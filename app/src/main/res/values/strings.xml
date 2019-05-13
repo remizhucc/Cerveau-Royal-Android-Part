@@ -12,4 +12,15 @@
     <string name="account_nickname">Nickname</string>
     <string name="index_startGame">Start\n Game</string>
     <string name="index_friends">Friends</string>
+    <string name="title_choose">Choose</string>
+    <string name="title_subject">Subject</string>
+    <string name="subject_geography">Geography</string>
+    <string name="subject_literature">Literature</string>
+    <string name="subject_math">Math</string>
+    <string name="subject_history">History</string>
+    <string name="subject_art">Art</string>
+    <string name="subject_music">Music</string>
+    <string name="subject_english">English</string>
+    <string name="subject_commonsense">CommonSense</string>
+
 </resources>
