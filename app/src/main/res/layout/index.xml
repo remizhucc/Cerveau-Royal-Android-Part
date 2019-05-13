@@ -29,11 +29,23 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <ImageView
-                android:id="@+id/avatarImage"
+            <FrameLayout
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/button_person" />
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/background_cercle" />
+
+                <ImageView
+                    android:id="@+id/avatarImage"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/avatar_1" />
+
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -85,9 +97,9 @@
                 android:layout_height="wrap_content"
                 android:width="200dp"
                 android:height="60dp"
-                android:textSize="20sp"
                 android:background="@drawable/button_red"
-                android:text="@string/index_startGame" />
+                android:text="@string/index_startGame"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
