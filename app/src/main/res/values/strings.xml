@@ -22,5 +22,6 @@
     <string name="subject_music">Music</string>
     <string name="subject_english">English</string>
     <string name="subject_commonsense">CommonSense</string>
-
+    <string name="title_V">V</string>
+    <string name="title_S">S</string>
 </resources>
