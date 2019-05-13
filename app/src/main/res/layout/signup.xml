@@ -99,6 +99,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle"
@@ -118,6 +119,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -136,6 +138,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -154,6 +157,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -182,6 +186,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -200,6 +205,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -218,6 +224,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />
@@ -236,6 +243,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/background_avatar8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle" />

@@ -12,4 +12,6 @@
     <string name="account_nickname">Nickname</string>
     <string name="index_startGame">Start\n Game</string>
     <string name="index_friends">Friends</string>
+    <string name="title_V">V</string>
+    <string name="title_S">S</string>
 </resources>
