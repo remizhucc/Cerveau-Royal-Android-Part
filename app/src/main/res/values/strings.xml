@@ -10,4 +10,6 @@
     <string name="account_signup">Sign Up</string>
     <string name="account_confirmPasswor">Confirm password</string>
     <string name="account_nickname">Nickname</string>
+    <string name="index_startGame">Start\n Game</string>
+    <string name="index_friends">Friends</string>
 </resources>
