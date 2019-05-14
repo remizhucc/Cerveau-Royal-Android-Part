@@ -24,6 +24,8 @@
     <string name="subject_commonsense">CommonSense</string>
     <string name="title_V">V</string>
     <string name="title_S">S</string>
+    <string name="winner_tryAgain">Try again!</string>
+    <string name="winner_leave">Leave</string>
 
     <string name="player1_nom">DeadPool</string>
     <string name="player2_nom">Random</string>
