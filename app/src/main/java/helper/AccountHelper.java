@@ -23,7 +23,7 @@ public class AccountHelper {
 
     public static int getMyAvatarFromPreferences(Activity activity) {
         SharedPreferences userInformation = activity.getSharedPreferences("user", 0);
-        int avatar = userInformation.getInt("avatar", null);  //second parameter default value
+        int avatar = userInformation.getInt("avatar", 0);  //second parameter default value
         return avatar;
     }
 
