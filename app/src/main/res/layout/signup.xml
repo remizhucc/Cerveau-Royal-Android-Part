@@ -96,7 +96,8 @@
                 android:id="@+id/avatar1"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar1">
 
                 <ImageView
                     android:id="@+id/background_avatar1"
@@ -116,7 +117,8 @@
                 android:id="@+id/avatar2"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar2">
 
                 <ImageView
                     android:id="@+id/background_avatar2"
@@ -135,7 +137,8 @@
                 android:id="@+id/avatar3"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar3">
 
                 <ImageView
                     android:id="@+id/background_avatar3"
@@ -154,7 +157,8 @@
                 android:id="@+id/avatar4"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar4">
 
                 <ImageView
                     android:id="@+id/background_avatar4"
@@ -183,7 +187,8 @@
                 android:id="@+id/avatar5"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar5">
 
                 <ImageView
                     android:id="@+id/background_avatar5"
@@ -202,7 +207,8 @@
                 android:id="@+id/avatar6"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar6">
 
                 <ImageView
                     android:id="@+id/background_avatar6"
@@ -221,7 +227,8 @@
                 android:id="@+id/avatar7"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar7">
 
                 <ImageView
                     android:id="@+id/background_avatar7"
@@ -240,7 +247,8 @@
                 android:id="@+id/avatar8"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseAvatar8">
 
                 <ImageView
                     android:id="@+id/background_avatar8"
@@ -271,7 +279,8 @@
                 android:layout_height="wrap_content"
                 android:width="150dp"
                 android:background="@drawable/button_green"
-                android:text="@string/account_signup" />
+                android:text="@string/account_signup"
+                android:onClick="trySignup"/>
         </LinearLayout>
 
 
