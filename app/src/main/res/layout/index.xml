@@ -118,7 +118,7 @@
                 android:drawableStart="@drawable/button_friends_drawableleft"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
-                android:text="@string/account_signup" />
+                android:text="Friends" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
