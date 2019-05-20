@@ -222,33 +222,69 @@
             android:textStyle="normal" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/score1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:text="300"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/score2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="300"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:weightSum="10">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="360dp">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1000dp"
-                    android:layout_gravity="center"
+                    android:layout_width="15dp"
+                    android:layout_height="350dp"
+                    android:layout_gravity="center|bottom"
                     android:src="@drawable/bar_white" />
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/scoreBar1"
+                    android:layout_width="15dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center|bottom"
                     android:src="@drawable/bar_green" />
             </FrameLayout>
 
@@ -256,15 +292,91 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="360dp"
             android:layout_weight="8"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:weightSum="4">
+
+
+            <Button
+                android:id="@+id/option1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:width="150dp"
+                android:background="@drawable/button_grey"
+                android:text="California"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/option2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:width="150dp"
+                android:background="@drawable/button_grey_strokeRed"
+                android:text="New York"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/option3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:width="150dp"
+                android:background="@drawable/button_grey"
+                android:text="New Jersey"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/option4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:width="150dp"
+                android:background="@drawable/button_white_storkeGreen"
+                android:text="Washington"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="350dp"
+                    android:layout_gravity="bottom|center"
+                    android:src="@drawable/bar_white" />
+
+                <ImageView
+                    android:id="@+id/scoreBar2"
+                    android:layout_width="15dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="bottom|center"
+                    android:src="@drawable/bar_red" />
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
