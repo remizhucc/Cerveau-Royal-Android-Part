@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:id="@+id/avatar1"
+
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="left"
@@ -24,6 +24,7 @@
                 android:src="@drawable/background_cercle_grey" />
 
             <ImageView
+                android:id="@+id/avatar"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -47,6 +48,7 @@
             android:gravity="right">
 
         <ImageView
+            android:id="@+id/add"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
