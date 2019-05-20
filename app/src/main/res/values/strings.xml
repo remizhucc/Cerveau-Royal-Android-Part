@@ -24,7 +24,13 @@
     <string name="subject_commonsense">CommonSense</string>
     <string name="title_V">V</string>
     <string name="title_S">S</string>
+<<<<<<< HEAD
     <string name="account_logout">Log Out</string>
+=======
+    <string name="winner_tryAgain">Try again!</string>
+    <string name="winner_leave">Leave</string>
+
+>>>>>>> master
     <string name="player1_nom">DeadPool</string>
     <string name="player2_nom">Random</string>
 
