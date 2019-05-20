@@ -62,18 +62,21 @@
             android:weightSum="4">
 
             <FrameLayout
-                android:id="@+id/geography"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject1">
 
                 <ImageView
+                    android:id="@+id/geography"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey"
                     />
 
                 <ImageView
+
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -82,17 +85,20 @@
 
 
             <FrameLayout
-                android:id="@+id/literature"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject2">
 
                 <ImageView
+                    android:id="@+id/literature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
 
                 <ImageView
+
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -100,17 +106,20 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/math"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject3">
 
                 <ImageView
+                    android:id="@+id/math"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
 
                 <ImageView
+
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -118,12 +127,14 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/history"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject4">
 
                 <ImageView
+                    android:id="@+id/history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
@@ -206,12 +217,14 @@
             android:paddingTop="10dp">
 
             <FrameLayout
-                android:id="@+id/art"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject5">
 
                 <ImageView
+                    android:id="@+id/art"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
@@ -224,13 +237,15 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/music"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject6">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/music"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
 
@@ -242,12 +257,14 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/english"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject7">
 
                 <ImageView
+                    android:id="@+id/english"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
@@ -260,12 +277,14 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/commonSense"
+
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:onClick="chooseSubject8">
 
                 <ImageView
+                    android:id="@+id/commonSense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/background_cercle_grey" />
@@ -455,6 +474,7 @@
             android:height="60dp"
             android:textSize="20sp"
             android:background="@drawable/button_red"
-            android:text="@string/index_startGame" />
+            android:text="@string/index_startGame"
+            android:onClick="startGame"/>
     </LinearLayout>
 </LinearLayout>
