@@ -6,10 +6,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/avatar1"
@@ -38,15 +38,20 @@
             android:text="Steven"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:layout_gravity="left"/>
+            android:layout_gravity="start"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="right">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="right|center"
-
             android:layout_marginRight="15dp"
             android:src="@drawable/button_add" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
