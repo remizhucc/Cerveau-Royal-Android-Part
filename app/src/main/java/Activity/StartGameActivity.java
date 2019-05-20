@@ -1,6 +1,7 @@
 package Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +18,8 @@ public class StartGameActivity extends Activity {
         subject = -1;
     }
     public void startGame(View view) {
-        
+        Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
+        startActivity(intent);
         finish();
     }
     public void setAllSubjectBgWhite(){
