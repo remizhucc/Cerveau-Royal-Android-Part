@@ -1,10 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Match {
-    String nickName1;
-    String nickName2;
-    String rank1;
-    String rank2;
-    int score1;
-    int score2;
+    public User user1;
+    public User user2;
+    public int score1;
+    public int score2;
+    public ArrayList<Question> questions;
+
 }
