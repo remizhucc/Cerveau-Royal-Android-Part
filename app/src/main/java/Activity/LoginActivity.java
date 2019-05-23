@@ -35,6 +35,7 @@ import static helper.AccountHelper.setMyInformationFromServer;
 
 public class LoginActivity extends Activity {
 
+    private static final String TAG = "LoginActivity";
     private EditText emailEditText;
     private EditText passwordEditText;
 
@@ -140,8 +141,9 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                     startActivity(intent);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }catch (Exception e){
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Log.e(TAG,"FailToLogIn:"+e.getMessage());
             }
         }
 

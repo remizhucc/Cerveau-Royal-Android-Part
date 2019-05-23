@@ -34,10 +34,10 @@ public class IndexActivity extends Activity {
         ImageView rankImage = (ImageView) findViewById(R.id.rankImage);
         TextView rankName = (TextView) findViewById(R.id.rankName);
 
-        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
-        nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
-        rankImage.setImageResource(RankHelper.getRankDrawableId(AccountHelper.getMyRankFromPreferences(this),this));
-        rankName.setText(RankHelper.getRankName(AccountHelper.getMyRankFromPreferences(this)));
+//        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
+//        nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
+//        rankImage.setImageResource(RankHelper.getRankDrawableId(AccountHelper.getMyRankFromPreferences(this),this));
+//        rankName.setText(RankHelper.getRankName(AccountHelper.getMyRankFromPreferences(this)));
     }
 
     public void directToFriends(View view) {
