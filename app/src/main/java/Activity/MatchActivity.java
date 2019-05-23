@@ -29,7 +29,8 @@ public class MatchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.match);
+//        setContentView( R.layout.match);
+//        setContentView(res.layout.match);
 
 
     }
@@ -120,7 +121,7 @@ public class MatchActivity extends Activity {
             }
 
             public void onFinish() {
-                mTextField.setText("done!");
+//                mTextField.setText("done!");
             }
 
 
@@ -128,12 +129,12 @@ public class MatchActivity extends Activity {
     }
 
     public void chooseOption(View view) {
-        Button buttonChosen = (Button) findViewById(view.getId());
-        buttonChosen.setBackground(getDrawable(R.drawable.button_white_storkeGreen));
-        sendMyChoiceToServer();
-        if (answerright) {
-            match.score1 += timeleft * 10;
-        }
+//        Button buttonChosen = (Button) findViewById(view.getId());
+//        buttonChosen.setBackground(getDrawable(R.drawable.button_white_storkeGreen));
+//        sendMyChoiceToServer();
+//        if (answerright) {
+//            match.score1 += timeleft * 10;
+//        }
     }
 
     private void questionFinish() {
@@ -149,8 +150,8 @@ public class MatchActivity extends Activity {
 
 //add code here
 
-        match.score2 =?;
-        nextquestion();
+//        match.score2 =?;
+//        nextquestion();
         refreshScoreBar();
         new CountDownTimer(5000, 1000) {
 
@@ -158,13 +159,13 @@ public class MatchActivity extends Activity {
             }
 
             public void onFinish() {
-                initializeQuestion();
+//                initializeQuestion();
             }
         }.start();
     }
 
     private void matchOver() {
-        sendResultToServer();
+//        sendResultToServer();
 
         //go to winner page with data
         Intent returnIntent = new Intent();

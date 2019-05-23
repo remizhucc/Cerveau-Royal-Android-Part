@@ -43,6 +43,7 @@ public class AccountHelper {
 
     public static boolean isAuthentic(String email, String password) {
 
+    return true;
     }
 
     //signup page
@@ -53,5 +54,6 @@ public class AccountHelper {
 
     public static boolean isSignUpInServerSuccess(String email, String password, String nickname, int avatar) {
 
+        return true;
     }
 }
