@@ -95,7 +95,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/GoogleSans-Bold"
+                        android:fontFamily="@font/google_sans_bold"
                         android:text="@string/title_V"
                         android:textColor="@color/red"
                         android:textSize="40sp"
@@ -104,7 +104,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/GoogleSans-Bold"
+                        android:fontFamily="@font/google_sans_bold"
                         android:text="@string/title_S"
                         android:textColor="@color/green"
                         android:textSize="40sp"
@@ -120,7 +120,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/GoogleSans-Bold"
+                        android:fontFamily="@font/google_sans_bold"
                         android:text="00"
                         android:textColor="@color/red"
                         android:textSize="30sp"
@@ -129,7 +129,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/GoogleSans-Bold"
+                        android:fontFamily="@font/google_sans_bold"
                         android:text=":"
                         android:textColor="@color/white"
                         android:textSize="40sp"
@@ -139,7 +139,7 @@
                         android:id="@+id/countDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/GoogleSans-Bold"
+                        android:fontFamily="@font/google_sans_bold"
                         android:text="15"
                         android:textColor="@color/green"
                         android:textSize="30sp"
@@ -325,7 +325,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:width="150dp"
-                    android:background="@drawable/button_grey_strokeRed"
+                    android:background="@drawable/button_grey_stroke_red"
                     android:onClick="chooseOption"
                     android:text="New York"
                     android:textColor="@color/black" />
@@ -351,7 +351,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:width="150dp"
-                    android:background="@drawable/button_white_storkeGreen"
+                    android:background="@drawable/button_white_storke_green"
                     android:onClick="chooseOption"
                     android:text="Washington"
                     android:textColor="@color/black" />
