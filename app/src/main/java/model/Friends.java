@@ -10,6 +10,8 @@ public class Friends implements Serializable {
     private Integer user1Id;
     private Integer user2Id;
 
+    private Friends(){}
+
     public Friends(User user1, User user2) {
         this.user1Id = user1.getId();
         this.user2Id = user2.getId();

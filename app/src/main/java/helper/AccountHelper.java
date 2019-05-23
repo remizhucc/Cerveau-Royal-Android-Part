@@ -42,8 +42,7 @@ public class AccountHelper {
 
 
     public static boolean isAuthentic(String email, String password) {
-
-    return true;
+        return true;
     }
 
     //signup page

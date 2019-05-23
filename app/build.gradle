@@ -28,4 +28,5 @@ dependencies {
     implementation files('libs/jackson-databind-2.9.4.jar')
     implementation files('libs/jackson-core-2.9.4.jar')
     implementation files('libs/jackson-annotations-2.9.4.jar')
+    compile 'com.zhy:okhttputils:2.2.0'
 }
