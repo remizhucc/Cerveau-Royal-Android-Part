@@ -17,9 +17,6 @@ import static helper.AccountHelper.setMyInformationFromServer;
 
 public class LoginActivity extends Activity {
 
-    private String email;
-    private String password;
-
     private EditText emailEditText;
     private EditText passwordEditText;
 
@@ -27,35 +24,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
-        emailEditText = (EditText) findViewById(R.id.email);
-        passwordEditText = (EditText) findViewById(R.id.password);
-
-        Button btnLogIn = (Button) findViewById(R.id.button_login);
-        btnLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                email = emailEditText.getText().toString();
-                password = passwordEditText.getText().toString();
-                if(email.isEmpty()||password.isEmpty()) {
-                    try {
-                        if (isAuthentic(email, password)) {
-                            setMyInformationFromServer(email);
-                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                            startActivity(intent);
-                        } else {
-                            //LENGTH_SHORT 2s LONG 3.5s
-                            Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(LoginActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
     }
 
 
@@ -70,6 +38,8 @@ public class LoginActivity extends Activity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if(email.isEmpty()||password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
+        }else{
             try {
                 if (isAuthentic(email, password)) {
                     setMyInformationFromServer(email);
@@ -82,8 +52,6 @@ public class LoginActivity extends Activity {
             }catch (Exception e){
                 Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(LoginActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
         }
     }
 }

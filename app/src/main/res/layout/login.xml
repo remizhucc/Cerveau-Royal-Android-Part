@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:width="150dp"
             android:background="@drawable/button_green"
+            android:onClick="tryLogin"
             android:text="@string/account_login" />
     </LinearLayout>
 
