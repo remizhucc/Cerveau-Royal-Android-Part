@@ -17,6 +17,8 @@
         </activity>
         <activity android:name="Activity.SignupActivity">
         </activity>
+        <activity android:name="Activity.IndexActivity">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
