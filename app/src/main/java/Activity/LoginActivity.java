@@ -15,6 +15,8 @@ import static helper.AccountHelper.isAuthentic;
 import static helper.AccountHelper.setMyInformationFromServer;
 
 public class LoginActivity extends Activity {
+    private EditText emailEditText;
+    private  EditText passwordEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +32,8 @@ public class LoginActivity extends Activity {
     }
 
     public void tryLogin(View view) {
-        EditText emailEditText = (EditText) findViewById(R.id.email);
-        EditText passwordEditText = (EditText) findViewById(R.id.password);
+        emailEditText = (EditText) findViewById(R.id.email);
+        passwordEditText = (EditText) findViewById(R.id.password);
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if(email.isEmpty()||password.isEmpty()) {
