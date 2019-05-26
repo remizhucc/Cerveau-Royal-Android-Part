@@ -33,5 +33,6 @@
     <string name="lose">Lose</string>
     <string name="wait">Waitng for your opponent....</string>
     <string name="cancel">Cancel</string>
+    <string name="add_friend">Add friend</string>
 
 </resources>

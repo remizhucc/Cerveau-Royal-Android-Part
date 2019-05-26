@@ -1,11 +1,11 @@
-package Activity;
+package activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cerveauroyal.R;
@@ -57,7 +57,7 @@ public class WinnerActivity extends Activity {
         rankName1.setText(RankHelper.getRankName(dataRank1));
         rankName2.setText(RankHelper.getRankName(dataRank2));
 
-
+//set winner crown
         if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
         } else {
@@ -65,5 +65,18 @@ public class WinnerActivity extends Activity {
         }
 
     }
+    public void addFriend(View view) {
 
+    }
+    public void leave(View view) {
+        Intent intent = new Intent(WinnerActivity.this,
+                IndexActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+
+    }
+    public void tryAgain(View view) {
+
+    }
 }

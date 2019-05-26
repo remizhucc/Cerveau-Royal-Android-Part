@@ -1,4 +1,4 @@
-package Activity;
+package activity;
 
 public class FriendsActivity {
 }
