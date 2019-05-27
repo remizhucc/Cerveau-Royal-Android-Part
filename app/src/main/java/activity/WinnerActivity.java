@@ -12,6 +12,7 @@ import com.cerveauroyal.R;
 
 import helper.AvatarHelper;
 import helper.RankHelper;
+import model.Constant;
 
 public class WinnerActivity extends Activity {
     @Override
@@ -52,10 +53,10 @@ public class WinnerActivity extends Activity {
         avatar2.setImageResource(AvatarHelper.getAvatarDrawableId(dataAvatar2, this));
         nickname1.setText(dataNickName1);
         nickname2.setText(dataNickName2);
-        rankImage1.setImageResource(RankHelper.getRankDrawableId(dataRank1, this));
-        rankImage2.setImageResource(RankHelper.getRankDrawableId(dataRank2, this));
-        rankName1.setText(RankHelper.getRankName(dataRank1));
-        rankName2.setText(RankHelper.getRankName(dataRank2));
+        rankImage1.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(dataRank1), this));
+        rankImage2.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(dataRank2), this));
+        rankName1.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank1)));
+        rankName2.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank2)));
 
 //set winner crown
         if (dataScore1 > dataScore2) {
