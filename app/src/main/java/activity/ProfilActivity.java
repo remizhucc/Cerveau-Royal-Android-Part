@@ -7,29 +7,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerveauroyal.R;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.RankHelper;
 import model.Constant;
+import model.User;
+import okhttp3.Call;
 
 public class ProfilActivity extends Activity{
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-        initializeActivity();
+        try {
+            initializeActivity();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    private void initializeActivity(){
+    private void initializeActivity() throws UnsupportedEncodingException {
         ImageView avatarImage = (ImageView) findViewById(R.id.avatar);
         TextView nickname = (TextView) findViewById(R.id.nickname);
         TextView email = (TextView) findViewById(R.id.email);
         ImageView rankImage = (ImageView) findViewById(R.id.rankImage);
         TextView rankName = (TextView) findViewById(R.id.rankName);
-
 
         avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
         nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
@@ -37,22 +49,59 @@ public class ProfilActivity extends Activity{
         rankImage.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this)),this));
         rankName.setText(RankHelper.getRankName(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this))));
 
-        TextView winSubject1 = (TextView) findViewById(R.id.win_geography);
-        TextView winSubject2 = (TextView) findViewById(R.id.win_literature);
-        TextView winSubject3 = (TextView) findViewById(R.id.win_math);
-        TextView winSubject4 = (TextView) findViewById(R.id.win_history);
-        TextView winSubject5 = (TextView) findViewById(R.id.win_art);
-        TextView winSubject6 = (TextView) findViewById(R.id.win_music);
-        TextView winSubject7 = (TextView) findViewById(R.id.win_english);
-        TextView winSubject8 = (TextView) findViewById(R.id.win_commonsense);
-        TextView loseSubject1 = (TextView) findViewById(R.id.lose_geography);
-        TextView loseSubject2 = (TextView) findViewById(R.id.lose_literature);
-        TextView loseSubject3 = (TextView) findViewById(R.id.lose_math);
-        TextView loseSubject4 = (TextView) findViewById(R.id.lose_history);
-        TextView loseSubject5 = (TextView) findViewById(R.id.lose_art);
-        TextView loseSubject6 = (TextView) findViewById(R.id.lose_music);
-        TextView loseSubject7 = (TextView) findViewById(R.id.lose_english);
-        TextView loseSubject8 = (TextView) findViewById(R.id.lose_commonsense);
+
+        final TextView  winSubject1 = (TextView) findViewById(R.id.win_geography);
+        final TextView winSubject2 = (TextView) findViewById(R.id.win_literature);
+        final TextView winSubject3 = (TextView) findViewById(R.id.win_math);
+        final TextView winSubject4 = (TextView) findViewById(R.id.win_history);
+        final TextView winSubject5 = (TextView) findViewById(R.id.win_art);
+        final TextView winSubject6 = (TextView) findViewById(R.id.win_music);
+        final TextView winSubject7 = (TextView) findViewById(R.id.win_english);
+        final TextView winSubject8 = (TextView) findViewById(R.id.win_commonsense);
+        final TextView loseSubject1 = (TextView) findViewById(R.id.lose_geography);
+        final TextView loseSubject2 = (TextView) findViewById(R.id.lose_literature);
+        final TextView loseSubject3 = (TextView) findViewById(R.id.lose_math);
+        final TextView loseSubject4 = (TextView) findViewById(R.id.lose_history);
+        final TextView loseSubject5 = (TextView) findViewById(R.id.lose_art);
+        final TextView loseSubject6 = (TextView) findViewById(R.id.lose_music);
+        final TextView loseSubject7 = (TextView) findViewById(R.id.lose_english);
+        final TextView loseSubject8 = (TextView) findViewById(R.id.lose_commonsense);
+
+        AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(this), new StringCallback() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(response);
+                    User user = User.read(json.getString("user"));
+                    winSubject1.setText(user.getNumWinGeography());
+                    winSubject2.setText(user.getNumWinLiterature());
+                    winSubject3.setText(user.getNumWinMath());
+                    winSubject4.setText(user.getNumWinHistory());
+                    winSubject5.setText(user.getNumWinArt());
+                    winSubject6.setText(user.getNumWinMusic());
+                    winSubject7.setText(user.getNumWinEnglish());
+                    winSubject8.setText(user.getNumWinCommonsense());
+                    loseSubject1.setText(user.getNumLoseGeography());
+                    loseSubject2.setText(user.getNumLoseLiterature());
+                    loseSubject3.setText(user.getNumLoseMath());
+                    loseSubject4.setText(user.getNumLoseHistory());
+                    loseSubject5.setText(user.getNumLoseArt());
+                    loseSubject6.setText(user.getNumLoseMusic());
+                    loseSubject7.setText(user.getNumLoseEnglish());
+                    loseSubject8.setText(user.getNumLoseCommonsense());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Call call, Exception e) {
+
+            }
+        });
 
     }
 
