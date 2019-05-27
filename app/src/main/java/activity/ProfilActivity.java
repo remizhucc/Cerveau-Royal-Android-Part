@@ -11,6 +11,7 @@ import com.cerveauroyal.R;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.RankHelper;
+import model.Constant;
 
 public class ProfilActivity extends Activity{
     @Override
@@ -33,8 +34,8 @@ public class ProfilActivity extends Activity{
         avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
         nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
         email.setText(AccountHelper.getMyEmailFromPreferences(this));
-        rankImage.setImageResource(RankHelper.getRankDrawableId(AccountHelper.getMyRankFromPreferences(this),this));
-        rankName.setText(RankHelper.getRankName(AccountHelper.getMyRankFromPreferences(this)));
+        rankImage.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this)),this));
+        rankName.setText(RankHelper.getRankName(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this))));
 
         TextView winSubject1 = (TextView) findViewById(R.id.win_geography);
         TextView winSubject2 = (TextView) findViewById(R.id.win_literature);

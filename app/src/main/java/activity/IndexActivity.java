@@ -12,6 +12,7 @@ import com.cerveauroyal.R;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.RankHelper;
+import model.Constant;
 
 public class IndexActivity extends Activity {
 
@@ -35,8 +36,8 @@ public class IndexActivity extends Activity {
 
         avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
         nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
-        rankImage.setImageResource(RankHelper.getRankDrawableId(AccountHelper.getMyRankFromPreferences(this),this));
-        rankName.setText(RankHelper.getRankName(AccountHelper.getMyRankFromPreferences(this)));
+        rankImage.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this)),this));
+        rankName.setText(RankHelper.getRankName(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this))));
     }
 
     public void directToFriends(View view) {
