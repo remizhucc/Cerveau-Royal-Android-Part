@@ -119,9 +119,20 @@ public class SignupActivity extends Activity {
                 JSONObject json = new JSONObject(response);
                 Boolean success = json.getBoolean("success");
                 if (success) {
-                    AccountHelper.setMyInformationFromServer(email, SignupActivity.this);
-                    Intent intent = new Intent(SignupActivity.this, IndexActivity.class);
-                    startActivity(intent);
+                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                        @Override
+                        public void onResponse(String response) {
+                            AccountHelper.setPreferences(response, SignupActivity.this);
+                            Intent intent = new Intent(SignupActivity.this, IndexActivity.class);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(Call call, Exception e) {
+
+                        }
+                    });
+
                 } else {
                     Toast.makeText(SignupActivity.this, "Singup failure", Toast.LENGTH_SHORT).show();
                 }

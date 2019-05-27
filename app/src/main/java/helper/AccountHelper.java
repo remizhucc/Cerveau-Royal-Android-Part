@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
@@ -28,10 +29,10 @@ import static android.content.Context.MODE_PRIVATE;
 public class AccountHelper {
 
     //preferences
-    public static String getMyIdFromPreferences(Activity activity) {
+    public static int getMyIdFromPreferences(Activity activity) {
         SharedPreferences userInformation = activity.getSharedPreferences("user", 0);
-        String email = userInformation.getString("email", null);  //second parameter default value
-        return email;
+        int id = userInformation.getInt("id", 0);  //second parameter default value
+        return id;
     }
 
     public static String getMyEmailFromPreferences(Activity activity) {
@@ -61,7 +62,7 @@ public class AccountHelper {
 
     //login page
 
-    public static void setMyInformationFromServer(String email, Activity activity) throws UnsupportedEncodingException {
+    public static void setMyInformationFromServer(String email,  Callback callback) throws UnsupportedEncodingException {
         String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/user";
         JSONObject json = new JSONObject();
         try {
@@ -73,51 +74,25 @@ public class AccountHelper {
                 .url(url)
                 .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
                 .build()
-                .execute(new GetUserInfoFromServerCallback(activity));
+                .execute(callback);
     }
 
-    public static class GetUserInfoFromServerCallback extends StringCallback {
-        Activity activity;
 
-        public GetUserInfoFromServerCallback(Activity activity) {
-            super();
-            this.activity = activity;
+    public static void setPreferences(String response,Activity activity){
+
+        try {
+            JSONObject json = new JSONObject(response);
+            User user = User.read(json.getString("user"));
+            SharedPreferences.Editor editor = activity.getSharedPreferences("user", 0).edit();
+            editor.putString("email", user.getEmail());
+            editor.putString("nickname", user.getnickname());
+            editor.putInt("avatar", user.getAvatar());
+            editor.putString("rank", user.getRank().toString());
+            editor.putInt("id", user.getId());
+            editor.apply();
+        }catch (Exception e){
 
         }
-
-//        @Override
-//        public void onBefore(Request request) {
-//            super.onBefore(request);
-//        }
-//
-//        @Override
-//        public void onAfter() {
-//            super.onAfter();
-//        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
-            try {
-                JSONObject json = new JSONObject(response);
-                User user = User.read(json.getString("user"));
-                SharedPreferences.Editor editor = this.activity.getSharedPreferences("user", 0).edit();
-                editor.putString("email", user.getEmail());
-                editor.putString("nickname", user.getnickname());
-                editor.putInt("avatar", user.getAvatar());
-                editor.putString("rank", user.getRank());
-                editor.putInt("rank", user.getId());
-                editor.apply();
-            } catch (Exception e) {
-            }
-        }
-
-
     }
 
     //signup page

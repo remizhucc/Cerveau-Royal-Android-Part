@@ -2,16 +2,18 @@ package helper;
 
 import android.app.Activity;
 
+import model.Constant;
+
 public class RankHelper {
 
 
-    public static int getRankDrawableId(String rank, Activity activity) {
-        String mDrawableName = "@drawable/rank" + rank;
+    public static int getRankDrawableId(Constant.RANK rank, Activity activity) {
+        String mDrawableName = "@drawable/rank" + rank.toString();
         return activity.getResources().getIdentifier(mDrawableName, "drawable", activity.getPackageName());
     }
 
-    public static String getRankName(String rank) {
-        switch (rank) {
+    public static String getRankName(Constant.RANK rank) {
+        switch (rank.toString()) {
             case "pawn":
                 return "Pawn";
             case "knight":

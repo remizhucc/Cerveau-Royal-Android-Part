@@ -1,5 +1,6 @@
 package activity;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.cerveauroyal.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
@@ -26,6 +28,7 @@ import helper.AccountHelper;
 import model.User;
 import okhttp3.Call;
 import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginActivity extends Activity {
 
@@ -107,9 +110,20 @@ public class LoginActivity extends Activity {
                 JSONObject json = new JSONObject(response);
                 Boolean isLogin = json.getBoolean("success");
                 if (isLogin) {
-                    AccountHelper.setMyInformationFromServer(email, LoginActivity.this);
-                    Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                    startActivity(intent);
+                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                        @Override
+                        public void onResponse(String response) {
+                            AccountHelper.setPreferences(response, LoginActivity.this);
+                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(Call call, Exception e) {
+
+                        }
+                    });
+
                 } else {
                     Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
                 }

@@ -1,4 +1,4 @@
-package model;
+package Model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,8 +9,6 @@ public class Friends implements Serializable {
     private Integer id;
     private Integer user1Id;
     private Integer user2Id;
-
-    private Friends(){}
 
     public Friends(User user1, User user2) {
         this.user1Id = user1.getId();
