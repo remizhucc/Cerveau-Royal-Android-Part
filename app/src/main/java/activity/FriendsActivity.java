@@ -13,6 +13,7 @@ import com.cerveauroyal.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import helper.AccountHelper;
 import model.Friends;
+import model.User;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -83,7 +85,16 @@ public class FriendsActivity extends Activity {
                 JSONObject json = new JSONObject(response);
                 Boolean success= json.getBoolean("success");
                 if (success) {
-              //      friend = json.getJSONArray("friends");
+                    JSONArray result= json.getJSONArray("friends");
+                    ProfilFriends pf;
+                    for(int i=0;i<result.length();i++)
+                    {
+                        JSONObject jb=result.getJSONObject(i);
+                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(),User.read(jb.toString()).getAvatar());
+                        friend.add(pf);
+
+                    }
+
                     FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this,R.layout.listfriends,friend);
                     ListView listview = (ListView) findViewById(R.id.list_view);
                     listview.setAdapter(adapter);
