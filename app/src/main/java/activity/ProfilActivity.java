@@ -52,7 +52,7 @@ public class ProfilActivity extends Activity{
         TextView loseSubject6 = (TextView) findViewById(R.id.lose_music);
         TextView loseSubject7 = (TextView) findViewById(R.id.lose_english);
         TextView loseSubject8 = (TextView) findViewById(R.id.lose_commonsense);
-        
+
     }
 
     public void back(View view) {
