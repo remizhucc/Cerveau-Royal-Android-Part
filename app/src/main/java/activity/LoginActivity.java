@@ -61,77 +61,77 @@ public class LoginActivity extends Activity {
     }
 
     public void loginProcess(String email, String password) throws UnsupportedEncodingException {
-        //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
-        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
-        JSONObject json = new JSONObject();
-        try {
-            json.put("email", email);
-            json.put("password", password);
-
-            String token = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            json.put("deviceToken", token);
-        } catch (org.json.JSONException e) {
-            System.out.println(e.getStackTrace());
-        }
-        OkHttpUtils.get()
-                .url(url)
-                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                .build()
-                .execute(new LoginProcessCallback(email));
-    }
-
-    public class LoginProcessCallback extends StringCallback {
-        String email;
-
-        LoginProcessCallback(String email) {
-            super();
-            this.email = email;
-        }
-
-        @Override
-        public void onBefore(Request request) {
-            super.onBefore(request);
-        }
-
-        @Override
-        public void onAfter() {
-            super.onAfter();
-        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
+            //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
+            String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
+            JSONObject json = new JSONObject();
             try {
-                JSONObject json = new JSONObject(response);
-                Boolean isLogin = json.getBoolean("success");
-                if (isLogin) {
-                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
-                        @Override
-                        public void onResponse(String response) {
-                            AccountHelper.setPreferences(response, LoginActivity.this);
-                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                            startActivity(intent);
-                        }
+                json.put("email", email);
+                json.put("password", password);
 
-                        @Override
-                        public void onError(Call call, Exception e) {
-
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "FailToLogIn:" + e.getMessage());
+                String token = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                json.put("deviceToken", token);
+            } catch (org.json.JSONException e) {
+                System.out.println(e.getStackTrace());
             }
+            OkHttpUtils.get()
+                    .url(url)
+                    .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
+                    .build()
+                    .execute(new LoginProcessCallback(email));
         }
+
+        public class LoginProcessCallback extends StringCallback {
+            String email;
+
+            LoginProcessCallback(String email) {
+                super();
+                this.email = email;
+            }
+
+            @Override
+            public void onBefore(Request request) {
+                super.onBefore(request);
+            }
+
+            @Override
+            public void onAfter() {
+                super.onAfter();
+            }
+
+            @Override
+            public void onError(Call call, Exception e) {
+                //do some thing lisk this
+                //myText.setText("onError:" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    Boolean isLogin = json.getBoolean("success");
+                    if (isLogin) {
+                        AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                            @Override
+                            public void onResponse(String response) {
+                                AccountHelper.setPreferences(response, LoginActivity.this);
+                                Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onError(Call call, Exception e) {
+
+                            }
+                        });
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "FailToLogIn:" + e.getMessage());
+                }
+            }
 
 
     }

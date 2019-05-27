@@ -10,15 +10,26 @@ import com.cerveauroyal.R;
 
 public class StartGameActivity extends Activity {
     int subject;
+    boolean withUser;
+    int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
+
+        Intent i = getIntent();
+        withUser = i.getBooleanExtra("withUser",false);
+        if (withUser)
+            userId = i.getIntExtra("userId",-1);
         //default subject
         subject = -1;
     }
     public void startGame(View view) {
         Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
+        intent.putExtra("subject",subject);
+        intent.putExtra("withUser",withUser);
+        if (withUser)
+            intent.putExtra("userId",userId);
         startActivity(intent);
         finish();
     }

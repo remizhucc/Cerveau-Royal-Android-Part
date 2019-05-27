@@ -22,7 +22,7 @@ public class FriendsAdapter extends ArrayAdapter<ProfilFriends> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ProfilFriends friend = getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        ImageView avatarImage=(ImageView)view.findViewById(R.id.avatar);
+        ImageView avatarImage=(ImageView)view.findViewById(R.id.avatar_player2);
         TextView friendName=(TextView) view.findViewById(R.id.nickname);
         avatarImage.setImageResource(friend.getAvatarId());
         friendName.setText(friend.getNickname());
