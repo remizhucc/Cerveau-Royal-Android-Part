@@ -1,5 +1,6 @@
 package activity;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.FriendHelper;
 import helper.RankHelper;
@@ -78,19 +81,20 @@ public class WinnerActivity extends Activity {
             crown1.setVisibility(View.INVISIBLE);
         }
 
-        if(getIntent().getExtras().getBoolean("withFriend")){
-            addFriendEnable=false;
+        if (getIntent().getExtras().getBoolean("withFriend")) {
+            addFriendEnable = false;
             setAddFriendButtonGrey();
-        }else{
-            addFriendEnable=true;
+        } else {
+            addFriendEnable = true;
         }
 
     }
+
     public void addFriend(View view) {
-        if(addFriendEnable){
-            FriendHelper.addFriend(getIntent().getIntExtra("id1",0),
-                    getIntent().getIntExtra("id2",0),
-                    new StringCallback(){
+        if (addFriendEnable) {
+            FriendHelper.addFriend(getIntent().getIntExtra("id1", 0),
+                    getIntent().getIntExtra("id2", 0),
+                    new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e) {
 
@@ -104,37 +108,55 @@ public class WinnerActivity extends Activity {
                                 if (success) {
                                     addFriendEnable = true;
                                     setAddFriendButtonGrey();
-                                }else {
+                                } else {
                                     Toast.makeText(WinnerActivity.this, "Failed add friend", Toast.LENGTH_SHORT).show();
                                 }
-                            }catch (JSONException e){
+                            } catch (JSONException e) {
                                 System.out.println(e.getStackTrace());
                             }
                         }
                     });
-        }else{
+        } else {
             Toast.makeText(WinnerActivity.this, "Already your friend", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void leave(View view) {
-        Intent intent = new Intent(WinnerActivity.this, IndexActivity.class);
-        startActivity(intent);
+        try {
+            AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(WinnerActivity.this), new StringCallback() {
+                @Override
+                public void onResponse(String response) {
+                    AccountHelper.setPreferences(response, WinnerActivity.this);
+                    Intent intent = new Intent(WinnerActivity.this, IndexActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onError(Call call, Exception e) {
+
+                }
+            });
+        }catch (UnsupportedEncodingException e){
+            System.out.println(e.getStackTrace());
+        }
+
 
     }
+
     public void tryAgain(View view) {
         Intent intent = new Intent(WinnerActivity.this, StartGameActivity.class);
-        intent.putExtra("subject",getIntent().getIntExtra("subject",0));
-        intent.putExtra("withUser",true );
-        intent.putExtra("avatar",getIntent().getIntExtra("avatar2",0) );
-        intent.putExtra("rank",getIntent().getStringExtra("rank2") );
-        intent.putExtra("nickname",getIntent().getStringExtra("rank2") );
-        intent.putExtra("id",getIntent().getIntExtra("rank2",0) );
+        intent.putExtra("subject", getIntent().getIntExtra("subject", 0));
+        intent.putExtra("withUser", true);
+        intent.putExtra("avatar", getIntent().getIntExtra("avatar2", 0));
+        intent.putExtra("rank", getIntent().getStringExtra("rank2"));
+        intent.putExtra("nickname", getIntent().getStringExtra("rank2"));
+        intent.putExtra("id", getIntent().getIntExtra("rank2", 0));
         startActivity(intent);
 
     }
 
-    private void setAddFriendButtonGrey(){
-        Button addFriendButton=(Button) findViewById(R.id.button_addFriend);
+    private void setAddFriendButtonGrey() {
+        Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
         addFriendButton.setBackground(getDrawable(R.drawable.button_grey));
     }
 }
