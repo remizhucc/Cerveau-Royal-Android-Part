@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,6 +43,12 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         context = getApplicationContext();
+
+        //create Listener to button
+        Button buttonLogin = (Button)findViewById(R.id.button_login);
+        buttonLogin.setOnTouchListener(new ActivityHelper.BlueButtonListener());
+        Button buttonSignUp = (Button)findViewById(R.id.button_signup);
+        buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
     }
 
 
@@ -80,6 +87,9 @@ public class LoginActivity extends Activity {
                     .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
                     .build()
                     .execute(new LoginProcessCallback(email));
+
+            //circle
+            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         }
 
         public class LoginProcessCallback extends StringCallback {
@@ -93,7 +103,6 @@ public class LoginActivity extends Activity {
         @Override
         public void onBefore(Request request) {
             super.onBefore(request);
-            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         }
 
         @Override

@@ -8,4 +8,5 @@
     <color name="grey">#aaaaaa</color>
     <color name="lightgrey">#e0e0e0</color>
     <color name="lightgreyplus">#ebebeb</color>
+    <color name="darkgray">#938192</color>
 </resources>
