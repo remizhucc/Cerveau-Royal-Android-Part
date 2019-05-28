@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,82 +12,82 @@
         android:paddingLeft="40dp"
         android:paddingRight="40dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/crown" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/crown" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        android:gravity="center">
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/google_sans_bold"
-            android:gravity="center"
-            android:text="@string/title_cerveau"
-            android:textColor="@color/red"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="60dp"
+            android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/google_sans_bold"
+                android:gravity="center"
+                android:text="@string/title_cerveau"
+                android:textColor="@color/red"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/google_sans_bold"
+                android:gravity="center"
+                android:text="@string/title_royale"
+                android:textColor="@color/green"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/google_sans_bold"
-            android:gravity="center"
-            android:text="@string/title_royale"
-            android:textColor="@color/green"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginBottom="15dp"
+            android:hint="@string/account_email"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:textSize="24sp" />
 
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:hint="@string/account_password"
+            android:inputType="text"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:hint="@string/account_email"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:textSize="24sp" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/account_email"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:hint="@string/account_password"
-        android:inputType="text"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:hint="@string/account_email"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:hint="@string/account_password"
-        android:inputType="text"
-        android:textSize="24sp" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:hint="@string/account_password"
+            android:inputType="text"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -115,12 +114,10 @@
             android:text="@string/account_signup" />
     </LinearLayout>
 
-    </LinearLayout>
     <ProgressBar
         android:id="@+id/loadingPanel"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 </RelativeLayout>
