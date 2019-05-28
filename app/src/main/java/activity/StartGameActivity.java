@@ -38,7 +38,6 @@ public class StartGameActivity extends Activity {
         if (withUser)
             intent.putExtra("userId",userId);
         startActivity(intent);
-        finish();
     }
     public void setAllSubjectBgWhite(){
         ImageView background_geography=(ImageView) findViewById(R.id.geography);
@@ -109,6 +108,7 @@ public class StartGameActivity extends Activity {
     }
 
     public void backToIndex(View view){
-        finish();
+        Intent intent=new Intent(StartGameActivity.this,IndexActivity.class);
+        startActivity(intent);
     }
 }

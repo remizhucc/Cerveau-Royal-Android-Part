@@ -9,24 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="activity.LoginActivity">
+        <activity android:name="activity.LoginActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="activity.SignupActivity">
+        <activity android:name="activity.SignupActivity" android:noHistory="true">
         </activity>
-        <activity android:name="activity.IndexActivity">
+        <activity android:name="activity.IndexActivity" android:noHistory="true">
         </activity>
-        <activity android:name="activity.StartGameActivity">
+        <activity android:name="activity.StartGameActivity" android:noHistory="true">
         </activity>
-        <activity android:name="activity.MatchActivity">
+        <activity android:name="activity.MatchActivity" android:noHistory="true">
         </activity>
-        <activity android:name="activity.WinnerActivity">
+        <activity android:name="activity.WinnerActivity" android:noHistory="true">
         </activity>
-        <activity android:name="activity.ProfilActivity">
+        <activity android:name="activity.ProfilActivity" android:noHistory="true">
         </activity>
     </application>
 

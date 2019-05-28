@@ -227,7 +227,8 @@ public class SignupActivity extends Activity {
     }
 
     public void backToLogin(View view) {
-        finish();
+        Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
+        startActivity(intent);
     }
 
 

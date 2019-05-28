@@ -10,5 +10,7 @@ public class Match {
     public ArrayList<Question> questions;
     public String matchId;
     public int round;
+    public  boolean withFriend;
+    public int subject;
 
 }

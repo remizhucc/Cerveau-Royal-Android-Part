@@ -4,17 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerveauroyal.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
 
 import helper.AvatarHelper;
+import helper.FriendHelper;
 import helper.RankHelper;
 import model.Constant;
+import okhttp3.Call;
 
 public class WinnerActivity extends Activity {
+    Boolean addFriendEnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +40,7 @@ public class WinnerActivity extends Activity {
 
     private void initializeActivity() {
         int dataAvatar1 = getIntent().getIntExtra("avatar1", 1);
-        int dataAvatar2 = getIntent().getIntExtra("avatar1", 1);
+        int dataAvatar2 = getIntent().getIntExtra("avatar2", 1);
         String dataNickName1 = getIntent().getStringExtra("nickName1");
         String dataNickName2 = getIntent().getStringExtra("nickName2");
         String dataRank1 = getIntent().getStringExtra("rank1");
@@ -65,19 +78,63 @@ public class WinnerActivity extends Activity {
             crown1.setVisibility(View.INVISIBLE);
         }
 
-    }
-    public void addFriend(View view) {
+        if(getIntent().getExtras().getBoolean("withFriend")){
+            addFriendEnable=false;
+            setAddFriendButtonGrey();
+        }else{
+            addFriendEnable=true;
+        }
 
     }
+    public void addFriend(View view) {
+        if(addFriendEnable){
+            FriendHelper.addFriend(getIntent().getIntExtra("id1",0),
+                    getIntent().getIntExtra("id2",0),
+                    new StringCallback(){
+                        @Override
+                        public void onError(Call call, Exception e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject json = new JSONObject(response);
+                                Boolean success = json.getBoolean("success");
+                                if (success) {
+                                    addFriendEnable = true;
+                                    setAddFriendButtonGrey();
+                                }else {
+                                    Toast.makeText(WinnerActivity.this, "Failed add friend", Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (JSONException e){
+                                System.out.println(e.getStackTrace());
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(WinnerActivity.this, "Already your friend", Toast.LENGTH_SHORT).show();
+        }
+    }
     public void leave(View view) {
-        Intent intent = new Intent(WinnerActivity.this,
-                IndexActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intent = new Intent(WinnerActivity.this, IndexActivity.class);
         startActivity(intent);
 
     }
     public void tryAgain(View view) {
+        Intent intent = new Intent(WinnerActivity.this, StartGameActivity.class);
+        intent.putExtra("subject",getIntent().getIntExtra("subject",0));
+        intent.putExtra("withUser",true );
+        intent.putExtra("avatar",getIntent().getIntExtra("avatar2",0) );
+        intent.putExtra("rank",getIntent().getStringExtra("rank2") );
+        intent.putExtra("nickname",getIntent().getStringExtra("rank2") );
+        intent.putExtra("id",getIntent().getIntExtra("rank2",0) );
+        startActivity(intent);
 
+    }
+
+    private void setAddFriendButtonGrey(){
+        Button addFriendButton=(Button) findViewById(R.id.button_addFriend);
+        addFriendButton.setBackground(getDrawable(R.drawable.button_grey));
     }
 }

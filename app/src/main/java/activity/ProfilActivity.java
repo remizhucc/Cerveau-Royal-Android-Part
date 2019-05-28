@@ -106,12 +106,12 @@ public class ProfilActivity extends Activity{
     }
 
     public void back(View view) {
-        finish();
+        Intent intent=new Intent(ProfilActivity.this,IndexActivity.class);
+        startActivity(intent);
     }
 
     public void logout(View view){
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 }

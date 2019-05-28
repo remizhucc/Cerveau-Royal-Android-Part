@@ -66,6 +66,7 @@ public class MatchActivity extends Activity {
         JSONObject json = new JSONObject();
         try {
             json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
+            json.put("subject", getIntent().getIntExtra("subject",0));
             //withUesr
             if (getIntent().getExtras().getBoolean("withUser")) {
                 json.put("withUser", true);
@@ -106,7 +107,8 @@ public class MatchActivity extends Activity {
                         }
 
                         public void onFinish() {
-                            finish();
+                            Intent intent=new Intent(MatchActivity.this,StartGameActivity.class);
+                            startActivity(intent);
                         }
                     }.start();
                 }
@@ -136,12 +138,14 @@ public class MatchActivity extends Activity {
                 AccountHelper.getMyEmailFromPreferences(MatchActivity.this),
                 Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(MatchActivity.this)));
         try {
+            match.withFriend=json.getBoolean("withFriend");
             match.user2 = User.read(json.getJSONObject("opponent").toString());
             JSONArray questions = json.getJSONArray("questions");
             for (int i = 0; i < questions.length(); i++) {
                 match.questions.add(Question.read(questions.getJSONObject(i).toString()));
             }
             match.matchId = json.getString("match");
+            match.subject=getIntent().getExtras().getInt("subject");
         } catch (JSONException e) {
             System.out.println(e.getStackTrace());
         }
@@ -273,13 +277,17 @@ public class MatchActivity extends Activity {
         intent.putExtra("rank2", match.user2.getRank());
         intent.putExtra("score1", match.score1);
         intent.putExtra("score2", match.score2);
+        intent.putExtra("id1", match.user1.getId());
+        intent.putExtra("id2", match.user2.getId());
+        intent.putExtra("withFriend",match.withFriend);
+        intent.putExtra("subject",match.subject);
         startActivity(intent);
 
     }
 
     public void backToStartGame(View view) {
-        finish();
-
+        Intent intent=new Intent(MatchActivity.this,StartGameActivity.class);
+        startActivity(intent);
     }
 
     private String buildChoiceJsonString(int choice) {
