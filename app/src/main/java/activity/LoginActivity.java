@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import helper.AccountHelper;
+import helper.ActivityHelper;
 import model.User;
 import okhttp3.Call;
 import okhttp3.Request;
@@ -137,5 +139,20 @@ public class LoginActivity extends Activity {
         }
 
 
+    }
+
+
+    //keyboard hide automatically
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (ActivityHelper.isShouldHideInput(v, ev)) {
+                if(ActivityHelper.hideInputMethod(this, v)) {
+                    return true; //隐藏键盘时，其他控件不响应点击事件==》注释则不拦截点击事件
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
