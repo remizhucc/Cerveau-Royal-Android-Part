@@ -90,50 +90,52 @@ public class LoginActivity extends Activity {
                 this.email = email;
             }
 
-            @Override
-            public void onBefore(Request request) {
-                super.onBefore(request);
-            }
+        @Override
+        public void onBefore(Request request) {
+            super.onBefore(request);
+            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+        }
 
-            @Override
-            public void onAfter() {
-                super.onAfter();
-            }
+        @Override
+        public void onAfter() {
+            super.onAfter();
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
 
-            @Override
-            public void onError(Call call, Exception e) {
-                //do some thing lisk this
-                //myText.setText("onError:" + e.getMessage());
-            }
+        @Override
+        public void onError(Call call, Exception e) {
+            //do some thing lisk this
+            //myText.setText("onError:" + e.getMessage());
+        }
 
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject json = new JSONObject(response);
-                    Boolean isLogin = json.getBoolean("success");
-                    if (isLogin) {
-                        AccountHelper.setMyInformationFromServer(email, new StringCallback() {
-                            @Override
-                            public void onResponse(String response) {
-                                AccountHelper.setPreferences(response, LoginActivity.this);
-                                Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                                startActivity(intent);
-                            }
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject json = new JSONObject(response);
+                Boolean isLogin = json.getBoolean("success");
+                if (isLogin) {
+                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                        @Override
+                        public void onResponse(String response) {
+                            AccountHelper.setPreferences(response, LoginActivity.this);
+                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                            startActivity(intent);
+                        }
 
-                            @Override
-                            public void onError(Call call, Exception e) {
+                        @Override
+                        public void onError(Call call, Exception e) {
 
-                            }
-                        });
+                        }
+                    });
 
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "FailToLogIn:" + e.getMessage());
+                } else {
+                    Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
                 }
+            } catch (Exception e) {
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "FailToLogIn:" + e.getMessage());
             }
+        }
 
 
     }

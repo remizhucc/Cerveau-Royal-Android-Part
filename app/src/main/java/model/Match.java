@@ -8,5 +8,7 @@ public class Match {
     public int score1;
     public int score2;
     public ArrayList<Question> questions;
+    public String matchId;
+    public int round;
 
 }

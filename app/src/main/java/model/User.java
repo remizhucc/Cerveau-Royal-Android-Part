@@ -32,7 +32,34 @@ public class User implements Serializable {
     private String deviceToken;
     private Constant.RANK rank;
 
-    private User(){}
+    public User(){}
+
+    public User(int id,String nickname,Integer avatar,String email,Constant.RANK rank){
+        this.nickname=nickname;
+        this .avatar=avatar;
+        this.email=email;
+        this.rank=rank;
+        this.id=id;
+        this.password =null;
+
+        this.numWinLiterature = 0;
+        this.numLoseLiterature = 0;
+        this.numWinMath = 0;
+        this.numLoseMath = 0;
+        this.numWinArt = 0;
+        this.numLoseArt = 0;
+        this.numWinHistory = 0;
+        this.numLoseHistory = 0;
+        this.numWinMusic = 0;
+        this.numLoseMusic = 0;
+        this.numWinGeography = 0;
+        this.numLoseGeography = 0;
+        this.numWinEnglish = 0;
+        this.numLoseEnglish = 0;
+        this.numWinCommonsense = 0;
+        this.numLoseCommonsense = 0;
+        this.deviceToken = null;
+    }
     public User(String nickname, Integer avatar, String email, String password, String deviceToken){
         this.id = 0;
         this.nickname = nickname;
