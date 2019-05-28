@@ -59,6 +59,7 @@
             android:hint="@string/account_email"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress"
+            android:padding="5dp"
             android:textSize="24sp" />
 
         <EditText
@@ -68,6 +69,7 @@
             android:layout_marginBottom="80dp"
             android:hint="@string/account_password"
             android:inputType="textPassword"
+            android:padding="5dp"
             android:textSize="24sp" />
 
         <LinearLayout

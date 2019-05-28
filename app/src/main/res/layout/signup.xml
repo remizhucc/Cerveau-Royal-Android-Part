@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -14,8 +15,8 @@
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/button_back"
-            android:onClick="backToLogin"/>
+            android:onClick="backToLogin"
+            android:src="@drawable/button_back" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -63,28 +64,36 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:hint="@string/account_email"
-            />
+            android:inputType="textEmailAddress"
+            android:padding="5dp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:hint="@string/account_password" />
+            android:hint="@string/account_password"
+            android:inputType="textPassword"
+            android:padding="5dp" />
 
         <EditText
             android:id="@+id/confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginBottom="15dp"
-            android:hint="@string/account_confirmPasswor" />
+            android:hint="@string/account_confirmPasswor"
+            android:inputType="textPassword"
+            android:padding="5dp" />
 
         <EditText
             android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="@string/account_nickname" />
+            android:hint="@string/account_nickname"
+            android:inputType="text"
+            android:padding="5dp" />
 
 
         <LinearLayout
@@ -104,8 +113,7 @@
                     android:id="@+id/background_avatar1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle"
-                    />
+                    android:src="@drawable/background_cercle" />
 
                 <ImageView
                     android:layout_width="60dp"
@@ -181,8 +189,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:weightSum="4"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:weightSum="4">
 
             <FrameLayout
                 android:id="@+id/avatar5"
@@ -280,8 +288,8 @@
                 android:layout_height="wrap_content"
                 android:width="150dp"
                 android:background="@drawable/button_green"
-                android:text="@string/account_signup"
-                android:onClick="trySignup"/>
+                android:onClick="trySignup"
+                android:text="@string/account_signup" />
         </LinearLayout>
 
 
