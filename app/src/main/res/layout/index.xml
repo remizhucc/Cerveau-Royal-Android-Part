@@ -100,7 +100,7 @@
                 android:width="200dp"
                 android:height="60dp"
                 android:background="@drawable/button_red"
-                android:text="@string/index_startGame"
+                android:text="@string/index_startgame"
                 android:textSize="20sp"
                 android:onClick="directToStartGame"/>
         </LinearLayout>

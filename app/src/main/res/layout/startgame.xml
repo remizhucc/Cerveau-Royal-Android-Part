@@ -473,9 +473,9 @@
             android:layout_height="wrap_content"
             android:width="300dp"
             android:height="60dp"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:background="@drawable/button_red"
-            android:text="@string/index_startGame"
+            android:text="@string/startgame_startgame"
             android:onClick="startGame"/>
     </LinearLayout>
 </LinearLayout>
