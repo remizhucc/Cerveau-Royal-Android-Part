@@ -15,7 +15,8 @@
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:src="@drawable/button_person" />
+            android:src="@drawable/button_person"
+            android:onClick="directToProfil"/>
     </LinearLayout>
 
     <LinearLayout
@@ -99,7 +100,8 @@
                 android:height="60dp"
                 android:background="@drawable/button_red"
                 android:text="@string/index_startGame"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:onClick="directToStartGame"/>
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +120,8 @@
                 android:drawableStart="@drawable/button_friends_drawableleft"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
-                android:text="Friends" />
+                android:text="Friends"
+                android:onClick="directToFriends"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

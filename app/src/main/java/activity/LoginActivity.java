@@ -91,11 +91,13 @@ public class LoginActivity extends Activity {
         @Override
         public void onBefore(Request request) {
             super.onBefore(request);
+            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onAfter() {
             super.onAfter();
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
 
         @Override
@@ -117,6 +119,7 @@ public class LoginActivity extends Activity {
                             Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                             startActivity(intent);
                         }
+
 
                         @Override
                         public void onError(Call call, Exception e) {

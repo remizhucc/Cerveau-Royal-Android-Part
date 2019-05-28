@@ -4,49 +4,157 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerveauroyal.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.MatchHelper;
 import helper.RankHelper;
+import model.Constant;
 import model.Match;
 import model.Question;
+import model.User;
+import okhttp3.Call;
+import okhttp3.Request;
 
 public class MatchActivity extends Activity {
     private Match match;
     private int timeleft;
+    private CountDownTimer countdown;
+    private int myChoice;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView( R.layout.match);
-//        setContentView(res.layout.match);
+        setContentView(R.layout.match);
+
+        //request match information
+        try {
+            OkHttpUtils.get()
+                    .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
+                    .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
+                    .build()
+                    .execute(new requestMatchInformationCallback());
+        } catch (UnsupportedEncodingException e) {
+            System.out.println(e.getStackTrace());
+        }
+    }
+
+    private String buildRequestMatchInfomationJsonString() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
+            //withUesr
+            if (getIntent().getExtras().getBoolean("withUser")) {
+                json.put("withUser", true);
+                json.put("userId", getIntent().getExtras().getInt("userId"));
+            } else {
+                json.put("withUser", false);
+            }
+        } catch (JSONException e) {
+            System.out.println(e.getStackTrace());
+        }
+        return json.toString();
+    }
+
+    public class requestMatchInformationCallback extends StringCallback {
+
+
+        @Override
+        public void onError(Call call, Exception e) {
+            //do some thing lisk this
+            //myText.setText("onError:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject json = new JSONObject(response);
+                Boolean success = json.getBoolean("success");
+                if (success) {
+                    initializeMatch(json);
+                    nextRound();
+
+                } else {
+                    Toast.makeText(MatchActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
+                    new CountDownTimer(3000, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+                            //here you can have your logic to set text to edittext
+                        }
+
+                        public void onFinish() {
+                            finish();
+                        }
+                    }.start();
+                }
+            } catch (JSONException e) {
+                System.out.println(e.getStackTrace());
+            }
+        }
 
 
     }
+
 
     private void initializeWaitingPanel() {
-
+        LinearLayout waitPanel = (LinearLayout) findViewById(R.id.waitPanel);
+        waitPanel.setVisibility(View.GONE);
     }
 
-    private void initializeMatchModel() {
+    private void initializeMatchModel(JSONObject json) {
         match = new Match();
+        match.questions = new ArrayList<>();
+        match.score1 = 0;
+        match.score2 = 0;
+        match.round = 0;
+        match.user1 = new User(AccountHelper.getMyIdFromPreferences(MatchActivity.this),
+                AccountHelper.getMyNicknameFromPreferences(MatchActivity.this),
+                AccountHelper.getMyAvatarFromPreferences(MatchActivity.this),
+                AccountHelper.getMyEmailFromPreferences(MatchActivity.this),
+                Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(MatchActivity.this)));
+        try {
+            match.user2 = User.read(json.getJSONObject("opponent").toString());
+            JSONArray questions = json.getJSONArray("questions");
+            for (int i = 0; i < questions.length(); i++) {
+                match.questions.add(Question.read(questions.getJSONObject(i).toString()));
+            }
+            match.matchId = json.getString("match");
+        } catch (JSONException e) {
+            System.out.println(e.getStackTrace());
+        }
+
 
     }
 
-    private void initializeMatch() {
+    private void initializeMatch(JSONObject json) {
 
-        initializeMatchModel();
+        initializeMatchModel(json);
         initializeUser();
         refreshScoreBar();
+        initializeWaitingPanel();
     }
 
     private void refreshScoreBar() {
@@ -91,10 +199,34 @@ public class MatchActivity extends Activity {
 
     }
 
+    private void nextRound() {
+        if(match.round==10){
+            matchOver();
+        }else {
+            match.round++;
+            myChoice = 0;
+            initializeQuestion(match.questions.get(match.round - 1));
+            countdown = new CountDownTimer(15000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    TextView countDownTextView = (TextView) findViewById(R.id.countDown);
+
+                    countDownTextView.setText(String.valueOf(millisUntilFinished / 1000));
+                    timeleft = (int) millisUntilFinished / 1000;
+
+                }
+                public void onFinish() {
+                    if (myChoice == 0) {
+                        sendMyChoiceToServer(0);
+                    }
+                }
+            }.start();
+        }
+    }
+
 
     private void initializeQuestion(Question question) {
+
         TextView questionText = (TextView) findViewById(R.id.questionText);
-        final TextView countDown = (TextView) findViewById(R.id.countDown);
         Button option1 = (Button) findViewById(R.id.option1);
         Button option2 = (Button) findViewById(R.id.option2);
         Button option3 = (Button) findViewById(R.id.option3);
@@ -110,82 +242,142 @@ public class MatchActivity extends Activity {
         option3.setBackground(getDrawable(R.drawable.button_white));
         option4.setBackground(getDrawable(R.drawable.button_white));
 
-        new CountDownTimer(15000, 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                countDown.setText(String.valueOf(millisUntilFinished / 1000));
-                timeleft = (int) millisUntilFinished / 1000;
-
-            }
-
-            public void onFinish() {
-//                mTextField.setText("done!");
-            }
-
-
-        }.start();
     }
 
     public void chooseOption(View view) {
-//        Button buttonChosen = (Button) findViewById(view.getId());
-//        buttonChosen.setBackground(getDrawable(R.drawable.button_white_storkeGreen));
-//        sendMyChoiceToServer();
-//        if (answerright) {
-//            match.score1 += timeleft * 10;
-//        }
-    }
-
-    private void questionFinish() {
-        Button option1 = (Button) findViewById(R.id.option1);
-        Button option2 = (Button) findViewById(R.id.option2);
-        Button option3 = (Button) findViewById(R.id.option3);
-        Button option4 = (Button) findViewById(R.id.option4);
-        option1.setBackground(getDrawable(R.drawable.button_white));
-        option2.setBackground(getDrawable(R.drawable.button_white));
-        option3.setBackground(getDrawable(R.drawable.button_white));
-        option4.setBackground(getDrawable(R.drawable.button_white));
-
-
-//add code here
-
-//        match.score2 =?;
-//        nextquestion();
-        refreshScoreBar();
-        new CountDownTimer(5000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
+        if (timeleft > 0) {
+            Button buttonChosen = (Button) findViewById(view.getId());
+            buttonChosen.setBackground(getDrawable(R.drawable.button_white_storke_green));
+            Matcher m = Pattern.compile("option([0-9])").matcher(view.getResources().getResourceEntryName(view.getId()));
+            myChoice = Integer.valueOf(m.group(1));
+            if (match.questions.get(match.round - 1).getAnswer() == myChoice) {
+                match.score1 += timeleft * 10;
             }
 
-            public void onFinish() {
-//                initializeQuestion();
-            }
-        }.start();
+            sendMyChoiceToServer(myChoice);
+        }
+
     }
+
 
     private void matchOver() {
-//        sendResultToServer();
 
         //go to winner page with data
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("avatar1",match.user1.getAvatar());
-        returnIntent.putExtra("avatar2",match.user2.getAvatar());
-        returnIntent.putExtra("nickName1",match.user1.getnickname());
-        returnIntent.putExtra("nickName2",match.user2.getnickname());
-        returnIntent.putExtra("rank1",match.user1.getRank());
-        returnIntent.putExtra("rank2",match.user2.getRank());
-        returnIntent.putExtra("score1",match.score1);
-        returnIntent.putExtra("score2",match.score2);
-        setResult(1,returnIntent);
-        finish();
+        Intent intent = new Intent(MatchActivity.this,WinnerActivity.class);
+        intent.putExtra("avatar1", match.user1.getAvatar());
+        intent.putExtra("avatar2", match.user2.getAvatar());
+        intent.putExtra("nickName1", match.user1.getnickname());
+        intent.putExtra("nickName2", match.user2.getnickname());
+        intent.putExtra("rank1", match.user1.getRank());
+        intent.putExtra("rank2", match.user2.getRank());
+        intent.putExtra("score1", match.score1);
+        intent.putExtra("score2", match.score2);
+        startActivity(intent);
+
     }
+
     public void backToStartGame(View view) {
         finish();
 
     }
 
-    private void removeWaitPanel(){
-        LinearLayout waitPanel=(LinearLayout) findViewById(R.id.waitPanel);
-        RelativeLayout root=(RelativeLayout) findViewById(R.id.root);
-        root.removeView(waitPanel);
+    private String buildChoiceJsonString(int choice) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
+            json.put("match", match.matchId);
+            json.put("index", match.round);
+            json.put("answer", choice);
+            json.put("score", match.score1);
+        } catch (JSONException e) {
+            System.out.println(e.getStackTrace());
+        }
+        return json.toString();
+    }
+
+    private void sendMyChoiceToServer(int choice) {
+        OkHttpUtils.post()
+                .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
+                .addParams("JSON", buildChoiceJsonString(choice))
+                .build()
+                .execute(new getOpponentChoiceCallback());
+    }
+
+
+    private class getOpponentChoiceCallback extends StringCallback {
+
+
+        @Override
+        public void onError(Call call, Exception e) {
+            //do some thing lisk this
+            //myText.setText("onError:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject json = new JSONObject(response);
+                int opponentChoice = json.getInt("answer");
+                match.score2=json.getInt("score");
+                setRoundResult(myChoice,opponentChoice);
+                refreshScoreBar();
+                new CountDownTimer(5000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        nextRound();
+                    }
+
+
+                }.start();
+            }catch (JSONException e){
+                System.out.println(e.getStackTrace());
+            }
+        }
+
+
+    }
+
+    private void setRoundResult(int choice1,int choice2){
+        int correction=match.questions.get(match.round-1).getAnswer();
+
+        Button option1 = (Button) findViewById(R.id.option1);
+        Button option2 = (Button) findViewById(R.id.option2);
+        Button option3 = (Button) findViewById(R.id.option3);
+        Button option4 = (Button) findViewById(R.id.option4);
+
+        ArrayList<Button> buttons=new ArrayList<>();
+        buttons.add(option1);
+        buttons.add(option2);
+        buttons.add(option3);
+        buttons.add(option4);
+
+        option1.setBackground(getDrawable(R.drawable.button_grey));
+        option2.setBackground(getDrawable(R.drawable.button_grey));
+        option3.setBackground(getDrawable(R.drawable.button_grey));
+        option4.setBackground(getDrawable(R.drawable.button_grey));
+        for(int i=1;i<=4;i++){
+            if(correction==i){
+                if(choice1==i){
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white_storke_green));
+                }else if(choice2==i){
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white_storke_red));
+                }else{
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white));
+                }
+            }else{
+                if(choice1==i){
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey_stroke_green));
+                }else if(choice2==i){
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey_stroke_red));
+                }else{
+                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey));
+                }
+            }
+        }
+
     }
 }
