@@ -37,7 +37,7 @@ public class ActivityHelper {
         return false;
     }
 
-    public static class BlueButtonListener implements View.OnTouchListener {
+    public static class GreenButtonListener implements View.OnTouchListener {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -57,6 +57,20 @@ public class ActivityHelper {
         public boolean onTouch(View v, MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_UP){
                 v.setBackgroundResource(R.drawable.button_grey);
+            }
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                v.setBackgroundResource(R.drawable.button_dark_grey);
+            }
+            return false;
+        }
+    }
+
+    public static class RedButtonListener implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(event.getAction() == MotionEvent.ACTION_UP){
+                v.setBackgroundResource(R.drawable.button_red);
             }
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 v.setBackgroundResource(R.drawable.button_dark_grey);

@@ -46,7 +46,7 @@ public class LoginActivity extends Activity {
 
         //create Listener to button
         Button buttonLogin = (Button)findViewById(R.id.button_login);
-        buttonLogin.setOnTouchListener(new ActivityHelper.BlueButtonListener());
+        buttonLogin.setOnTouchListener(new ActivityHelper.GreenButtonListener());
         Button buttonSignUp = (Button)findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
     }

@@ -28,4 +28,22 @@ public class RankHelper {
                 return "NULL";
         }
     }
+
+    public static String getRankName(String rank){
+        Constant.RANK ConstantRank = Constant.RANK.valueOf(rank);
+        switch (ConstantRank) {
+            case PAWN:
+                return "Pawn";
+            case KNIGHT:
+                return "Knight";
+            case BISHOP:
+                return "Bishop";
+            case TOWER:
+                return "Tower";
+            case QUEEN:
+                return "Queen";
+            default:
+                return "NULL";
+        }
+    }
 }

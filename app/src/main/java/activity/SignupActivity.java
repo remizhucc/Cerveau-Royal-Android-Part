@@ -8,6 +8,7 @@ import android.provider.Settings;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import helper.AccountHelper;
+import helper.ActivityHelper;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -42,6 +44,10 @@ public class SignupActivity extends Activity {
         //default avatar
         context = getApplicationContext();
         avatar = -1;
+
+        //add listener to button
+        Button buttonSignUp = (Button)findViewById(R.id.button_signup);
+        buttonSignUp.setOnTouchListener(new ActivityHelper.GreenButtonListener());
     }
 
     public void trySignup(View view) {

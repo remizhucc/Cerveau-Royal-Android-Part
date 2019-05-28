@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cerveauroyal.R;
+
+import helper.ActivityHelper;
 
 public class StartGameActivity extends Activity {
     int subject;
@@ -23,6 +26,10 @@ public class StartGameActivity extends Activity {
             userId = i.getIntExtra("userId",-1);
         //default subject
         subject = -1;
+
+        //Add listner to button
+        Button buttonStartGame = (Button)findViewById(R.id.button_startGame);
+        buttonStartGame.setOnTouchListener(new ActivityHelper.RedButtonListener());
     }
     public void startGame(View view) {
         Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
@@ -99,5 +106,9 @@ public class StartGameActivity extends Activity {
         ImageView background_subject8=(ImageView) findViewById(R.id.commonSense);
         background_subject8.setImageResource(R.drawable.background_cercle_green);
         subject=8;
+    }
+
+    public void backToIndex(View view){
+        finish();
     }
 }

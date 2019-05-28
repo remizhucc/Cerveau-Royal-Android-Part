@@ -74,22 +74,22 @@ public class ProfilActivity extends Activity{
                 try {
                     json = new JSONObject(response);
                     User user = User.read(json.getString("user"));
-                    winSubject1.setText(user.getNumWinGeography());
-                    winSubject2.setText(user.getNumWinLiterature());
-                    winSubject3.setText(user.getNumWinMath());
-                    winSubject4.setText(user.getNumWinHistory());
-                    winSubject5.setText(user.getNumWinArt());
-                    winSubject6.setText(user.getNumWinMusic());
-                    winSubject7.setText(user.getNumWinEnglish());
-                    winSubject8.setText(user.getNumWinCommonsense());
-                    loseSubject1.setText(user.getNumLoseGeography());
-                    loseSubject2.setText(user.getNumLoseLiterature());
-                    loseSubject3.setText(user.getNumLoseMath());
-                    loseSubject4.setText(user.getNumLoseHistory());
-                    loseSubject5.setText(user.getNumLoseArt());
-                    loseSubject6.setText(user.getNumLoseMusic());
-                    loseSubject7.setText(user.getNumLoseEnglish());
-                    loseSubject8.setText(user.getNumLoseCommonsense());
+                    winSubject1.setText(String.valueOf(user.getNumWinGeography()));
+                    winSubject2.setText(String.valueOf(user.getNumWinLiterature()));
+                    winSubject3.setText(String.valueOf(user.getNumWinMath()));
+                    winSubject4.setText(String.valueOf(user.getNumWinHistory()));
+                    winSubject5.setText(String.valueOf(user.getNumWinArt()));
+                    winSubject6.setText(String.valueOf(user.getNumWinMusic()));
+                    winSubject7.setText(String.valueOf(user.getNumWinEnglish()));
+                    winSubject8.setText(String.valueOf(user.getNumWinCommonsense()));
+                    loseSubject1.setText(String.valueOf(user.getNumLoseGeography()));
+                    loseSubject2.setText(String.valueOf(user.getNumLoseLiterature()));
+                    loseSubject3.setText(String.valueOf(user.getNumLoseMath()));
+                    loseSubject4.setText(String.valueOf(user.getNumLoseHistory()));
+                    loseSubject5.setText(String.valueOf(user.getNumLoseArt()));
+                    loseSubject6.setText(String.valueOf(user.getNumLoseMusic()));
+                    loseSubject7.setText(String.valueOf(user.getNumLoseEnglish()));
+                    loseSubject8.setText(String.valueOf(user.getNumLoseCommonsense()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
