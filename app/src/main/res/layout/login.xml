@@ -70,48 +70,39 @@
             android:inputType="text"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:hint="@string/account_email"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:textSize="24sp" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:hint="@string/account_password"
-            android:inputType="text"
-            android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="150dp"
+                android:background="@drawable/button_green"
+                android:onClick="tryLogin"
+                android:text="@string/account_login" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="150dp"
-            android:background="@drawable/button_green"
-            android:onClick="tryLogin"
-            android:text="@string/account_login" />
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="150dp"
-            android:background="@drawable/button_grey"
-            android:onClick="directToSignUp"
-            android:text="@string/account_signup" />
+            <Button
+                android:id="@+id/button_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="150dp"
+                android:background="@drawable/button_grey"
+                android:onClick="directToSignUp"
+                android:text="@string/account_signup" />
+        </LinearLayout>
     </LinearLayout>
 
     <ProgressBar
