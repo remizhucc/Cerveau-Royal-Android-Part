@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -32,8 +37,10 @@ import static helper.AccountHelper.isPasswordAndComfirmPasswordMatch;
 import static helper.AccountHelper.setMyInformationFromServer;
 
 public class SignupActivity extends Activity {
-    int avatar;
+    private int avatar;
     private static Context context;
+    private String deviceToken;
+
 
 
     @Override
@@ -48,6 +55,21 @@ public class SignupActivity extends Activity {
         //add listener to button
         Button buttonSignUp = (Button)findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreenButtonListener());
+
+        //get device token
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        deviceToken = task.getResult().getToken();
+
+                    }
+                });
     }
 
     public void trySignup(View view) {

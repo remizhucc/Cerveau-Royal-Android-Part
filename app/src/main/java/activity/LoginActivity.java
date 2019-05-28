@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.cerveauroyal.R;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -32,11 +37,13 @@ import model.User;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
+import service.ReceiveInvitationService;
 
 public class LoginActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
     private static Context context;
+    private String deviceToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +51,29 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
         context = getApplicationContext();
 
+
+        //start sesrvice
+        Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
+        startService(serviceIntent);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        deviceToken = task.getResult().getToken();
+
+                    }
+                });
+
         //create Listener to button
-        Button buttonLogin = (Button)findViewById(R.id.button_login);
+        Button buttonLogin = (Button) findViewById(R.id.button_login);
         buttonLogin.setOnTouchListener(new ActivityHelper.GreenButtonListener());
-        Button buttonSignUp = (Button)findViewById(R.id.button_signup);
+        Button buttonSignUp = (Button) findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
     }
 
@@ -70,35 +96,34 @@ public class LoginActivity extends Activity {
     }
 
     public void loginProcess(String email, String password) throws UnsupportedEncodingException {
-            //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
-            String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
-            JSONObject json = new JSONObject();
-            try {
-                json.put("email", email);
-                json.put("password", password);
+        //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
+        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
+        JSONObject json = new JSONObject();
+        try {
+            json.put("email", email);
+            json.put("password", password);
 
-                String token = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                json.put("deviceToken", token);
-            } catch (org.json.JSONException e) {
-                System.out.println(e.getStackTrace());
-            }
-            OkHttpUtils.get()
-                    .url(url)
-                    .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                    .build()
-                    .execute(new LoginProcessCallback(email));
-
-            //circle
-            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            json.put("deviceToken", deviceToken);
+        } catch (org.json.JSONException e) {
+            System.out.println(e.getStackTrace());
         }
+        OkHttpUtils.get()
+                .url(url)
+                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
+                .build()
+                .execute(new LoginProcessCallback(email));
 
-        public class LoginProcessCallback extends StringCallback {
-            String email;
+        //circle
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+    }
 
-            LoginProcessCallback(String email) {
-                super();
-                this.email = email;
-            }
+    public class LoginProcessCallback extends StringCallback {
+        String email;
+
+        LoginProcessCallback(String email) {
+            super();
+            this.email = email;
+        }
 
         @Override
         public void onBefore(Request request) {
@@ -108,7 +133,7 @@ public class LoginActivity extends Activity {
         @Override
         public void onAfter() {
             super.onAfter();
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
 
         @Override
@@ -156,7 +181,7 @@ public class LoginActivity extends Activity {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
             if (ActivityHelper.isShouldHideInput(v, ev)) {
-                if(ActivityHelper.hideInputMethod(this, v)) {
+                if (ActivityHelper.hideInputMethod(this, v)) {
                     return true; //隐藏键盘时，其他控件不响应点击事件==》注释则不拦截点击事件
                 }
             }
