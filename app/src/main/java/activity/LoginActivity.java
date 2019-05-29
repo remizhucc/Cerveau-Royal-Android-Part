@@ -42,33 +42,16 @@ import service.ReceiveInvitationService;
 public class LoginActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
-    private static Context context;
-    private String deviceToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        context = getApplicationContext();
 
 
         //start sesrvice
         Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
         startService(serviceIntent);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        deviceToken = task.getResult().getToken();
-
-                    }
-                });
 
         //create Listener to button
         Button buttonLogin = (Button) findViewById(R.id.button_login);
@@ -103,7 +86,7 @@ public class LoginActivity extends Activity {
             json.put("email", email);
             json.put("password", password);
 
-            json.put("deviceToken", deviceToken);
+            json.put("deviceToken", AccountHelper.getMyTokenFromPreferences(this));
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }

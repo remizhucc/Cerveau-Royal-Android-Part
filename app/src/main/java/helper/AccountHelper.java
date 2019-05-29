@@ -1,6 +1,7 @@
 package helper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;
@@ -15,6 +16,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
 
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -29,6 +31,12 @@ import static android.content.Context.MODE_PRIVATE;
 public class AccountHelper {
 
     //preferences
+    public static String getMyTokenFromPreferences(Context context) {
+        SharedPreferences userInformation = context.getSharedPreferences("user", 0);
+        String token = userInformation.getString("token",null);  //second parameter default value
+        return token;
+    }
+
     public static int getMyIdFromPreferences(Activity activity) {
         SharedPreferences userInformation = activity.getSharedPreferences("user", 0);
         int id = userInformation.getInt("id", 0);  //second parameter default value
@@ -59,6 +67,11 @@ public class AccountHelper {
         return rank;
     }
 
+    public static void setMyTokenFromPreferences(Context context,String token) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("user", 0).edit();
+        editor.putString("token",token);  //second parameter default value
+        editor.apply();
+    }
 
     //login page
 

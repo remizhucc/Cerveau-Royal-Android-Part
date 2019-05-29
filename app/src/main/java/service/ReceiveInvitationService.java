@@ -5,8 +5,18 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import helper.AccountHelper;
+
 public class ReceiveInvitationService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
+
+
+    @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+        AccountHelper.setMyTokenFromPreferences(this,s);
+
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

@@ -42,7 +42,6 @@ public class SignupActivity extends Activity {
     private String deviceToken;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,23 +52,9 @@ public class SignupActivity extends Activity {
         avatar = -1;
 
         //add listener to button
-        Button buttonSignUp = (Button)findViewById(R.id.button_signup);
+        Button buttonSignUp = (Button) findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreenButtonListener());
 
-        //get device token
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        deviceToken = task.getResult().getToken();
-
-                    }
-                });
     }
 
     public void trySignup(View view) {
@@ -249,7 +234,7 @@ public class SignupActivity extends Activity {
     }
 
     public void backToLogin(View view) {
-        Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
+        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
