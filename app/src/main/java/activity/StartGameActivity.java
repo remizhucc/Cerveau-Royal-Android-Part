@@ -6,21 +6,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cerveauroyal.R;
 
-import helper.ActivityHelper;
+import helper.AccountHelper;
+import helper.AvatarHelper;
 
 public class StartGameActivity extends Activity {
     int subject;
     boolean withUser;
     int userId;
+    String source;
+    int avatar_player1;
+    String nom_player1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
-
+        ImageView avatar1=(ImageView) findViewById(R.id.avatar_player1);
+        TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
+        avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this), this));
+        nickname1.setText(AccountHelper.getMyNicknameFromPreferences(this));
         Intent i = getIntent();
+        //source = i.getStringExtra("source");
+
         withUser = i.getBooleanExtra("withUser",false);
         if (withUser)
             userId = i.getIntExtra("userId",-1);
@@ -31,6 +41,7 @@ public class StartGameActivity extends Activity {
         Button buttonStartGame = (Button)findViewById(R.id.button_startGame);
         buttonStartGame.setOnTouchListener(new ActivityHelper.RedButtonListener());
     }
+
     public void startGame(View view) {
         Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
         intent.putExtra("subject",subject);

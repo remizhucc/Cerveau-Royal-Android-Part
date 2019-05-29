@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
@@ -110,5 +112,19 @@ public class FriendsActivity extends Activity {
         }
 
 
+    }
+
+
+    public void playWithFriend(View view){
+
+        int userId = -1;
+        TextView text=(TextView) findViewById(R.id.nickname);
+        String nickname = text.getText().toString();
+
+        Intent intent = new Intent(this, StartGameActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("withUser",true);
+        intent.putExtra("userId",userId);
+        startActivity(intent);
     }
 }
