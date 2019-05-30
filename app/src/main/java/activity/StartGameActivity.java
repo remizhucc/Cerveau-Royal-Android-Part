@@ -11,15 +11,18 @@ import android.widget.TextView;
 import com.cerveauroyal.R;
 
 import helper.AccountHelper;
+import helper.ActivityHelper;
 import helper.AvatarHelper;
 
 public class StartGameActivity extends Activity {
     int subject;
     boolean withUser;
     int userId;
-    String source;
+
     int avatar_player1;
     String nom_player1;
+    int avatar_player2;
+    String nom_player2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,12 @@ public class StartGameActivity extends Activity {
         withUser = i.getBooleanExtra("withUser",false);
         if (withUser)
             userId = i.getIntExtra("userId",-1);
+            ImageView avatar2=(ImageView) findViewById(R.id.avatar_player2);
+            TextView nickname2 = (TextView) findViewById(R.id.nom_player2);
+            avatar_player2 = i.getIntExtra("avatar_player2",0);
+            nom_player2 = i.getStringExtra("nickname_player2");
+            avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(avatar_player2, this));
+            nickname1.setText(nom_player2);
         //default subject
         subject = -1;
 
