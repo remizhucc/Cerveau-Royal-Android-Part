@@ -23,13 +23,13 @@ public class InvitationHelper {
         }
     }
 
-    public static void registerInvitationReceiver(Activity activity){
-        ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver();
+    public static ReceiveInvitationBroadcastReceiver registerInvitationReceiver(Activity activity){
+        ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver(activity);
         IntentFilter filter = new IntentFilter("InvitationReceiver");
         activity.registerReceiver(receiver, filter);
+        return receiver;
     }
-    public static void unRegisterInvitationReceiver(Activity activity){
-        ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver();
-        activity.unregisterReceiver(receiver);
+    public static void unRegisterInvitationReceiver(Activity activity,ReceiveInvitationBroadcastReceiver invitationReceiver){
+        activity.unregisterReceiver(invitationReceiver);
     }
 }

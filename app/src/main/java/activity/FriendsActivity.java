@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.InvitationHelper;
 import model.Friends;
@@ -31,9 +32,10 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 public class FriendsActivity extends Activity {
-      private static final String TAG = "FriendsActivity";
-      private List<ProfilFriends> friend = new ArrayList<>();
-      private int id;
+    private static final String TAG = "FriendsActivity";
+    private List<ProfilFriends> friend = new ArrayList<>();
+    private int id;
+    ReceiveInvitationBroadcastReceiver invitationReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class FriendsActivity extends Activity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
     }
 
     public void getFriends(int id) throws UnsupportedEncodingException {
@@ -87,19 +89,18 @@ public class FriendsActivity extends Activity {
         public void onResponse(String response) {
             try {
                 JSONObject json = new JSONObject(response);
-                Boolean success= json.getBoolean("success");
+                Boolean success = json.getBoolean("success");
                 if (success) {
-                    JSONArray result= json.getJSONArray("friends");
+                    JSONArray result = json.getJSONArray("friends");
                     ProfilFriends pf;
-                    for(int i=0;i<result.length();i++)
-                    {
-                        JSONObject jb=result.getJSONObject(i);
-                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(),User.read(jb.toString()).getAvatar());
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject jb = result.getJSONObject(i);
+                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar());
                         friend.add(pf);
 
                     }
 
-                    FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this,R.layout.listfriends,friend);
+                    FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
                     ListView listview = (ListView) findViewById(R.id.list_view);
                     listview.setAdapter(adapter);
 
@@ -117,29 +118,28 @@ public class FriendsActivity extends Activity {
     }
 
 
-    public void playWithFriend(View view){
+    public void playWithFriend(View view) {
 
         int userId = -1;
-        TextView text=(TextView) findViewById(R.id.nickname);
+        TextView text = (TextView) findViewById(R.id.nickname);
         String nickname = text.getText().toString();
 
         Intent intent = new Intent(this, StartGameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("withUser",true);
-        intent.putExtra("userId",userId);
+        intent.putExtra("withUser", true);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
+
     @Override
     protected void onResume() {
-        InvitationHelper.registerInvitationReceiver(this);
-
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this);
-
+        InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
         super.onPause();
     }
 }

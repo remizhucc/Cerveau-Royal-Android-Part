@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.FriendHelper;
@@ -32,11 +33,13 @@ import okhttp3.Call;
 public class WinnerActivity extends Activity {
     Boolean addFriendEnable;
 
+    ReceiveInvitationBroadcastReceiver invitationReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
-        InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
 
         initializeActivity();
 
@@ -138,7 +141,7 @@ public class WinnerActivity extends Activity {
 
                 }
             });
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             System.out.println(e.getStackTrace());
         }
 
@@ -161,16 +164,16 @@ public class WinnerActivity extends Activity {
         Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
         addFriendButton.setBackground(getDrawable(R.drawable.button_grey));
     }
+
     @Override
     protected void onResume() {
-        InvitationHelper.registerInvitationReceiver(this);
-
+        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this);
+        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
 
         super.onPause();
     }

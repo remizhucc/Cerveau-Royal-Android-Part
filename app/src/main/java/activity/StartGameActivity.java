@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
@@ -38,12 +39,14 @@ public class StartGameActivity extends Activity {
     int avatar_player2;
     String nom_player2;
 
+    ReceiveInvitationBroadcastReceiver invitationReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
 
-        InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
 
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar_player1);
         TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
@@ -69,7 +72,7 @@ public class StartGameActivity extends Activity {
         Button buttonStartGame = (Button) findViewById(R.id.button_startGame);
         buttonStartGame.setOnTouchListener(new ActivityHelper.RedButtonListener());
     }
-
+//TODO make sure user has chosen subject
     public void startGame(View view) {
         if (!connecting) {
             connecting = true;
@@ -247,15 +250,13 @@ public class StartGameActivity extends Activity {
 
     @Override
     protected void onResume() {
-        InvitationHelper.registerInvitationReceiver(this);
-
+        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this);
-
+        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
         super.onPause();
     }
 }

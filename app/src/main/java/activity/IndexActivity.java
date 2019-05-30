@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cerveauroyal.R;
 
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
@@ -18,12 +19,13 @@ import helper.RankHelper;
 import model.Constant;
 
 public class IndexActivity extends Activity {
+    ReceiveInvitationBroadcastReceiver invitationReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
-        InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
         initializeActivity();
 
 
@@ -66,15 +68,13 @@ public class IndexActivity extends Activity {
     }
     @Override
     protected void onResume() {
-        InvitationHelper.registerInvitationReceiver(this);
-
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this);
-
+        InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
         super.onPause();
     }
 }

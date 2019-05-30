@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.InvitationHelper;
@@ -24,12 +25,13 @@ import model.User;
 import okhttp3.Call;
 
 public class ProfilActivity extends Activity {
+    ReceiveInvitationBroadcastReceiver invitationReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-        InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
 
         try {
             initializeActivity();
@@ -120,15 +122,13 @@ public class ProfilActivity extends Activity {
     }
     @Override
     protected void onResume() {
-        InvitationHelper.registerInvitationReceiver(this);
-
+        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this);
-
+        InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
         super.onPause();
     }
 }
