@@ -139,4 +139,3 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
 
     }
 }
-//TODO put invitation pop up center
