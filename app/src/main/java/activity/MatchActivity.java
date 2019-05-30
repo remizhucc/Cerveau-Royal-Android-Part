@@ -49,80 +49,19 @@ public class MatchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match);
-
-        //request match information
-        try {
-            OkHttpUtils.get()
-                    .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
-                    .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
-                    .build()
-                    .execute(new requestMatchInformationCallback());
-        } catch (UnsupportedEncodingException e) {
+        JSONObject json;
+        try{
+            json=new JSONObject(getIntent().getStringExtra("json"));
+            initializeMatch(json);
+            nextRound();
+        }catch (JSONException e){
             System.out.println(e.getStackTrace());
         }
     }
 
-    private String buildRequestMatchInfomationJsonString() {
-
-        //TODO request in startgame
-        JSONObject json = new JSONObject();
-        try {
-            json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
-            json.put("subject", getIntent().getIntExtra("subject",0));
-            //withUesr
-            if (getIntent().getExtras().getBoolean("withUser")) {
-                json.put("withUser", true);
-                json.put("userId", getIntent().getExtras().getInt("userId"));
-            } else {
-                json.put("withUser", false);
-            }
-        } catch (JSONException e) {
-            System.out.println(e.getStackTrace());
-        }
-        return json.toString();
-    }
-
-    public class requestMatchInformationCallback extends StringCallback {
 
 
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
-            try {
-                JSONObject json = new JSONObject(response);
-                Boolean success = json.getBoolean("success");
-                if (success) {
-                    initializeMatch(json);
-                    nextRound();
-
-                } else {
-                    Toast.makeText(MatchActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
-                    new CountDownTimer(3000, 1000) {
-
-                        public void onTick(long millisUntilFinished) {
-                            //here you can have your logic to set text to edittext
-                        }
-
-                        public void onFinish() {
-                            Intent intent=new Intent(MatchActivity.this,StartGameActivity.class);
-                            startActivity(intent);
-                        }
-                    }.start();
-                }
-            } catch (JSONException e) {
-                System.out.println(e.getStackTrace());
-            }
-        }
-
-
-    }
-
-
+//TODO move panel to startgame
     private void initializeWaitingPanel() {
         LinearLayout waitPanel = (LinearLayout) findViewById(R.id.waitPanel);
         waitPanel.setVisibility(View.GONE);
@@ -143,11 +82,11 @@ public class MatchActivity extends Activity {
             match.withFriend=json.getBoolean("withFriend");
             match.user2 = User.read(json.getJSONObject("opponent").toString());
             JSONArray questions = json.getJSONArray("questions");
+            match.subject=json.getInt("subject");
             for (int i = 0; i < questions.length(); i++) {
                 match.questions.add(Question.read(questions.getJSONObject(i).toString()));
             }
             match.matchId = json.getString("match");
-            match.subject=getIntent().getExtras().getInt("subject");
         } catch (JSONException e) {
             System.out.println(e.getStackTrace());
         }
