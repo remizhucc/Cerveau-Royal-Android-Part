@@ -24,7 +24,6 @@ public class ReceiveInvitationBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        TODO set content of message
         RelativeLayout root = (RelativeLayout) currentActivity.findViewById(R.id.root);
         FragmentManager fragmentManager = currentActivity.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

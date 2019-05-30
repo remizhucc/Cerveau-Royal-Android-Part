@@ -142,4 +142,9 @@ public class FriendsActivity extends Activity {
         InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
         super.onPause();
     }
+    @Override
+    protected void onDestroy() {
+        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
+        super.onDestroy();
+    }
 }

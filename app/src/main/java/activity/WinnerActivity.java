@@ -177,4 +177,11 @@ public class WinnerActivity extends Activity {
 
         super.onPause();
     }
+
+    @Override
+    protected void onDestroy() {
+        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
+        super.onDestroy();
+    }
+
 }

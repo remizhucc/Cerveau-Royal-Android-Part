@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,7 +78,8 @@ public class MatchActivity extends Activity {
                 Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(MatchActivity.this)));
         try {
             match.withFriend=json.getBoolean("withFriend");
-            match.user2 = User.read(json.getJSONObject("opponent").toString());
+            match.user2 = User.read(json.getString("opponent"));
+            //TODO JSON Array wrong
             JSONArray questions = json.getJSONArray("questions");
             match.subject=json.getInt("subject");
             for (int i = 0; i < questions.length(); i++) {
