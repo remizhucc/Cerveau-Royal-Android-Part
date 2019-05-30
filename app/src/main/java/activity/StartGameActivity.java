@@ -46,7 +46,6 @@ public class StartGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
 
-        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
 
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar_player1);
         TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
@@ -259,9 +258,5 @@ public class StartGameActivity extends Activity {
         InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
         super.onPause();
     }
-    @Override
-    protected void onDestroy() {
-        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
-        super.onDestroy();
-    }
+
 }

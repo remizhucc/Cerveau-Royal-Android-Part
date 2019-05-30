@@ -39,7 +39,6 @@ public class WinnerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
-        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
 
         initializeActivity();
 
@@ -174,14 +173,9 @@ public class WinnerActivity extends Activity {
     @Override
     protected void onPause() {
         InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
-
         super.onPause();
     }
 
-    @Override
-    protected void onDestroy() {
-        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
-        super.onDestroy();
-    }
+
 
 }

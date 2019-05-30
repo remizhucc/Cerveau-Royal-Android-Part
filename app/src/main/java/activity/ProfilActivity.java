@@ -31,7 +31,6 @@ public class ProfilActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
 
         try {
             initializeActivity();
@@ -131,9 +130,5 @@ public class ProfilActivity extends Activity {
         InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
         super.onPause();
     }
-    @Override
-    protected void onDestroy() {
-        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
-        super.onDestroy();
-    }
+
 }
