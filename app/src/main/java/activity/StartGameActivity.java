@@ -6,31 +6,51 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cerveauroyal.R;
 
+import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.AvatarHelper;
 
 public class StartGameActivity extends Activity {
     int subject;
     boolean withUser;
     int userId;
+
+    int avatar_player1;
+    String nom_player1;
+    int avatar_player2;
+    String nom_player2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
-
+        ImageView avatar1=(ImageView) findViewById(R.id.avatar_player1);
+        TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
+        avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this), this));
+        nickname1.setText(AccountHelper.getMyNicknameFromPreferences(this));
         Intent i = getIntent();
+        //source = i.getStringExtra("source");
+
         withUser = i.getBooleanExtra("withUser",false);
-        if (withUser)
-            userId = i.getIntExtra("userId",-1);
-        //default subject
+        if (withUser) {
+            userId = i.getIntExtra("userId", -1);
+            ImageView avatar2 = (ImageView) findViewById(R.id.avatar_player2);
+            TextView nickname2 = (TextView) findViewById(R.id.nom_player2);
+            avatar_player2 = i.getIntExtra("avatar_player2", 0);
+            nom_player2 = i.getStringExtra("nickname_player2");
+            avatar2.setImageResource(AvatarHelper.getAvatarDrawableId(avatar_player2, this));
+            nickname2.setText(nom_player2);
+        }
         subject = -1;
 
         //Add listner to button
         Button buttonStartGame = (Button)findViewById(R.id.button_startGame);
         buttonStartGame.setOnTouchListener(new ActivityHelper.RedButtonListener());
     }
+
     public void startGame(View view) {
         Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
         intent.putExtra("subject",subject);
