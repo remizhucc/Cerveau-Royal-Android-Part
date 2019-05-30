@@ -35,5 +35,8 @@
     <string name="wait">Waitng for your opponent....</string>
     <string name="cancel">Cancel</string>
     <string name="add_friend">Add friend</string>
+    <string name="challenger">Challenger</string>
+    <string name="accpet">Accept</string>
+    <string name="escape">Escape</string>
 
 </resources>

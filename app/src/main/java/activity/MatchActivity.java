@@ -63,6 +63,8 @@ public class MatchActivity extends Activity {
     }
 
     private String buildRequestMatchInfomationJsonString() {
+
+        //TODO request in startgame
         JSONObject json = new JSONObject();
         try {
             json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
