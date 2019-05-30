@@ -35,15 +35,15 @@ public class StartGameActivity extends Activity {
         //source = i.getStringExtra("source");
 
         withUser = i.getBooleanExtra("withUser",false);
-        if (withUser)
-            userId = i.getIntExtra("userId",-1);
-            ImageView avatar2=(ImageView) findViewById(R.id.avatar_player2);
+        if (withUser) {
+            userId = i.getIntExtra("userId", -1);
+            ImageView avatar2 = (ImageView) findViewById(R.id.avatar_player2);
             TextView nickname2 = (TextView) findViewById(R.id.nom_player2);
-            avatar_player2 = i.getIntExtra("avatar_player2",0);
+            avatar_player2 = i.getIntExtra("avatar_player2", 0);
             nom_player2 = i.getStringExtra("nickname_player2");
-            avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(avatar_player2, this));
-            nickname1.setText(nom_player2);
-        //default subject
+            avatar2.setImageResource(AvatarHelper.getAvatarDrawableId(avatar_player2, this));
+            nickname2.setText(nom_player2);
+        }
         subject = -1;
 
         //Add listner to button
