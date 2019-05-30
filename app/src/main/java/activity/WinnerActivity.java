@@ -161,4 +161,17 @@ public class WinnerActivity extends Activity {
         Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
         addFriendButton.setBackground(getDrawable(R.drawable.button_grey));
     }
+    @Override
+    protected void onResume() {
+        InvitationHelper.registerInvitationReceiver(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        InvitationHelper.unRegisterInvitationReceiver(this);
+
+        super.onPause();
+    }
 }

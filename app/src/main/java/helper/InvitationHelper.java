@@ -28,4 +28,8 @@ public class InvitationHelper {
         IntentFilter filter = new IntentFilter("InvitationReceiver");
         activity.registerReceiver(receiver, filter);
     }
+    public static void unRegisterInvitationReceiver(Activity activity){
+        ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver();
+        activity.unregisterReceiver(receiver);
+    }
 }

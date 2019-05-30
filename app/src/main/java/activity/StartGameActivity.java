@@ -244,4 +244,18 @@ public class StartGameActivity extends Activity {
         hideWaitngPanel();
         connecting = false;
     }
+
+    @Override
+    protected void onResume() {
+        InvitationHelper.registerInvitationReceiver(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        InvitationHelper.unRegisterInvitationReceiver(this);
+
+        super.onPause();
+    }
 }

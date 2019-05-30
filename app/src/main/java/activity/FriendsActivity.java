@@ -129,4 +129,17 @@ public class FriendsActivity extends Activity {
         intent.putExtra("userId",userId);
         startActivity(intent);
     }
+    @Override
+    protected void onResume() {
+        InvitationHelper.registerInvitationReceiver(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        InvitationHelper.unRegisterInvitationReceiver(this);
+
+        super.onPause();
+    }
 }

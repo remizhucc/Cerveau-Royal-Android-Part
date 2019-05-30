@@ -64,4 +64,17 @@ public class IndexActivity extends Activity {
         Intent intent = new Intent(IndexActivity.this, ProfilActivity.class);
         startActivity(intent);
     }
+    @Override
+    protected void onResume() {
+        InvitationHelper.registerInvitationReceiver(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        InvitationHelper.unRegisterInvitationReceiver(this);
+
+        super.onPause();
+    }
 }

@@ -118,4 +118,17 @@ public class ProfilActivity extends Activity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+    @Override
+    protected void onResume() {
+        InvitationHelper.registerInvitationReceiver(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        InvitationHelper.unRegisterInvitationReceiver(this);
+
+        super.onPause();
+    }
 }
