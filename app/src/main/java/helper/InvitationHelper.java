@@ -1,11 +1,14 @@
 package helper;
 
+import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import activity.InvitationFragment;
+import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 
 public class InvitationHelper {
     public static void sendData(InvitationFragment invitation, String jsonString) {
@@ -18,5 +21,11 @@ public class InvitationHelper {
         }catch (JSONException e){
             System.out.println(e.getStackTrace());
         }
+    }
+
+    public static void registerInvitationReceiver(Activity activity){
+        ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver();
+        IntentFilter filter = new IntentFilter("InvitationReceiver");
+        activity.registerReceiver(receiver, filter);
     }
 }

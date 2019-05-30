@@ -1,5 +1,5 @@
 package activity;
-
+//TODO put this file somewhere else
 public class ProfilFriends {
     private String nickname;
     private int avatarId;

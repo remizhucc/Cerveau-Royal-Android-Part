@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import helper.AccountHelper;
+import helper.InvitationHelper;
 import model.Friends;
 import model.User;
 import okhttp3.Call;
@@ -45,6 +46,7 @@ public class FriendsActivity extends Activity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        InvitationHelper.registerInvitationReceiver(this);
     }
 
     public void getFriends(int id) throws UnsupportedEncodingException {

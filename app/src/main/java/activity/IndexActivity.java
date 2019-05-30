@@ -13,6 +13,7 @@ import com.cerveauroyal.R;
 import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
+import helper.InvitationHelper;
 import helper.RankHelper;
 import model.Constant;
 
@@ -22,7 +23,7 @@ public class IndexActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
-
+        InvitationHelper.registerInvitationReceiver(this);
         initializeActivity();
 
 

@@ -1,4 +1,5 @@
 package activity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +17,20 @@ import java.io.UnsupportedEncodingException;
 
 import helper.AccountHelper;
 import helper.AvatarHelper;
+import helper.InvitationHelper;
 import helper.RankHelper;
 import model.Constant;
 import model.User;
 import okhttp3.Call;
 
-public class ProfilActivity extends Activity{
+public class ProfilActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
+        InvitationHelper.registerInvitationReceiver(this);
+
         try {
             initializeActivity();
         } catch (UnsupportedEncodingException e) {
@@ -43,14 +47,14 @@ public class ProfilActivity extends Activity{
         ImageView rankImage = (ImageView) findViewById(R.id.rankImage);
         TextView rankName = (TextView) findViewById(R.id.rankName);
 
-        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this),this));
+        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this), this));
         nickname.setText(AccountHelper.getMyNicknameFromPreferences(this));
         email.setText(AccountHelper.getMyEmailFromPreferences(this));
-        rankImage.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this)),this));
+        rankImage.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this)), this));
         rankName.setText(RankHelper.getRankName(Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(this))));
 
 
-        final TextView  winSubject1 = (TextView) findViewById(R.id.win_geography);
+        final TextView winSubject1 = (TextView) findViewById(R.id.win_geography);
         final TextView winSubject2 = (TextView) findViewById(R.id.win_literature);
         final TextView winSubject3 = (TextView) findViewById(R.id.win_math);
         final TextView winSubject4 = (TextView) findViewById(R.id.win_history);
@@ -106,11 +110,11 @@ public class ProfilActivity extends Activity{
     }
 
     public void back(View view) {
-        Intent intent=new Intent(ProfilActivity.this,IndexActivity.class);
+        Intent intent = new Intent(ProfilActivity.this, IndexActivity.class);
         startActivity(intent);
     }
 
-    public void logout(View view){
+    public void logout(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

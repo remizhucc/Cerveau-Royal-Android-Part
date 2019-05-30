@@ -61,11 +61,7 @@ public class MatchActivity extends Activity {
 
 
 
-//TODO move panel to startgame
-    private void initializeWaitingPanel() {
-        LinearLayout waitPanel = (LinearLayout) findViewById(R.id.waitPanel);
-        waitPanel.setVisibility(View.GONE);
-    }
+
 
     private void initializeMatchModel(JSONObject json) {
         match = new Match();
@@ -99,7 +95,6 @@ public class MatchActivity extends Activity {
         initializeMatchModel(json);
         initializeUser();
         refreshScoreBar();
-        initializeWaitingPanel();
     }
 
     private void refreshScoreBar() {

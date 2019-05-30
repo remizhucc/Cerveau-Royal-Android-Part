@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +24,14 @@ import java.net.URLEncoder;
 import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
+import helper.InvitationHelper;
 import okhttp3.Call;
 
 public class StartGameActivity extends Activity {
     int subject;
     boolean withUser;
     int userId;
+    Boolean connecting;
 
     int avatar_player1;
     String nom_player1;
@@ -39,6 +42,9 @@ public class StartGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
+
+        InvitationHelper.registerInvitationReceiver(this);
+
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar_player1);
         TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
         avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this), this));
@@ -57,6 +63,7 @@ public class StartGameActivity extends Activity {
             nickname2.setText(nom_player2);
         }
         subject = -1;
+        connecting = false;
 
         //Add listner to button
         Button buttonStartGame = (Button) findViewById(R.id.button_startGame);
@@ -64,18 +71,19 @@ public class StartGameActivity extends Activity {
     }
 
     public void startGame(View view) {
-        try {
-            OkHttpUtils.get()
-                    .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
-                    .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
-                    .build()
-                    .execute(new requestMatchInformationCallback());
-        } catch (UnsupportedEncodingException e) {
-            System.out.println(e.getStackTrace());
+        if (!connecting) {
+            connecting = true;
+            try {
+                showWaitngPanel();
+                OkHttpUtils.get()
+                        .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
+                        .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
+                        .build()
+                        .execute(new requestMatchInformationCallback());
+            } catch (UnsupportedEncodingException e) {
+                System.out.println(e.getStackTrace());
+            }
         }
-
-
-
 
 
     }
@@ -91,32 +99,33 @@ public class StartGameActivity extends Activity {
 
         @Override
         public void onResponse(String response) {
-            try {
-                JSONObject json = new JSONObject(response);
-                Boolean success = json.getBoolean("success");
-                if (success) {
-                    Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
-                    intent.putExtra("json", json.toString());
-                    startActivity(intent);
+            if (connecting) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    Boolean success = json.getBoolean("success");
+                    if (success) {
+                        Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
+                        intent.putExtra("json", json.toString());
+                        startActivity(intent);
 
-                } else {
-                    Toast.makeText(StartGameActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
-                    new CountDownTimer(3000, 1000) {
+                    } else {
+                        Toast.makeText(StartGameActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
+                        new CountDownTimer(3000, 1000) {
 
-                        public void onTick(long millisUntilFinished) {
-                            //here you can have your logic to set text to edittext
-                        }
+                            public void onTick(long millisUntilFinished) {
+                                //here you can have your logic to set text to edittext
+                            }
 
-                        public void onFinish() {
-                            //TODO delete waiting panel
-                        }
-                    }.start();
+                            public void onFinish() {
+                                hideWaitngPanel();
+                            }
+                        }.start();
+                    }
+                } catch (JSONException e) {
+                    System.out.println(e.getStackTrace());
                 }
-            } catch (JSONException e) {
-                System.out.println(e.getStackTrace());
             }
         }
-
 
     }
 
@@ -219,5 +228,20 @@ public class StartGameActivity extends Activity {
     public void backToIndex(View view) {
         Intent intent = new Intent(StartGameActivity.this, IndexActivity.class);
         startActivity(intent);
+    }
+
+    private void hideWaitngPanel() {
+        LinearLayout waitPanel = (LinearLayout) findViewById(R.id.waitPanel);
+        waitPanel.setVisibility(View.GONE);
+    }
+
+    private void showWaitngPanel() {
+        LinearLayout waitPanel = (LinearLayout) findViewById(R.id.waitPanel);
+        waitPanel.setVisibility(View.VISIBLE);
+    }
+
+    public void cancelMatchOpponent(View view) {
+        hideWaitngPanel();
+        connecting = false;
     }
 }
