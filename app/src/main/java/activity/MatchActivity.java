@@ -267,21 +267,27 @@ public class MatchActivity extends Activity {
         public void onResponse(String response) {
             try {
                 JSONObject json = new JSONObject(response);
-                int opponentChoice = json.getInt("answer");
-                match.score2=json.getInt("score");
-                setRoundResult(myChoice,opponentChoice);
-                refreshScoreBar();
-                new CountDownTimer(5000, 1000) {
+                if(json.getBoolean("stop")) {
+                    //TODO disconnect could be better
+                    match.score2=0;
+                    matchOver();
+                }else {
+                    int opponentChoice = json.getInt("answer");
+                    match.score2 = json.getInt("score");
+                    setRoundResult(myChoice, opponentChoice);
+                    refreshScoreBar();
+                    new CountDownTimer(5000, 1000) {
 
-                    public void onTick(long millisUntilFinished) {
-                    }
+                        public void onTick(long millisUntilFinished) {
+                        }
 
-                    public void onFinish() {
-                        nextRound();
-                    }
+                        public void onFinish() {
+                            nextRound();
+                        }
 
 
-                }.start();
+                    }.start();
+                }
             }catch (JSONException e){
                 System.out.println(e.getStackTrace());
             }

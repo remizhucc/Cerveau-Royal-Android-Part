@@ -1,481 +1,484 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:onClick="backToIndex"
-            android:src="@drawable/button_back" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="80dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/google_sans_bold"
-            android:gravity="center"
-            android:text="@string/title_choose"
-            android:textColor="@color/red"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/google_sans_bold"
-            android:gravity="center"
-            android:text="@string/title_subject"
-            android:textColor="@color/green"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="4">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject1">
-
-                <ImageView
-                    android:id="@+id/geography"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey"
-                    />
-
-                <ImageView
-
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/geograph" />
-            </FrameLayout>
-
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject2">
-
-                <ImageView
-                    android:id="@+id/literature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
-
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/literature" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject3">
-
-                <ImageView
-                    android:id="@+id/math"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
-
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/math" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject4">
-
-                <ImageView
-                    android:id="@+id/history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/history" />
-            </FrameLayout>
-
-
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:onClick="backToIndex"
+                android:src="@drawable/button_back" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="4"
-            android:paddingTop="10dp">
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:fontFamily="@font/google_sans_bold"
-                android:text="@string/subject_geography"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/title_choose"
+                android:textColor="@color/red"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/google_sans_bold"
+                android:gravity="center"
+                android:text="@string/title_subject"
+                android:textColor="@color/green"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                />
+                android:weightSum="4">
 
-            <TextView
+                <FrameLayout
 
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject1">
 
-                android:fontFamily="@font/google_sans_bold"
+                    <ImageView
+                        android:id="@+id/geography"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
 
-                android:text="@string/subject_literature"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
+                    <ImageView
 
-            <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/geograph" />
+                </FrameLayout>
 
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/google_sans_bold"
 
-                android:text="@string/subject_math"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
+                <FrameLayout
 
-            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject2">
 
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/google_sans_bold"
+                    <ImageView
+                        android:id="@+id/literature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
 
-                android:text="@string/subject_history"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/literature" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject3">
+
+                    <ImageView
+                        android:id="@+id/math"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/math" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject4">
+
+                    <ImageView
+                        android:id="@+id/history"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/history" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:weightSum="4">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_geography"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_literature"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_math"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_history"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:weightSum="4">
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject5">
+
+                    <ImageView
+                        android:id="@+id/art"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/art" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject6">
+
+                    <ImageView
+                        android:id="@+id/music"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/music" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject7">
+
+                    <ImageView
+                        android:id="@+id/english"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/english" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:onClick="chooseSubject8">
+
+                    <ImageView
+                        android:id="@+id/commonSense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/background_cercle_grey" />
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/common_sense" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:weightSum="4">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_art"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_music"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_english"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/google_sans_bold"
+
+                    android:gravity="center_horizontal"
+                    android:text="@string/subject_commonsense"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="4"
-            android:paddingTop="10dp">
+            android:paddingLeft="40dp"
+            android:paddingTop="60dp"
+            android:paddingRight="40dp">
 
             <FrameLayout
 
-                android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:onClick="chooseSubject5">
+                android:paddingRight="10dp">
 
                 <ImageView
-                    android:id="@+id/art"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
+                    android:src="@drawable/background_rectangle_grey" />
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/art" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject6">
+                    android:layout_gravity="left"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/background_cercle_black" />
 
                 <ImageView
-                    android:id="@+id/music"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/music" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject7">
-
-                <ImageView
-                    android:id="@+id/english"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/english" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:onClick="chooseSubject8">
-
-                <ImageView
-                    android:id="@+id/commonSense"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/background_cercle_grey" />
-
-                <ImageView
+                    android:id="@+id/avatar_player1"
                     android:layout_width="45dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="left"
+                    android:paddingLeft="15dp"
+                    android:src="@drawable/avatar_1" />
+
+                <TextView
+                    android:id="@+id/nom_player1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="center"
-                    android:src="@drawable/common_sense" />
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/google_sans_bold"
+                    android:paddingLeft="45dp"
+                    android:text="@string/player1_nom"
+                    android:textColor="@color/black"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
 
+            <FrameLayout
+
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/background_rectangle_grey" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/background_cercle_black" />
+
+                <ImageView
+                    android:id="@+id/avatar_player2"
+                    android:layout_width="45dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="left"
+                    android:paddingLeft="15dp"
+                    android:src="@drawable/button_person" />
+
+                <TextView
+                    android:id="@+id/nom_player2"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/google_sans_bold"
+                    android:paddingLeft="45dp"
+                    android:text="@string/player2_nom"
+                    android:textColor="@color/black"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="4"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/google_sans_bold"
-                android:text="@string/subject_art"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"
-                />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-
-                android:fontFamily="@font/google_sans_bold"
-
-                android:text="@string/subject_music"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/google_sans_bold"
-
-                android:text="@string/subject_english"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/google_sans_bold"
-
-                android:text="@string/subject_commonsense"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="60dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
-
-        <FrameLayout
-
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:paddingRight="10dp"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/background_rectangle_grey" />
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:paddingLeft="10dp"
-                android:src="@drawable/background_cercle_black" />
-
-            <ImageView
-                android:id="@+id/avatar_player1"
-                android:layout_width="45dp"
-                android:layout_height="48dp"
-                android:layout_gravity="left"
-                android:paddingLeft="15dp"
-                android:src="@drawable/avatar_1" />
-
-            <TextView
-                android:id="@+id/nom_player1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center"
-                android:layout_weight="1"
-
-                android:fontFamily="@font/google_sans_bold"
-                android:paddingLeft="45dp"
-                android:text="@string/player1_nom"
-                android:textColor="@color/black"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-
-        </FrameLayout>
-
-
-        <FrameLayout
-
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/background_rectangle_grey" />
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:paddingLeft="10dp"
-                android:src="@drawable/background_cercle_black" />
-
-            <ImageView
-                android:id="@+id/avatar_player2"
-                android:layout_width="45dp"
-                android:layout_height="48dp"
-                android:layout_gravity="left"
-                android:paddingLeft="15dp"
-                android:src="@drawable/button_person" />
-
-            <TextView
-                android:id="@+id/nom_player2"
-                android:layout_width="130dp"
-                android:layout_height="30dp"
-
-                android:layout_gravity="center"
-                android:layout_weight="1"
-
-                android:fontFamily="@font/google_sans_bold"
-                android:paddingLeft="45dp"
-                android:text="@string/player2_nom"
-                android:textColor="@color/black"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-
-        </FrameLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="50dp">
-
-        <Button
-            android:id="@+id/button_startGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="300dp"
-            android:height="60dp"
-            android:textSize="30sp"
-            android:background="@drawable/button_red"
-            android:text="@string/startgame_startgame"
-            android:onClick="startGame"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="50dp">
+
+            <Button
+                android:id="@+id/button_startGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="300dp"
+                android:height="60dp"
+                android:background="@drawable/button_red"
+                android:onClick="startGame"
+                android:text="@string/startgame_startgame"
+                android:textSize="30sp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

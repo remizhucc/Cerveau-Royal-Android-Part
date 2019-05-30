@@ -28,7 +28,7 @@ public class ReceiveInvitationService extends FirebaseMessagingService {
     }
     private void sendMessageToActivity(String msgJson) {
         Intent intent = new Intent("Invitation");
-//        TODO set content of invitation
+        intent.putExtra("json",msgJson);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

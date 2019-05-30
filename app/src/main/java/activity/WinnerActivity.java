@@ -60,7 +60,7 @@ public class WinnerActivity extends Activity {
         TextView rankName1 = (TextView) findViewById(R.id.rankName1);
         TextView rankName2 = (TextView) findViewById(R.id.rankName2);
 
-        LinearLayout root = (LinearLayout) findViewById(R.id.root);
+        LinearLayout root = (LinearLayout) findViewById(R.id.rootLinearLayout);
         ImageView crown1 = (ImageView) findViewById(R.id.crown1);
         ImageView crown2 = (ImageView) findViewById(R.id.crown2);
 
