@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -134,5 +135,11 @@ public class FriendsActivity extends Activity {
 
     public void addFriend(){
 
+    }
+
+
+    public void backFriendToIndex(View view){
+        Intent intent=new Intent(FriendsActivity.this, IndexActivity.class);
+        startActivity(intent);
     }
 }
