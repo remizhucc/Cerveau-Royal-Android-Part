@@ -244,7 +244,7 @@ public class MatchActivity extends Activity {
         JSONObject json = new JSONObject();
         try {
             json.put("id", AccountHelper.getMyIdFromPreferences(MatchActivity.this));
-            json.put("match", match.matchId);
+            json.put("matchId", match.matchId);
             json.put("index", match.round);
             json.put("answer", choice);
             json.put("score", match.score1);
