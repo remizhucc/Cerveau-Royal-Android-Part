@@ -95,8 +95,7 @@ public class StartGameActivity extends Activity {
 
         @Override
         public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
+            Toast.makeText(StartGameActivity.this, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
