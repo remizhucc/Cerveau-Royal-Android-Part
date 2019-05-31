@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,29 +118,25 @@ public class FriendsActivity extends Activity {
     }
 
 
-    public void playWithFriend(View view) {
+    public void playWithFriend(int position,ListView listView){
 
         int userId = -1;
-        TextView text = (TextView) findViewById(R.id.nickname);
+        ImageView avatar2=(ImageView) findViewById(R.id.avatar);
+        TextView text=(TextView) findViewById(R.id.nickname);
         String nickname = text.getText().toString();
+        int avatarId=0;
 
         Intent intent = new Intent(this, StartGameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("withUser", true);
-        intent.putExtra("userId", userId);
+        intent.putExtra("withUser",true);
+        intent.putExtra("userId",userId);
+        intent.putExtra("avatar_player2",avatarId);
+        intent.putExtra("nickname_player2",nickname);
+
         startActivity(intent);
     }
 
-    @Override
-    protected void onResume() {
-        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
-        super.onResume();
-    }
+    public void addFriend(){
 
-    @Override
-    protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
-        super.onPause();
     }
-
 }

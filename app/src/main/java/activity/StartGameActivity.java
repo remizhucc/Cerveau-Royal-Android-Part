@@ -34,8 +34,6 @@ public class StartGameActivity extends Activity {
     int userId;
     Boolean connecting;
 
-    int avatar_player1;
-    String nom_player1;
     int avatar_player2;
     String nom_player2;
 
@@ -71,9 +69,11 @@ public class StartGameActivity extends Activity {
         Button buttonStartGame = (Button) findViewById(R.id.button_startGame);
         buttonStartGame.setOnTouchListener(new ActivityHelper.RedButtonListener());
     }
-//TODO make sure user has chosen subject
+
     public void startGame(View view) {
-        if (!connecting) {
+        if (subject == -1){
+            Toast.makeText(this,"U should choose one subject.",Toast.LENGTH_SHORT).show();
+        }else if (!connecting) {
             connecting = true;
             try {
                 showWaitngPanel();
