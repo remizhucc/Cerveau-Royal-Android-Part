@@ -54,6 +54,7 @@ public class WinnerActivity extends Activity {
         String dataRank2 = getIntent().getStringExtra("rank2");
         int dataScore1 = getIntent().getIntExtra("score1", 0);
         int dataScore2 = getIntent().getIntExtra("score2", 0);
+        boolean offline = getIntent().getBooleanExtra("offline",false);
 
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar1);
         ImageView avatar2 = (ImageView) findViewById(R.id.avatar2);
@@ -63,6 +64,8 @@ public class WinnerActivity extends Activity {
         ImageView rankImage2 = (ImageView) findViewById(R.id.rankImage2);
         TextView rankName1 = (TextView) findViewById(R.id.rankName1);
         TextView rankName2 = (TextView) findViewById(R.id.rankName2);
+        TextView score1 = (TextView) findViewById(R.id.score1);
+        TextView score2 = (TextView) findViewById(R.id.score2);
 
         LinearLayout root = (LinearLayout) findViewById(R.id.rootLinearLayout);
         ImageView crown1 = (ImageView) findViewById(R.id.crown1);
@@ -77,9 +80,18 @@ public class WinnerActivity extends Activity {
         rankImage2.setImageResource(RankHelper.getRankDrawableId(Constant.RANK.valueOf(dataRank2), this));
         rankName1.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank1)));
         rankName2.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank2)));
-
+        score1.setText(String.valueOf(dataScore1));
+        if (offline){
+            String sc2 = String.valueOf(dataScore2);
+            sc2 +="(Escape)";
+            score2.setText(sc2);
+        }else {
+            score2.setText(String.valueOf(dataScore2));
+        }
 //set winner crown
-        if (dataScore1 > dataScore2) {
+        if (offline){
+            crown1.setVisibility(View.INVISIBLE);
+        }else if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
         } else {
             crown1.setVisibility(View.INVISIBLE);
