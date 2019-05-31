@@ -114,7 +114,7 @@ public class MatchActivity extends Activity {
                 (int) Math.round(MatchHelper.getScoreBarLenght(match.score2)));
 
         score1.setText(String.valueOf(match.score1));
-        score2.setText(String.valueOf(match.score1));
+        score2.setText(String.valueOf(match.score2));
         scoreBar1.setLayoutParams(params1);
         scoreBar2.setLayoutParams(params2);
     }
