@@ -80,12 +80,13 @@ public class MatchActivity extends Activity {
             match.withFriend=json.getBoolean("withFriend");
             match.user2 = User.read(json.getString("opponent"));
             //TODO JSON Array wrong
-            JSONArray questions = json.getJSONArray("questions");
+            String questionsString = json.getString("questions");
+            JSONArray questions = new JSONArray(questionsString);
             match.subject=json.getInt("subject");
             for (int i = 0; i < questions.length(); i++) {
                 match.questions.add(Question.read(questions.getJSONObject(i).toString()));
             }
-            match.matchId = json.getString("match");
+            match.matchId = json.getString("matchId");
         } catch (JSONException e) {
             System.out.println(e.getStackTrace());
         }
@@ -114,8 +115,8 @@ public class MatchActivity extends Activity {
                 15,
                 (int) Math.round(MatchHelper.getScoreBarLenght(match.score2)));
 
-        score1.setText(match.score1);
-        score2.setText(match.score2);
+        score1.setText(String.valueOf(match.score1));
+        score2.setText(String.valueOf(match.score1));
         scoreBar1.setLayoutParams(params1);
         scoreBar2.setLayoutParams(params2);
     }
