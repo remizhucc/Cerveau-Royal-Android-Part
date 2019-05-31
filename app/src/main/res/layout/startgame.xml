@@ -5,10 +5,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/background_startgame"
+        tools:foreground="">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -481,14 +484,20 @@
                 android:textSize="30sp" />
         </LinearLayout>
     </LinearLayout>
-<!--TODO make wait panel more beautiful, add a storke-->
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/waitPanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/background"
+        android:background="@drawable/background_waiting"
         android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:visibility="gone">
 
         <TextView
@@ -496,15 +505,18 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/wait"
+
             android:textSize="30sp"
             android:textStyle="bold" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="110dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="@drawable/button_red"
             android:onClick="cancelMatchOpponent"
+
             android:text="@string/cancel"
             android:textColor="@color/white"
             android:textSize="20sp" />

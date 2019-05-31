@@ -46,6 +46,7 @@ public class MatchActivity extends Activity {
     private int timeleft;
     private CountDownTimer countdown;
     private int myChoice;
+    private boolean offline = false;
 
 
     @Override
@@ -219,6 +220,7 @@ public class MatchActivity extends Activity {
 
         //go to winner page with data
         Intent intent = new Intent(MatchActivity.this, WinnerActivity.class);
+        intent.putExtra("offline",offline);
         intent.putExtra("avatar1", match.user1.getAvatar());
         intent.putExtra("avatar2", match.user2.getAvatar());
         intent.putExtra("nickName1", match.user1.getnickname());
@@ -277,8 +279,8 @@ public class MatchActivity extends Activity {
             try {
                 JSONObject json = new JSONObject(response);
                 if (json.getBoolean("stop")) {
-                    //TODO disconnect could be better
-                    match.score2 = 0;
+
+                    offline = true;
                     matchOver();
                 } else {
                     int opponentChoice = json.getInt("answer");
