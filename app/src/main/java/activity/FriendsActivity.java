@@ -1,12 +1,9 @@
 package activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,8 +23,7 @@ import java.util.List;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
-import helper.InvitationHelper;
-import model.Friends;
+import model.ProfilFriends;
 import model.User;
 import okhttp3.Call;
 import okhttp3.Request;

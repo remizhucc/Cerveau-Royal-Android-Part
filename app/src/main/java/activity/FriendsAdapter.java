@@ -12,6 +12,8 @@ import com.cerveauroyal.R;
 
 import java.util.List;
 
+import model.ProfilFriends;
+
 public class FriendsAdapter extends ArrayAdapter<ProfilFriends> {
     private int resourceId;
     public FriendsAdapter(Context context, int resource, List<ProfilFriends> objects) {
