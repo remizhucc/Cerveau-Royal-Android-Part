@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,17 +53,14 @@ public class MatchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match);
         JSONObject json;
-        try{
-            json=new JSONObject(getIntent().getStringExtra("json"));
+        try {
+            json = new JSONObject(getIntent().getStringExtra("json"));
             initializeMatch(json);
             nextRound();
-        }catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println(e.getStackTrace());
         }
     }
-
-
-
 
 
     private void initializeMatchModel(JSONObject json) {
@@ -77,12 +75,11 @@ public class MatchActivity extends Activity {
                 AccountHelper.getMyEmailFromPreferences(MatchActivity.this),
                 Constant.RANK.valueOf(AccountHelper.getMyRankFromPreferences(MatchActivity.this)));
         try {
-            match.withFriend=json.getBoolean("withFriend");
+            match.withFriend = json.getBoolean("withFriend");
             match.user2 = User.read(json.getString("opponent"));
-            //TODO JSON Array wrong
             String questionsString = json.getString("questions");
             JSONArray questions = new JSONArray(questionsString);
-            match.subject=json.getInt("subject");
+            match.subject = json.getInt("subject");
             for (int i = 0; i < questions.length(); i++) {
                 match.questions.add(Question.read(questions.getJSONObject(i).toString()));
             }
@@ -108,10 +105,10 @@ public class MatchActivity extends Activity {
         TextView score2 = (TextView) findViewById(R.id.score2);
 
 
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+        FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(
                 15,
                 (int) Math.round(MatchHelper.getScoreBarLenght(match.score1)));
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
+        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(
                 15,
                 (int) Math.round(MatchHelper.getScoreBarLenght(match.score2)));
 
@@ -144,9 +141,9 @@ public class MatchActivity extends Activity {
     }
 
     private void nextRound() {
-        if(match.round==10){
+        if (match.round == 10) {
             matchOver();
-        }else {
+        } else {
             match.round++;
             myChoice = 0;
             initializeQuestion(match.questions.get(match.round - 1));
@@ -158,6 +155,7 @@ public class MatchActivity extends Activity {
                     timeleft = (int) millisUntilFinished / 1000;
 
                 }
+
                 public void onFinish() {
                     if (myChoice == 0) {
                         sendMyChoiceToServer(0);
@@ -191,10 +189,22 @@ public class MatchActivity extends Activity {
 
     public void chooseOption(View view) {
         if (timeleft > 0) {
+            switch (view.getId()) {
+                case R.id.option1:
+                    myChoice = 1;
+                    break;
+                case R.id.option2:
+                    myChoice = 2;
+                    break;
+                case R.id.option3:
+                    myChoice = 3;
+                    break;
+                case R.id.option4:
+                    myChoice = 4;
+                    break;
+            }
             Button buttonChosen = (Button) findViewById(view.getId());
             buttonChosen.setBackground(getDrawable(R.drawable.button_white_storke_green));
-            Matcher m = Pattern.compile("option([0-9])").matcher(view.getResources().getResourceEntryName(view.getId()));
-            myChoice = Integer.valueOf(m.group(1));
             if (match.questions.get(match.round - 1).getAnswer() == myChoice) {
                 match.score1 += timeleft * 10;
             }
@@ -208,7 +218,7 @@ public class MatchActivity extends Activity {
     private void matchOver() {
 
         //go to winner page with data
-        Intent intent = new Intent(MatchActivity.this,WinnerActivity.class);
+        Intent intent = new Intent(MatchActivity.this, WinnerActivity.class);
         intent.putExtra("avatar1", match.user1.getAvatar());
         intent.putExtra("avatar2", match.user2.getAvatar());
         intent.putExtra("nickName1", match.user1.getnickname());
@@ -219,14 +229,14 @@ public class MatchActivity extends Activity {
         intent.putExtra("score2", match.score2);
         intent.putExtra("id1", match.user1.getId());
         intent.putExtra("id2", match.user2.getId());
-        intent.putExtra("withFriend",match.withFriend);
-        intent.putExtra("subject",match.subject);
+        intent.putExtra("withFriend", match.withFriend);
+        intent.putExtra("subject", match.subject);
         startActivity(intent);
 
     }
 
     public void backToStartGame(View view) {
-        Intent intent=new Intent(MatchActivity.this,StartGameActivity.class);
+        Intent intent = new Intent(MatchActivity.this, StartGameActivity.class);
         startActivity(intent);
     }
 
@@ -266,11 +276,11 @@ public class MatchActivity extends Activity {
         public void onResponse(String response) {
             try {
                 JSONObject json = new JSONObject(response);
-                if(json.getBoolean("stop")) {
+                if (json.getBoolean("stop")) {
                     //TODO disconnect could be better
-                    match.score2=0;
+                    match.score2 = 0;
                     matchOver();
-                }else {
+                } else {
                     int opponentChoice = json.getInt("answer");
                     match.score2 = json.getInt("score");
                     setRoundResult(myChoice, opponentChoice);
@@ -287,7 +297,7 @@ public class MatchActivity extends Activity {
 
                     }.start();
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 System.out.println(e.getStackTrace());
             }
         }
@@ -295,15 +305,15 @@ public class MatchActivity extends Activity {
 
     }
 
-    private void setRoundResult(int choice1,int choice2){
-        int correction=match.questions.get(match.round-1).getAnswer();
+    private void setRoundResult(int choice1, int choice2) {
+        int correction = match.questions.get(match.round - 1).getAnswer();
 
         Button option1 = (Button) findViewById(R.id.option1);
         Button option2 = (Button) findViewById(R.id.option2);
         Button option3 = (Button) findViewById(R.id.option3);
         Button option4 = (Button) findViewById(R.id.option4);
 
-        ArrayList<Button> buttons=new ArrayList<>();
+        ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(option1);
         buttons.add(option2);
         buttons.add(option3);
@@ -313,22 +323,22 @@ public class MatchActivity extends Activity {
         option2.setBackground(getDrawable(R.drawable.button_grey));
         option3.setBackground(getDrawable(R.drawable.button_grey));
         option4.setBackground(getDrawable(R.drawable.button_grey));
-        for(int i=1;i<=4;i++){
-            if(correction==i){
-                if(choice1==i){
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white_storke_green));
-                }else if(choice2==i){
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white_storke_red));
-                }else{
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_white));
+        for (int i = 1; i <= 4; i++) {
+            if (correction == i) {
+                if (choice1 == i) {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white_storke_green));
+                } else if (choice2 == i) {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white_storke_red));
+                } else {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white));
                 }
-            }else{
-                if(choice1==i){
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey_stroke_green));
-                }else if(choice2==i){
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey_stroke_red));
-                }else{
-                    buttons.get(i-1).setBackground(getDrawable(R.drawable.button_grey));
+            } else {
+                if (choice1 == i) {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_grey_stroke_green));
+                } else if (choice2 == i) {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_grey_stroke_red));
+                } else {
+                    buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_grey));
                 }
             }
         }
