@@ -1,11 +1,14 @@
 package activity;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,10 +64,10 @@ public class FriendsActivity extends Activity {
                 .url(url)
                 .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
                 .build()
-                .execute(new FriendsActivity.LoginProcessCallback());
+                .execute(new FriendsActivity.GetFriendProcessCallback());
     }
 
-    public class LoginProcessCallback extends StringCallback {
+    public class GetFriendProcessCallback extends StringCallback {
 
         @Override
         public void onBefore(Request request) {
@@ -103,7 +106,7 @@ public class FriendsActivity extends Activity {
 
 
                 } else {
-                    Toast.makeText(FriendsActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FriendsActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 Toast.makeText(FriendsActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -133,10 +136,102 @@ public class FriendsActivity extends Activity {
         startActivity(intent);
     }
 
-    public void addFriend(){
-
+    public void addFriend(View view){
+        LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
+        EditText email = (EditText) findViewById(R.id.email);
+        email.setText("");
+        addFriendPanel.setVisibility(View.VISIBLE);
     }
 
+    public void sendRequestAddFriend(View view) throws UnsupportedEncodingException {
+        EditText emailEditText = (EditText) findViewById(R.id.email);
+        String email = emailEditText.getText().toString();
+        if (email.isEmpty()) {
+            Toast.makeText(FriendsActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
+        } else {
+            AddProcess(email);
+        }
+
+
+
+        LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
+        addFriendPanel.setVisibility(View.GONE);
+    }
+
+    public void AddProcess(String email) throws UnsupportedEncodingException {
+        //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
+        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
+        JSONObject json = new JSONObject();
+        try {
+
+            json.put("password", AccountHelper.getMyIdFromPreferences(this));
+            json.put("email", email);
+
+        } catch (org.json.JSONException e) {
+            System.out.println(e.getStackTrace());
+        }
+        OkHttpUtils.get()
+                .url(url)
+                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
+                .build()
+                .execute(new FriendsActivity.AddProcessCallback());
+
+        //circle
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+    }
+
+    public class AddProcessCallback extends StringCallback {
+
+        @Override
+        public void onBefore(Request request) {
+            super.onBefore(request);
+        }
+
+        @Override
+        public void onAfter() {
+            super.onAfter();
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError(Call call, Exception e) {
+            //do some thing lisk this
+            //myText.setText("onError:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject json = new JSONObject(response);
+                Boolean success = json.getBoolean("success");
+                if (success) {
+                    JSONArray result = json.getJSONArray("friends");
+                    ProfilFriends pf;
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject jb = result.getJSONObject(i);
+                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar());
+                        friend.add(pf);
+
+                    }
+
+                    FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
+                    ListView listview = (ListView) findViewById(R.id.list_view);
+                    listview.setAdapter(adapter);
+                } else {
+                    Toast.makeText(FriendsActivity.this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(FriendsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "FailToAddFriend:" + e.getMessage());
+            }
+        }
+
+
+    }
+    public void cancelAddFriend(View view) {
+        LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
+        addFriendPanel.setVisibility(View.GONE);
+    }
 
     public void backFriendToIndex(View view){
         Intent intent=new Intent(FriendsActivity.this, IndexActivity.class);
