@@ -33,6 +33,7 @@ import java.net.URLEncoder;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.MusicServer;
 import model.User;
 import okhttp3.Call;
 import okhttp3.Request;
@@ -42,6 +43,7 @@ import service.ReceiveInvitationService;
 public class LoginActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
+    private Intent MusicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +51,26 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
 
 
-        //start sesrvice
+        //Start service
         Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
         startService(serviceIntent);
 
-        //create Listener to button
+        //Create Listener to button
         Button buttonLogin = (Button) findViewById(R.id.button_login);
         buttonLogin.setOnTouchListener(new ActivityHelper.GreenButtonListener());
         Button buttonSignUp = (Button) findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
+
+        //Add music
+        MusicIntent = new Intent(this,MusicServer.class);
+        startService(MusicIntent);
     }
 
 
     public void directToSignUp(View view) {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
+        stopService(MusicIntent);
     }
 
     public void tryLogin(View view) throws UnsupportedEncodingException {
@@ -137,6 +144,7 @@ public class LoginActivity extends Activity {
                             AccountHelper.setPreferences(response, LoginActivity.this);
                             Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                             startActivity(intent);
+                            stopService(MusicIntent);
                         }
 
                         @Override
