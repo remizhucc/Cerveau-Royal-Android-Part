@@ -16,6 +16,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <service android:name="service.MusicService">
+        </service>
+
         <receiver android:name="broadcastReceiver.ReceiveInvitationBroadcastReceiver"  android:exported="true">
             <intent-filter>
                 <action android:name="InvitationReceiver"/>

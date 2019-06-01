@@ -15,6 +15,7 @@ public class ReceiveInvitationService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
+
         super.onNewToken(s);
         AccountHelper.setMyTokenFromPreferences(this,s);
 

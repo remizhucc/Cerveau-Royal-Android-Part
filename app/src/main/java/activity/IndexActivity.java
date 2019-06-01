@@ -17,9 +17,11 @@ import helper.AvatarHelper;
 import helper.InvitationHelper;
 import helper.RankHelper;
 import model.Constant;
+import service.MusicService;
 
 public class IndexActivity extends Activity {
     ReceiveInvitationBroadcastReceiver invitationReceiver;
+    private Intent MusicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,18 @@ public class IndexActivity extends Activity {
         setContentView(R.layout.index);
         initializeActivity();
 
+        //Add music
+        addIndexMusic();
 
+    }
 
-
+    private void addIndexMusic(){
+        MusicIntent = new Intent(this, MusicService.class);
+        Bundle bundle  = new Bundle();
+        bundle.putInt("musicUrl", R.raw.brighter_days);
+        bundle.putBoolean("isLoop",true);
+        MusicIntent.putExtras(bundle);
+        startService(MusicIntent);
     }
 
     private void initializeActivity(){

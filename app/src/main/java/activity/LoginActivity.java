@@ -1,12 +1,8 @@
 package activity;
 
-import android.accounts.Account;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +13,9 @@ import android.widget.Toast;
 import com.cerveauroyal.R;
 
 import org.jetbrains.annotations.NotNull;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -27,6 +26,7 @@ import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.RequestHelper;
 import model.User;
+import service.MusicService;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -36,6 +36,7 @@ import service.ReceiveInvitationService;
 public class LoginActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
+    private Intent MusicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +44,33 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
 
 
-        //start sesrvice
+        //Start service
         Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
         startService(serviceIntent);
 
-        //create Listener to button
+        //Create Listener to button
         Button buttonLogin = (Button) findViewById(R.id.button_login);
         buttonLogin.setOnTouchListener(new ActivityHelper.GreenButtonListener());
         Button buttonSignUp = (Button) findViewById(R.id.button_signup);
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
+
+        //Add music
+        addLoginMusic();
     }
 
+    private void addLoginMusic(){
+        MusicIntent = new Intent(this, MusicService.class);
+        Bundle bundle  = new Bundle();
+        bundle.putInt("musicUrl", R.raw.rockit_sting);
+        bundle.putBoolean("isLoop",false);
+        MusicIntent.putExtras(bundle);
+        startService(MusicIntent);
+    }
 
     public void directToSignUp(View view) {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
+        stopService(MusicIntent);
     }
 
     public void tryLogin(View view) throws UnsupportedEncodingException {
@@ -117,11 +130,11 @@ public class LoginActivity extends Activity {
                         }
 
                         @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                            String responseString = response.body().string();
-                            AccountHelper.setPreferences(responseString, LoginActivity.this);
+                        public void onResponse(String response) {
+                            AccountHelper.setPreferences(response, LoginActivity.this);
                             Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                             startActivity(intent);
+                            stopService(MusicIntent);
                         }
                     });
 
