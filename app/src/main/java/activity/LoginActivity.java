@@ -1,12 +1,8 @@
 package activity;
 
-import android.accounts.Account;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,14 +12,7 @@ import android.widget.Toast;
 
 import com.cerveauroyal.R;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
@@ -33,11 +22,9 @@ import java.net.URLEncoder;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
-import helper.MusicServer;
-import model.User;
+import service.MusicService;
 import okhttp3.Call;
 import okhttp3.Request;
-import okhttp3.Response;
 import service.ReceiveInvitationService;
 
 public class LoginActivity extends Activity {
@@ -62,10 +49,16 @@ public class LoginActivity extends Activity {
         buttonSignUp.setOnTouchListener(new ActivityHelper.GreyButtonListener());
 
         //Add music
-        MusicIntent = new Intent(this,MusicServer.class);
-        startService(MusicIntent);
+        addLoginMusic();
     }
 
+    private void addLoginMusic(){
+        MusicIntent = new Intent(this, MusicService.class);
+        Bundle bundle  = new Bundle();
+        bundle.putInt("musicUrl", R.raw.rockit_sting);
+        MusicIntent.putExtras(bundle);
+        startService(MusicIntent);
+    }
 
     public void directToSignUp(View view) {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);

@@ -17,11 +17,7 @@
             </intent-filter>
         </service>
 
-        <service android:name="helper.MusicServer">
-            <intent-filter>
-                <action android:name="com.angel.Android.MUSIC"/>
-                <category android:name="android.intent.category.default" />
-            </intent-filter>
+        <service android:name="service.MusicService">
         </service>
 
         <receiver android:name="broadcastReceiver.ReceiveInvitationBroadcastReceiver"  android:exported="true">

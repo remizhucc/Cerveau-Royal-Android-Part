@@ -1,13 +1,14 @@
-package helper;
+package service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import com.cerveauroyal.R;
 
-public class MusicServer extends Service {
+public class MusicService extends Service {
 
     private MediaPlayer mediaPlayer;
 
@@ -17,13 +18,16 @@ public class MusicServer extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        Bundle bundle = intent.getExtras();
+        int musicUrl = bundle.getInt("musicUrl");
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.rockit_sting);
+            mediaPlayer = MediaPlayer.create(this, musicUrl);
 //            mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }
+        return super.onStartCommand(intent, flags, startId);
     }
 
 
