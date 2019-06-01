@@ -28,6 +28,6 @@ dependencies {
     implementation files('libs/jackson-databind-2.9.4.jar')
     implementation files('libs/jackson-core-2.9.4.jar')
     implementation files('libs/jackson-annotations-2.9.4.jar')
-    implementation 'com.zhy:okhttputils:2.2.0'
     implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha02'
 }

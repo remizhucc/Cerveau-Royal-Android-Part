@@ -13,12 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerveauroyal.R;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -26,9 +26,12 @@ import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
 import helper.RankHelper;
+import helper.RequestHelper;
 import model.Constant;
 import model.User;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class InvitationFragment extends Fragment implements View.OnClickListener {
     User challenger;
@@ -41,7 +44,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
         //prepare date
         String userJson = getArguments().getString("user");
         agentName = getArguments().getString("agentName");
-        challenger=User.read(userJson);
+        challenger = User.read(userJson);
         //set onclick function
         Button accept = (Button) v.findViewById(R.id.button_accept);
         accept.setOnTouchListener(new ActivityHelper.GreenButtonListener());
@@ -56,60 +59,50 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
         ImageView rankImage = (ImageView) v.findViewById(R.id.rankImageInvitation);
         TextView rankName = (TextView) v.findViewById(R.id.rankNameInvitation);
 
-        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(challenger.getAvatar(),getActivity()));
+        avatarImage.setImageResource(AvatarHelper.getAvatarDrawableId(challenger.getAvatar(), getActivity()));
         nickname.setText(challenger.getnickname());
-        rankImage.setImageResource(RankHelper.getRankDrawableId(challenger.getRank(),getActivity()));
+        rankImage.setImageResource(RankHelper.getRankDrawableId(challenger.getRank(), getActivity()));
         rankName.setText(RankHelper.getRankName(challenger.getRank()));
         return v;
     }
 
-    private void accept(View view){
-        try {
-            OkHttpUtils.get()
-                    .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation")
-                    .addParams("JSON", URLEncoder.encode(buildRespondInvitationJsonString(true), "utf-8"))
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e) {
+    private void accept(View view) {
+        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation",
+                buildRespondInvitationJsonString(true),
+                new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onResponse(String response) {
-                            Intent intent = new Intent(getActivity(), MatchActivity.class);
-                            intent.putExtra("json", response);
-                            startActivity(intent);
-                        }
-                    });
-        } catch (UnsupportedEncodingException e) {
-            System.out.println(e.getStackTrace());
-        }
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        String responseString = response.body().string();
+                        Intent intent = new Intent(getActivity(), MatchActivity.class);
+                        intent.putExtra("json", responseString);
+                        startActivity(intent);
+                    }
+                });
     }
-    private void escape(View view){
-        try {
-            OkHttpUtils.get()
-                    .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation")
-                    .addParams("JSON", URLEncoder.encode(buildRespondInvitationJsonString(false), "utf-8"))
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e) {
 
-                        }
+    private void escape(View view) {
+        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation",
+                buildRespondInvitationJsonString(false),
+                new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                        @Override
-                        public void onResponse(String response) {
+                    }
 
-                        }
-                    });
-        } catch (UnsupportedEncodingException e) {
-            System.out.println(e.getStackTrace());
-        }
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                    }
+                } );
     }
 
 
-    private String buildRespondInvitationJsonString(Boolean success){
+    private String buildRespondInvitationJsonString(Boolean success) {
         JSONObject json = new JSONObject();
         try {
             json.put("agentName", agentName);

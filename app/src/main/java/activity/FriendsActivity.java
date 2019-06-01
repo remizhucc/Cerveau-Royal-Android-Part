@@ -11,23 +11,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
+import helper.RequestHelper;
 import model.ProfilFriends;
 import model.User;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.Response;
 
 public class FriendsActivity extends Activity {
     private static final String TAG = "FriendsActivity";
@@ -57,35 +59,20 @@ public class FriendsActivity extends Activity {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        OkHttpUtils.get()
-                .url(url)
-                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                .build()
-                .execute(new FriendsActivity.LoginProcessCallback());
+        RequestHelper.httpGetRequest(url,json.toString(),new FriendsActivity.LoginProcessCallback());
     }
 
-    public class LoginProcessCallback extends StringCallback {
-
+    public class LoginProcessCallback implements Callback {
         @Override
-        public void onBefore(Request request) {
-            super.onBefore(request);
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
         }
 
         @Override
-        public void onAfter() {
-            super.onAfter();
-        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
                     JSONArray result = json.getJSONArray("friends");
@@ -110,8 +97,6 @@ public class FriendsActivity extends Activity {
                 Log.e(TAG, "FailToLogIn:" + e.getMessage());
             }
         }
-
-
     }
 
 

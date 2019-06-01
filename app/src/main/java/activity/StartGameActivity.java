@@ -14,21 +14,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.IOException;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
 import helper.InvitationHelper;
+import helper.RequestHelper;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class StartGameActivity extends Activity {
     int subject;
@@ -73,38 +73,41 @@ public class StartGameActivity extends Activity {
     }
 
     public void startGame(View view) {
-        if (subject == -1){
-            Toast.makeText(this,"U should choose one subject.",Toast.LENGTH_SHORT).show();
-        }else if (!connecting) {
+        if (subject == -1) {
+            Toast.makeText(this, "U should choose one subject.", Toast.LENGTH_SHORT).show();
+        } else if (!connecting) {
             connecting = true;
-            try {
-                showWaitngPanel();
-                OkHttpUtils.get()
-                        .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
-                        .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
-                        .build()
-                        .execute(new requestMatchInformationCallback());
-            } catch (UnsupportedEncodingException e) {
-                System.out.println(e.getStackTrace());
-            }
+            showWaitngPanel();
+
+            RequestHelper.httpGetRequest(
+                    "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match",
+                    buildRequestMatchInfomationJsonString(),
+                    new requestMatchInformationCallback());
+//                OkHttpUtils.get()
+//                        .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
+//                        .addParams("JSON", URLEncoder.encode(buildRequestMatchInfomationJsonString(), "utf-8"))
+//                        .build()
+//                        .execute(new requestMatchInformationCallback());
+
         }
 
 
     }
 
-    public class requestMatchInformationCallback extends StringCallback {
 
+    public class requestMatchInformationCallback implements Callback {
 
         @Override
-        public void onError(Call call, Exception e) {
-            Toast.makeText(StartGameActivity.this, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
+        public void onFailure(Call call, IOException e) {
+            Toast.makeText(StartGameActivity.this, "onError" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
-        public void onResponse(String response) {
+        public void onResponse(Call call, Response response) throws IOException {
+            String responseString = response.body().string();
             if (connecting) {
                 try {
-                    JSONObject json = new JSONObject(response);
+                    JSONObject json = new JSONObject(responseString);
                     Boolean success = json.getBoolean("success");
                     if (success) {
                         Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
@@ -129,6 +132,41 @@ public class StartGameActivity extends Activity {
                 }
             }
         }
+
+//        @Override
+//        public void onError(Call call, Exception e) {
+//
+//        }
+//
+//        @Override
+//        public void onResponse(String response) {
+//            if (connecting) {
+//                try {
+//                    JSONObject json = new JSONObject(response);
+//                    Boolean success = json.getBoolean("success");
+//                    if (success) {
+//                        Intent intent = new Intent(StartGameActivity.this, MatchActivity.class);
+//                        intent.putExtra("json", json.toString());
+//                        startActivity(intent);
+//
+//                    } else {
+//                        Toast.makeText(StartGameActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
+//                        new CountDownTimer(3000, 1000) {
+//
+//                            public void onTick(long millisUntilFinished) {
+//                                //here you can have your logic to set text to edittext
+//                            }
+//
+//                            public void onFinish() {
+//                                hideWaitngPanel();
+//                            }
+//                        }.start();
+//                    }
+//                } catch (JSONException e) {
+//                    System.out.println(e.getStackTrace());
+//                }
+//            }
+//        }
 
     }
 

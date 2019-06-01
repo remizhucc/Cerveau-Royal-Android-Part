@@ -8,11 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerveauroyal.R;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
@@ -23,6 +24,8 @@ import helper.RankHelper;
 import model.Constant;
 import model.User;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class ProfilActivity extends Activity {
     ReceiveInvitationBroadcastReceiver invitationReceiver;
@@ -72,12 +75,18 @@ public class ProfilActivity extends Activity {
         final TextView loseSubject7 = (TextView) findViewById(R.id.lose_english);
         final TextView loseSubject8 = (TextView) findViewById(R.id.lose_commonsense);
 
-        AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(this), new StringCallback() {
+        AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(this), new Callback() {
             @Override
-            public void onResponse(String response) {
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String responseString = response.body().string();
                 JSONObject json = null;
                 try {
-                    json = new JSONObject(response);
+                    json = new JSONObject(responseString);
                     User user = User.read(json.getString("user"));
                     winSubject1.setText(String.valueOf(user.getNumWinGeography()));
                     winSubject2.setText(String.valueOf(user.getNumWinLiterature()));
@@ -98,14 +107,8 @@ public class ProfilActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
-            @Override
-            public void onError(Call call, Exception e) {
-
-            }
         });
 
     }
@@ -119,15 +122,16 @@ public class ProfilActivity extends Activity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
     @Override
     protected void onResume() {
-        invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
+        invitationReceiver = InvitationHelper.registerInvitationReceiver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        InvitationHelper.unRegisterInvitationReceiver(this,invitationReceiver);
+        InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
         super.onPause();
     }
 

@@ -4,26 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
-import com.zhy.http.okhttp.callback.StringCallback;
-
 import org.json.JSONObject;
 
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+
 
 import activity.IndexActivity;
 import activity.LoginActivity;
 import model.User;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -33,7 +22,7 @@ public class AccountHelper {
     //preferences
     public static String getMyTokenFromPreferences(Context context) {
         SharedPreferences userInformation = context.getSharedPreferences("user", 0);
-        String token = userInformation.getString("token",null);  //second parameter default value
+        String token = userInformation.getString("token", null);  //second parameter default value
         return token;
     }
 
@@ -67,15 +56,15 @@ public class AccountHelper {
         return rank;
     }
 
-    public static void setMyTokenFromPreferences(Context context,String token) {
+    public static void setMyTokenFromPreferences(Context context, String token) {
         SharedPreferences.Editor editor = context.getSharedPreferences("user", 0).edit();
-        editor.putString("token",token);  //second parameter default value
+        editor.putString("token", token);  //second parameter default value
         editor.apply();
     }
 
     //login page
 
-    public static void setMyInformationFromServer(String email,  Callback callback) throws UnsupportedEncodingException {
+    public static void setMyInformationFromServer(String email, Callback callback) {
         String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/user";
         JSONObject json = new JSONObject();
         try {
@@ -83,15 +72,11 @@ public class AccountHelper {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        OkHttpUtils.get()
-                .url(url)
-                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                .build()
-                .execute(callback);
+        RequestHelper.httpGetRequest(url, json.toString(), callback);
     }
 
 
-    public static void setPreferences(String response,Activity activity){
+    public static void setPreferences(String response, Activity activity) {
 
         try {
             JSONObject json = new JSONObject(response);
@@ -103,7 +88,7 @@ public class AccountHelper {
             editor.putString("rank", user.getRank().toString());
             editor.putInt("id", user.getId());
             editor.apply();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

@@ -15,26 +15,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.IOException;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.RequestHelper;
 import okhttp3.Call;
-import okhttp3.Request;
+import okhttp3.Callback;
+import okhttp3.Response;
 
-import static helper.AccountHelper.isSignUpInServerSuccess;
 import static helper.AccountHelper.isPasswordAndComfirmPasswordMatch;
-import static helper.AccountHelper.setMyInformationFromServer;
 
 public class SignupActivity extends Activity {
     private int avatar;
@@ -95,54 +89,34 @@ public class SignupActivity extends Activity {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        OkHttpUtils.post()
-                .url(url)
-                .addParams("JSON", json.toString())
-                .build()
-                .execute(new SignUpProcessCallback(email));
+        RequestHelper.httpPostRequest(url,json.toString(),new SignUpProcessCallback(email));
     }
 
-    public class SignUpProcessCallback extends StringCallback {
-        String email;
+    public class SignUpProcessCallback implements Callback {
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-        SignUpProcessCallback(String email) {
-            super();
-            this.email = email;
         }
 
         @Override
-        public void onBefore(Request request) {
-            super.onBefore(request);
-        }
-
-        @Override
-        public void onAfter() {
-            super.onAfter();
-        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
-                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                    AccountHelper.setMyInformationFromServer(email, new Callback() {
                         @Override
-                        public void onResponse(String response) {
-                            AccountHelper.setPreferences(response, SignupActivity.this);
-                            Intent intent = new Intent(SignupActivity.this, IndexActivity.class);
-                            startActivity(intent);
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
                         }
 
                         @Override
-                        public void onError(Call call, Exception e) {
-
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            String responseString = response.body().string();
+                            AccountHelper.setPreferences(responseString, SignupActivity.this);
+                            Intent intent = new Intent(SignupActivity.this, IndexActivity.class);
+                            startActivity(intent);
                         }
                     });
 
@@ -153,6 +127,14 @@ public class SignupActivity extends Activity {
                 Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         }
+
+        String email;
+
+        SignUpProcessCallback(String email) {
+            super();
+            this.email = email;
+        }
+
 
 
     }

@@ -12,12 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -29,6 +29,8 @@ import helper.InvitationHelper;
 import helper.RankHelper;
 import model.Constant;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class WinnerActivity extends Activity {
     Boolean addFriendEnable;
@@ -54,7 +56,7 @@ public class WinnerActivity extends Activity {
         String dataRank2 = getIntent().getStringExtra("rank2");
         int dataScore1 = getIntent().getIntExtra("score1", 0);
         int dataScore2 = getIntent().getIntExtra("score2", 0);
-        boolean offline = getIntent().getBooleanExtra("offline",false);
+        boolean offline = getIntent().getBooleanExtra("offline", false);
 
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar1);
         ImageView avatar2 = (ImageView) findViewById(R.id.avatar2);
@@ -81,17 +83,17 @@ public class WinnerActivity extends Activity {
         rankName1.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank1)));
         rankName2.setText(RankHelper.getRankName(Constant.RANK.valueOf(dataRank2)));
         score1.setText(String.valueOf(dataScore1));
-        if (offline){
+        if (offline) {
             String sc2 = String.valueOf(dataScore2);
-            sc2 +="(Escape)";
+            sc2 += "(Escape)";
             score2.setText(sc2);
-        }else {
+        } else {
             score2.setText(String.valueOf(dataScore2));
         }
 //set winner crown
-        if (offline){
+        if (offline) {
             crown1.setVisibility(View.INVISIBLE);
-        }else if (dataScore1 > dataScore2) {
+        } else if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
         } else {
             crown1.setVisibility(View.INVISIBLE);
@@ -110,16 +112,17 @@ public class WinnerActivity extends Activity {
         if (addFriendEnable) {
             FriendHelper.addFriend(getIntent().getIntExtra("id1", 0),
                     getIntent().getIntExtra("id2", 0),
-                    new StringCallback() {
+                    new Callback() {
                         @Override
-                        public void onError(Call call, Exception e) {
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
                         }
 
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            String responseString = response.body().string();
                             try {
-                                JSONObject json = new JSONObject(response);
+                                JSONObject json = new JSONObject(responseString);
                                 Boolean success = json.getBoolean("success");
                                 if (success) {
                                     addFriendEnable = true;
@@ -131,6 +134,7 @@ public class WinnerActivity extends Activity {
                                 System.out.println(e.getStackTrace());
                             }
                         }
+
                     });
         } else {
             Toast.makeText(WinnerActivity.this, "Already your friend", Toast.LENGTH_SHORT).show();
@@ -138,25 +142,20 @@ public class WinnerActivity extends Activity {
     }
 
     public void leave(View view) {
-        try {
-            AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(WinnerActivity.this), new StringCallback() {
-                @Override
-                public void onResponse(String response) {
-                    AccountHelper.setPreferences(response, WinnerActivity.this);
-                    Intent intent = new Intent(WinnerActivity.this, IndexActivity.class);
-                    startActivity(intent);
-                }
+        AccountHelper.setMyInformationFromServer(AccountHelper.getMyEmailFromPreferences(WinnerActivity.this), new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                @Override
-                public void onError(Call call, Exception e) {
+            }
 
-                }
-            });
-        } catch (UnsupportedEncodingException e) {
-            System.out.println(e.getStackTrace());
-        }
-
-
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String responseString = response.body().string();
+                AccountHelper.setPreferences(responseString, WinnerActivity.this);
+                Intent intent = new Intent(WinnerActivity.this, IndexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void tryAgain(View view) {
@@ -187,7 +186,6 @@ public class WinnerActivity extends Activity {
         InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
         super.onPause();
     }
-
 
 
 }
