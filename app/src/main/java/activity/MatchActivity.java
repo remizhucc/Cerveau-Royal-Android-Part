@@ -151,6 +151,7 @@ public class MatchActivity extends Activity {
             match.round++;
             myChoice = 0;
             initializeQuestion(match.questions.get(match.round - 1));
+            countdown.cancel();
             countdown = new CountDownTimer(15000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     TextView countDownTextView = (TextView) findViewById(R.id.countDown);
@@ -192,7 +193,7 @@ public class MatchActivity extends Activity {
     }
 
     public void chooseOption(View view) {
-        if (timeleft > 0) {
+        if (timeleft > 0&&myChoice==0) {
             switch (view.getId()) {
                 case R.id.option1:
                     myChoice = 1;
