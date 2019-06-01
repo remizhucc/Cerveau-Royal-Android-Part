@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.cerveauroyal.R;
 
 import org.jetbrains.annotations.NotNull;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
 
@@ -130,8 +128,9 @@ public class LoginActivity extends Activity {
                         }
 
                         @Override
-                        public void onResponse(String response) {
-                            AccountHelper.setPreferences(response, LoginActivity.this);
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            String responseString = response.body().string();
+                            AccountHelper.setPreferences(responseString, LoginActivity.this);
                             Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                             startActivity(intent);
                             stopService(MusicIntent);

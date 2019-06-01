@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class FriendsActivity extends Activity {
     private List<ProfilFriends> friend = new ArrayList<>();
     private int id;
     ReceiveInvitationBroadcastReceiver invitationReceiver;
+    ProgressBar loadingPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +66,17 @@ public class FriendsActivity extends Activity {
         RequestHelper.httpGetRequest(url,json.toString(),new FriendsActivity.GetFriendProcessCallback());
     }
 
-    public class GetFriendProcessCallback extends Callback {
+    public class GetFriendProcessCallback implements Callback {
 
 
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-
+        }
 
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
                     JSONArray result = json.getJSONArray("friends");
@@ -154,39 +156,25 @@ public class FriendsActivity extends Activity {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        OkHttpUtils.get()
-                .url(url)
-                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                .build()
-                .execute(new FriendsActivity.AddProcessCallback());
-
+        RequestHelper.httpGetRequest(url,json.toString(),new FriendsActivity.AddProcessCallback());
         //circle
-        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+        ProgressBar loadingPanel= (ProgressBar)findViewById(R.id.loadingPanel);
+        loadingPanel.setVisibility(View.VISIBLE);
     }
 
-    public class AddProcessCallback extends StringCallback {
+    public class AddProcessCallback implements Callback {
+
 
         @Override
-        public void onBefore(Request request) {
-            super.onBefore(request);
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
         }
 
         @Override
-        public void onAfter() {
-            super.onAfter();
-            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
                     JSONArray result = json.getJSONArray("friends");
@@ -201,6 +189,8 @@ public class FriendsActivity extends Activity {
                     FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
                     ListView listview = (ListView) findViewById(R.id.list_view);
                     listview.setAdapter(adapter);
+
+                    loadingPanel.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(FriendsActivity.this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
                 }
@@ -209,8 +199,6 @@ public class FriendsActivity extends Activity {
                 Log.e(TAG, "FailToAddFriend:" + e.getMessage());
             }
         }
-
-
     }
     public void cancelAddFriend(View view) {
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
