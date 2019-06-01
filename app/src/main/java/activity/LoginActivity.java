@@ -56,6 +56,7 @@ public class LoginActivity extends Activity {
         MusicIntent = new Intent(this, MusicService.class);
         Bundle bundle  = new Bundle();
         bundle.putInt("musicUrl", R.raw.rockit_sting);
+        bundle.putBoolean("isLoop",false);
         MusicIntent.putExtras(bundle);
         startService(MusicIntent);
     }

@@ -22,9 +22,10 @@ public class MusicService extends Service {
 
         Bundle bundle = intent.getExtras();
         int musicUrl = bundle.getInt("musicUrl");
+        boolean isLoop = bundle.getBoolean("isLoop");
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, musicUrl);
-//            mediaPlayer.setLooping(true);
+            mediaPlayer.setLooping(isLoop);
             mediaPlayer.start();
         }
         return super.onStartCommand(intent, flags, startId);
