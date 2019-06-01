@@ -38,5 +38,7 @@
     <string name="challenger">Challenger</string>
     <string name="accpet">Accept</string>
     <string name="escape">Escape</string>
+    <string name="ok">Ok</string>
+    <string name="enter_email">Enter your firend\'\s Email:</string>
 
 </resources>
