@@ -29,11 +29,14 @@ import helper.InvitationHelper;
 import helper.RankHelper;
 import model.Constant;
 import okhttp3.Call;
+import service.MusicService;
 
 public class WinnerActivity extends Activity {
     Boolean addFriendEnable;
 
     ReceiveInvitationBroadcastReceiver invitationReceiver;
+
+    private Intent MusicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +91,16 @@ public class WinnerActivity extends Activity {
         }else {
             score2.setText(String.valueOf(dataScore2));
         }
-//set winner crown
+        //set winner crown and music
         if (offline){
             crown1.setVisibility(View.INVISIBLE);
+            addMusic(true);
         }else if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
+            addMusic(true);
         } else {
             crown1.setVisibility(View.INVISIBLE);
+            addMusic(false);
         }
 
         if (getIntent().getExtras().getBoolean("withFriend")) {
@@ -106,6 +112,19 @@ public class WinnerActivity extends Activity {
 
     }
 
+    public void addMusic(boolean isWin){
+        MusicIntent = new Intent(this, MusicService.class);
+        Bundle bundle  = new Bundle();
+        if(isWin){
+            bundle.putInt("musicUrl", R.raw.victory);
+        } else{
+            bundle.putInt("musicUrl", R.raw.failure);
+        }
+
+        bundle.putBoolean("isLoop",true);
+        MusicIntent.putExtras(bundle);
+        startService(MusicIntent);
+    }
     public void addFriend(View view) {
         if (addFriendEnable) {
             FriendHelper.addFriend(getIntent().getIntExtra("id1", 0),
