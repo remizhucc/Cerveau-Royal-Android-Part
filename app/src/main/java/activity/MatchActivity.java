@@ -151,7 +151,9 @@ public class MatchActivity extends Activity {
             match.round++;
             myChoice = 0;
             initializeQuestion(match.questions.get(match.round - 1));
-            countdown.cancel();
+            if(countdown!=null) {
+                countdown.cancel();
+            }
             countdown = new CountDownTimer(15000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     TextView countDownTextView = (TextView) findViewById(R.id.countDown);

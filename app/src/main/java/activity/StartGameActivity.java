@@ -99,7 +99,7 @@ public class StartGameActivity extends Activity {
 
         @Override
         public void onFailure(Call call, IOException e) {
-            Toast.makeText(StartGameActivity.this, "onError" + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(StartGameActivity.this, "Error", Toast.LENGTH_LONG).show();
         }
 
         @Override
