@@ -84,7 +84,6 @@ public class LoginActivity extends Activity {
     }
 
     public void loginProcess(String email, String password) throws UnsupportedEncodingException {
-        //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
         String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
         JSONObject json = new JSONObject();
         try {
