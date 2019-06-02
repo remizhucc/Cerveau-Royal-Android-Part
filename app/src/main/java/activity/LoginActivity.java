@@ -12,19 +12,23 @@ import android.widget.Toast;
 
 import com.cerveauroyal.R;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+import org.jetbrains.annotations.NotNull;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.RequestHelper;
+import model.User;
 import service.MusicService;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.Response;
 import service.ReceiveInvitationService;
 
 public class LoginActivity extends Activity {
@@ -91,17 +95,13 @@ public class LoginActivity extends Activity {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        OkHttpUtils.get()
-                .url(url)
-                .addParams("JSON", URLEncoder.encode(json.toString(), "utf-8"))
-                .build()
-                .execute(new LoginProcessCallback(email));
+        RequestHelper.httpGetRequest(url, json.toString(), new LoginProcessCallback(email));
 
         //circle
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
     }
 
-    public class LoginProcessCallback extends StringCallback {
+    public class LoginProcessCallback implements Callback {
         String email;
 
         LoginProcessCallback(String email) {
@@ -110,40 +110,30 @@ public class LoginActivity extends Activity {
         }
 
         @Override
-        public void onBefore(Request request) {
-            super.onBefore(request);
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
         }
 
         @Override
-        public void onAfter() {
-            super.onAfter();
-            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response) {
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 Boolean isLogin = json.getBoolean("success");
                 if (isLogin) {
-                    AccountHelper.setMyInformationFromServer(email, new StringCallback() {
+                    AccountHelper.setMyInformationFromServer(email, new Callback() {
                         @Override
-                        public void onResponse(String response) {
-                            AccountHelper.setPreferences(response, LoginActivity.this);
-                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                            startActivity(intent);
-                            stopService(MusicIntent);
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
                         }
 
                         @Override
-                        public void onError(Call call, Exception e) {
-
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            String responseString = response.body().string();
+                            AccountHelper.setPreferences(responseString, LoginActivity.this);
+                            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                            startActivity(intent);
+                            stopService(MusicIntent);
                         }
                     });
 

@@ -15,14 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerveauroyal.R;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -34,13 +33,17 @@ import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.MatchHelper;
 import helper.RankHelper;
+import helper.RequestHelper;
 import model.Constant;
 import model.Match;
 import model.Question;
 import model.User;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.Response;
 
+//TODO countDown configuration
 public class MatchActivity extends Activity {
     private Match match;
     private int timeleft;
@@ -148,6 +151,7 @@ public class MatchActivity extends Activity {
             match.round++;
             myChoice = 0;
             initializeQuestion(match.questions.get(match.round - 1));
+            countdown.cancel();
             countdown = new CountDownTimer(15000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     TextView countDownTextView = (TextView) findViewById(R.id.countDown);
@@ -189,7 +193,7 @@ public class MatchActivity extends Activity {
     }
 
     public void chooseOption(View view) {
-        if (timeleft > 0) {
+        if (timeleft > 0&&myChoice==0) {
             switch (view.getId()) {
                 case R.id.option1:
                     myChoice = 1;
@@ -257,27 +261,23 @@ public class MatchActivity extends Activity {
     }
 
     private void sendMyChoiceToServer(int choice) {
-        OkHttpUtils.post()
-                .url("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match")
-                .addParams("JSON", buildChoiceJsonString(choice))
-                .build()
-                .execute(new getOpponentChoiceCallback());
+        RequestHelper.httpPostRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/match",
+                buildChoiceJsonString(choice),
+                new getOpponentChoiceCallback());
     }
 
 
-    private class getOpponentChoiceCallback extends StringCallback {
-
-
+    private class getOpponentChoiceCallback implements Callback {
         @Override
-        public void onError(Call call, Exception e) {
-            //do some thing lisk this
-            //myText.setText("onError:" + e.getMessage());
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
         }
 
         @Override
-        public void onResponse(String response) {
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            String responseString = response.body().string();
             try {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(responseString);
                 if (json.getBoolean("stop")) {
 
                     offline = true;
@@ -303,8 +303,6 @@ public class MatchActivity extends Activity {
                 System.out.println(e.getStackTrace());
             }
         }
-
-
     }
 
     private void setRoundResult(int choice1, int choice2) {
