@@ -59,7 +59,7 @@ public class FriendsActivity extends Activity {
 
     public void getFriends(int id) throws UnsupportedEncodingException {
         //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
-        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
+        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/friends";
         JSONObject json = new JSONObject();
         try {
             json.put("id", id);
