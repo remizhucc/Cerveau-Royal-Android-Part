@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.cerveauroyal.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -128,7 +129,7 @@ public class SignupActivity extends Activity {
                         }
                     });
                 }
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();

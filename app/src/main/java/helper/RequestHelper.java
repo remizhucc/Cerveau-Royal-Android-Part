@@ -24,7 +24,7 @@ public class RequestHelper {
                 .build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(urlBase).newBuilder();
-            urlBuilder.addQueryParameter("JSON", data);
+        urlBuilder.addQueryParameter("JSON", data);
 
         String url = urlBuilder.build().toString();
 
@@ -45,10 +45,16 @@ public class RequestHelper {
                 .build();
 
 
+//        RequestBody requestBody = null;
+//        try {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("JSON", data)
+//                    .addFormDataPart("JSON", URLEncoder.encode(data, "utf-8"))
                 .build();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
 
         Request request = new Request.Builder()
                 .url(url)
