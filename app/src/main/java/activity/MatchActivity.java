@@ -145,7 +145,7 @@ public class MatchActivity extends Activity {
     }
 
     private void nextRound() {
-        if (match.round == 10) {
+        if (match.round == 1) {
             matchOver();
         } else {
             match.round++;
@@ -231,8 +231,8 @@ public class MatchActivity extends Activity {
         intent.putExtra("avatar2", match.user2.getAvatar());
         intent.putExtra("nickName1", match.user1.getnickname());
         intent.putExtra("nickName2", match.user2.getnickname());
-        intent.putExtra("rank1", match.user1.getRank());
-        intent.putExtra("rank2", match.user2.getRank());
+        intent.putExtra("rank1", match.user1.getRank().toString());
+        intent.putExtra("rank2", match.user2.getRank().toString());
         intent.putExtra("score1", match.score1);
         intent.putExtra("score2", match.score2);
         intent.putExtra("id1", match.user1.getId());
