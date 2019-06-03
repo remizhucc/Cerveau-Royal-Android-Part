@@ -26,6 +26,7 @@ import java.util.List;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
+import helper.FriendHelper;
 import helper.RequestHelper;
 import model.ProfilFriends;
 import model.User;
@@ -145,31 +146,16 @@ public class FriendsActivity extends Activity {
         if (email.isEmpty()) {
             Toast.makeText(FriendsActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
         } else {
-            AddProcess(email);
+            FriendHelper.addFriend(AccountHelper.getMyIdFromPreferences(activity),email,new FriendsActivity.AddProcessCallback());
+            //circle
+            ProgressBar loadingPanel= (ProgressBar)findViewById(R.id.loadingPanel);
+            loadingPanel.setVisibility(View.VISIBLE);
         }
 
 
 
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
         addFriendPanel.setVisibility(View.GONE);
-    }
-
-    public void AddProcess(String email) throws UnsupportedEncodingException {
-        //String url = "http://你电脑的ip地址:8080/FirstServletDemo/servlet/HelloServlet";
-        String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/login";
-        JSONObject json = new JSONObject();
-        try {
-
-            json.put("password", AccountHelper.getMyIdFromPreferences(this));
-            json.put("email", email);
-
-        } catch (org.json.JSONException e) {
-            System.out.println(e.getStackTrace());
-        }
-        RequestHelper.httpGetRequest(url,json.toString(),new FriendsActivity.AddProcessCallback());
-        //circle
-        ProgressBar loadingPanel= (ProgressBar)findViewById(R.id.loadingPanel);
-        loadingPanel.setVisibility(View.VISIBLE);
     }
 
     public class AddProcessCallback implements Callback {
