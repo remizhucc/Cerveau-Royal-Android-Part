@@ -296,20 +296,21 @@ public class MatchActivity extends Activity {
                         public void run() {
                             setRoundResult(myChoice, opponentChoice);
                             refreshScoreBar();
+                            new CountDownTimer(5000, 1000) {
+
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                public void onFinish() {
+                                    nextRound();
+                                }
+
+
+                            }.start();
                         }
                     });
 
-                    new CountDownTimer(5000, 1000) {
 
-                        public void onTick(long millisUntilFinished) {
-                        }
-
-                        public void onFinish() {
-                            nextRound();
-                        }
-
-
-                    }.start();
                 }
             } catch (JSONException e) {
                 System.out.println(e.getStackTrace());

@@ -122,18 +122,19 @@ public class StartGameActivity extends Activity {
                         activity.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(activity, "Failed to find opponent", Toast.LENGTH_LONG).show();
+                                new CountDownTimer(3000, 1000) {
+
+                                    public void onTick(long millisUntilFinished) {
+                                        //here you can have your logic to set text to edittext
+                                    }
+
+                                    public void onFinish() {
+                                        hideWaitngPanel();
+                                    }
+                                }.start();
                             }
                         });
-                        new CountDownTimer(3000, 1000) {
 
-                            public void onTick(long millisUntilFinished) {
-                                //here you can have your logic to set text to edittext
-                            }
-
-                            public void onFinish() {
-                                hideWaitngPanel();
-                            }
-                        }.start();
                     }
                 } catch (JSONException e) {
                     System.out.println(e.getStackTrace());
