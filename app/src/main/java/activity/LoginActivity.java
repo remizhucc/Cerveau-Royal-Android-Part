@@ -141,9 +141,11 @@ public class LoginActivity extends Activity {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(activity, "Wrong authentication", Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                         }
                     });
                 }
+
             } catch (Exception e) {
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
