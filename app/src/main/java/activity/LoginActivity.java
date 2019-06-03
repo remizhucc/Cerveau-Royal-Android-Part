@@ -35,12 +35,13 @@ public class LoginActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
     private Intent MusicIntent;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        activity=this;
 
         //Start service
         Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
@@ -137,10 +138,18 @@ public class LoginActivity extends Activity {
                     });
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Wrong authentication", Toast.LENGTH_SHORT).show();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(activity, "Wrong authentication", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             } catch (Exception e) {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Log.e(TAG, "FailToLogIn:" + e.getMessage());
             }
         }

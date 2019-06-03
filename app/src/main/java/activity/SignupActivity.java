@@ -34,13 +34,14 @@ public class SignupActivity extends Activity {
     private int avatar;
     private static Context context;
     private String deviceToken;
+    private Activity activity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
-
+        activity=this;
         //default avatar
         context = getApplicationContext();
         avatar = -1;
@@ -121,10 +122,18 @@ public class SignupActivity extends Activity {
                     });
 
                 } else {
-                    Toast.makeText(SignupActivity.this, "Singup failure", Toast.LENGTH_SHORT).show();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(activity, "Singup failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             } catch (Exception e) {
-                Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
 
