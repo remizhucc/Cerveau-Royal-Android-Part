@@ -237,6 +237,7 @@ public class MatchActivity extends Activity {
         intent.putExtra("score2", match.score2);
         intent.putExtra("id1", match.user1.getId());
         intent.putExtra("id2", match.user2.getId());
+        intent.putExtra("opponentEmail", match.user2.getEmail());
         intent.putExtra("withFriend", match.withFriend);
         intent.putExtra("subject", match.subject);
         startActivity(intent);

@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import okhttp3.Callback;
 
 public class FriendHelper {
-    public static void addFriend(int myId, int friendId, Callback callback){
+    public static void addFriend(int myId, String friendEmail, Callback callback){
         String url = "http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/friends";
 
         JSONObject json=new JSONObject();
         try {
             json.put("id", myId);
-            json.put("friendId", friendId);
+            json.put("email", friendEmail);
         }catch (JSONException e){
             System.out.println(e.getStackTrace());
         }

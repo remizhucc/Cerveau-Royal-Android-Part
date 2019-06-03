@@ -130,7 +130,7 @@ public class WinnerActivity extends Activity {
     public void addFriend(View view) {
         if (addFriendEnable) {
             FriendHelper.addFriend(getIntent().getIntExtra("id1", 0),
-                    getIntent().getIntExtra("id2", 0),
+                    getIntent().getStringExtra("opponentEmail"),
                     new Callback() {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
