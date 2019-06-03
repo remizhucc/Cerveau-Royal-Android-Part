@@ -40,12 +40,14 @@ public class FriendsActivity extends Activity {
     private int id;
     ReceiveInvitationBroadcastReceiver invitationReceiver;
     ProgressBar loadingPanel;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.friends);
+        activity=this;
         id = AccountHelper.getMyIdFromPreferences(this);
         try {
             getFriends(id);
@@ -94,10 +96,18 @@ public class FriendsActivity extends Activity {
 
 
                 } else {
-                    Toast.makeText(FriendsActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(activity, "Wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             } catch (Exception e) {
-                Toast.makeText(FriendsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Log.e(TAG, "FailToLogIn:" + e.getMessage());
             }
         }
