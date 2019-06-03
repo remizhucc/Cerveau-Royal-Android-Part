@@ -35,7 +35,7 @@ public class StartGameActivity extends Activity {
     boolean withUser;
     int userId;
     Boolean connecting;
-
+    Activity activity;
     int avatar_player2;
     String nom_player2;
 
@@ -45,7 +45,7 @@ public class StartGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
-
+        activity=this;
 
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar_player1);
         TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
@@ -99,7 +99,11 @@ public class StartGameActivity extends Activity {
 
         @Override
         public void onFailure(Call call, IOException e) {
-            Toast.makeText(StartGameActivity.this, "Error", Toast.LENGTH_LONG).show();
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         @Override
@@ -115,7 +119,11 @@ public class StartGameActivity extends Activity {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(StartGameActivity.this, "Failed to find opponent", Toast.LENGTH_LONG).show();
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(activity, "Failed to find opponent", Toast.LENGTH_LONG).show();
+                            }
+                        });
                         new CountDownTimer(3000, 1000) {
 
                             public void onTick(long millisUntilFinished) {
