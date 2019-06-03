@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import activity.StartGameActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -47,9 +48,8 @@ public class RequestHelper {
 
 //        RequestBody requestBody = null;
 //        try {
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("JSON", data)
+        FormBody requestBody = new FormBody.Builder()
+                .add("JSON", data)
 //                    .addFormDataPart("JSON", URLEncoder.encode(data, "utf-8"))
                 .build();
 //        } catch (UnsupportedEncodingException e) {
