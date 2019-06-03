@@ -29,7 +29,6 @@ import okhttp3.Response;
 
 public class ProfilActivity extends Activity {
     ReceiveInvitationBroadcastReceiver invitationReceiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,23 +86,32 @@ public class ProfilActivity extends Activity {
                 JSONObject json = null;
                 try {
                     json = new JSONObject(responseString);
-                    User user = User.read(json.getString("user"));
-                    winSubject1.setText(String.valueOf(user.getNumWinGeography()));
-                    winSubject2.setText(String.valueOf(user.getNumWinLiterature()));
-                    winSubject3.setText(String.valueOf(user.getNumWinMath()));
-                    winSubject4.setText(String.valueOf(user.getNumWinHistory()));
-                    winSubject5.setText(String.valueOf(user.getNumWinArt()));
-                    winSubject6.setText(String.valueOf(user.getNumWinMusic()));
-                    winSubject7.setText(String.valueOf(user.getNumWinEnglish()));
-                    winSubject8.setText(String.valueOf(user.getNumWinCommonsense()));
-                    loseSubject1.setText(String.valueOf(user.getNumLoseGeography()));
-                    loseSubject2.setText(String.valueOf(user.getNumLoseLiterature()));
-                    loseSubject3.setText(String.valueOf(user.getNumLoseMath()));
-                    loseSubject4.setText(String.valueOf(user.getNumLoseHistory()));
-                    loseSubject5.setText(String.valueOf(user.getNumLoseArt()));
-                    loseSubject6.setText(String.valueOf(user.getNumLoseMusic()));
-                    loseSubject7.setText(String.valueOf(user.getNumLoseEnglish()));
-                    loseSubject8.setText(String.valueOf(user.getNumLoseCommonsense()));
+                    final User user = User.read(json.getString("user"));
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            winSubject1.setText(String.valueOf(user.getNumWinGeography()));
+                            winSubject2.setText(String.valueOf(user.getNumWinLiterature()));
+                            winSubject3.setText(String.valueOf(user.getNumWinMath()));
+                            winSubject4.setText(String.valueOf(user.getNumWinHistory()));
+                            winSubject5.setText(String.valueOf(user.getNumWinArt()));
+                            winSubject6.setText(String.valueOf(user.getNumWinMusic()));
+                            winSubject7.setText(String.valueOf(user.getNumWinEnglish()));
+                            winSubject8.setText(String.valueOf(user.getNumWinCommonsense()));
+                            loseSubject1.setText(String.valueOf(user.getNumLoseGeography()));
+                            loseSubject2.setText(String.valueOf(user.getNumLoseLiterature()));
+                            loseSubject3.setText(String.valueOf(user.getNumLoseMath()));
+                            loseSubject4.setText(String.valueOf(user.getNumLoseHistory()));
+                            loseSubject5.setText(String.valueOf(user.getNumLoseArt()));
+                            loseSubject6.setText(String.valueOf(user.getNumLoseMusic()));
+                            loseSubject7.setText(String.valueOf(user.getNumLoseEnglish()));
+                            loseSubject8.setText(String.valueOf(user.getNumLoseCommonsense()));
+
+                        }
+                    });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
