@@ -151,7 +151,7 @@ public class MatchActivity extends Activity {
             match.round++;
             myChoice = 0;
             initializeQuestion(match.questions.get(match.round - 1));
-            if(countdown!=null) {
+            if (countdown != null) {
                 countdown.cancel();
             }
             countdown = new CountDownTimer(15000, 1000) {
@@ -195,7 +195,7 @@ public class MatchActivity extends Activity {
     }
 
     public void chooseOption(View view) {
-        if (timeleft > 0&&myChoice==0) {
+        if (timeleft > 0 && myChoice == 0) {
             switch (view.getId()) {
                 case R.id.option1:
                     myChoice = 1;
@@ -226,7 +226,7 @@ public class MatchActivity extends Activity {
 
         //go to winner page with data
         Intent intent = new Intent(MatchActivity.this, WinnerActivity.class);
-        intent.putExtra("offline",offline);
+        intent.putExtra("offline", offline);
         intent.putExtra("avatar1", match.user1.getAvatar());
         intent.putExtra("avatar2", match.user2.getAvatar());
         intent.putExtra("nickName1", match.user1.getnickname());
@@ -286,10 +286,19 @@ public class MatchActivity extends Activity {
                     offline = true;
                     matchOver();
                 } else {
-                    int opponentChoice = json.getInt("answer");
+                    final int opponentChoice = json.getInt("answer");
                     match.score2 = json.getInt("score");
-                    setRoundResult(myChoice, opponentChoice);
-                    refreshScoreBar();
+
+
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            setRoundResult(myChoice, opponentChoice);
+                            refreshScoreBar();
+                        }
+                    });
+
                     new CountDownTimer(5000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
@@ -309,6 +318,7 @@ public class MatchActivity extends Activity {
     }
 
     private void setRoundResult(int choice1, int choice2) {
+
         int correction = match.questions.get(match.round - 1).getAnswer();
 
         Button option1 = (Button) findViewById(R.id.option1);
