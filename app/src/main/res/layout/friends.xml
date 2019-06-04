@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/root">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -64,14 +64,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            >
 
             <ListView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                />
+                android:layout_height="match_parent" />
         </LinearLayout>
 
 
@@ -82,14 +81,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/background_waiting"
         android:orientation="vertical"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="15dp"
         android:paddingLeft="15dp"
+        android:paddingTop="15dp"
         android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         android:visibility="gone">
 
         <TextView
@@ -103,9 +102,9 @@
 
         <EditText
             android:id="@+id/email"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/account_email"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress"
@@ -118,32 +117,33 @@
             android:gravity="center"
 
             >
-         <Button
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+
+            <Button
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/button_red"
-                android:onClick="sendRequestAddFriend"
 
+                android:onClick="sendRequestAddFriend"
                 android:text="@string/ok"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_marginRight="20dp"/>
+                android:textSize="20sp" />
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/button_red"
-            android:onClick="cancelAddFriend"
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_red"
+                android:onClick="cancelAddFriend"
 
-            android:text="@string/cancel"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
