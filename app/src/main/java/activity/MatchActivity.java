@@ -108,18 +108,11 @@ public class MatchActivity extends Activity {
         TextView score1 = (TextView) findViewById(R.id.score1);
         TextView score2 = (TextView) findViewById(R.id.score2);
 
-
-        FrameLayout.LayoutParams params1 = new FrameLayout.LayoutParams(
-                15,
-                (int) Math.round(MatchHelper.getScoreBarLenght(match.score1)));
-        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(
-                15,
-                (int) Math.round(MatchHelper.getScoreBarLenght(match.score2)));
+        scoreBar1.getLayoutParams().height= (int) Math.round(MatchHelper.getScoreBarLenght(match.score1));
+        scoreBar2.getLayoutParams().height= (int) Math.round(MatchHelper.getScoreBarLenght(match.score2));
 
         score1.setText(String.valueOf(match.score1));
         score2.setText(String.valueOf(match.score2));
-        scoreBar1.setLayoutParams(params1);
-        scoreBar2.setLayoutParams(params2);
     }
 
     private void initializeUser() {
