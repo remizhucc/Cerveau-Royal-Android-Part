@@ -138,7 +138,7 @@ public class MatchActivity extends Activity {
     }
 
     private void nextRound() {
-        if (match.round == 1) {
+        if (match.round == 10) {
             matchOver();
         } else {
             match.round++;

@@ -17,6 +17,7 @@ import com.cerveauroyal.R;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class FriendsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.friends);
-        activity=this;
+        activity = this;
         id = AccountHelper.getMyIdFromPreferences(this);
         try {
             getFriends(id);
@@ -66,7 +67,7 @@ public class FriendsActivity extends Activity {
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
-        RequestHelper.httpGetRequest(url,json.toString(),new FriendsActivity.GetFriendProcessCallback());
+        RequestHelper.httpGetRequest(url, json.toString(), new FriendsActivity.GetFriendProcessCallback());
     }
 
     public class GetFriendProcessCallback implements Callback {
@@ -82,7 +83,7 @@ public class FriendsActivity extends Activity {
                 JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
-                    JSONArray result = json.getJSONArray("friends");
+                    JSONArray result = new JSONArray(json.getString("friends"));
                     ProfilFriends pf;
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject jb = result.getJSONObject(i);
@@ -90,10 +91,13 @@ public class FriendsActivity extends Activity {
                         friend.add(pf);
 
                     }
-
-                    FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
-                    ListView listview = (ListView) findViewById(R.id.list_view);
-                    listview.setAdapter(adapter);
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
+                            ListView listview = (ListView) findViewById(R.id.list_view);
+                            listview.setAdapter(adapter);
+                        }
+                    });
 
 
                 } else {
@@ -103,7 +107,7 @@ public class FriendsActivity extends Activity {
                         }
                     });
                 }
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
@@ -115,25 +119,25 @@ public class FriendsActivity extends Activity {
     }
 
 
-    public void playWithFriend(int position,ListView listView){
+    public void playWithFriend(int position, ListView listView) {
 
         int userId = -1;
-        ImageView avatar2=(ImageView) findViewById(R.id.avatar);
-        TextView text=(TextView) findViewById(R.id.nickname);
+        ImageView avatar2 = (ImageView) findViewById(R.id.avatar);
+        TextView text = (TextView) findViewById(R.id.nickname);
         String nickname = text.getText().toString();
-        int avatarId=0;
+        int avatarId = 0;
 
         Intent intent = new Intent(this, StartGameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("withUser",true);
-        intent.putExtra("userId",userId);
-        intent.putExtra("avatar_player2",avatarId);
-        intent.putExtra("nickname_player2",nickname);
+        intent.putExtra("withUser", true);
+        intent.putExtra("userId", userId);
+        intent.putExtra("avatar_player2", avatarId);
+        intent.putExtra("nickname_player2", nickname);
 
         startActivity(intent);
     }
 
-    public void addFriend(View view){
+    public void addFriend(View view) {
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
         EditText email = (EditText) findViewById(R.id.email);
         email.setText("");
@@ -146,12 +150,11 @@ public class FriendsActivity extends Activity {
         if (email.isEmpty()) {
             Toast.makeText(FriendsActivity.this, "Field empty", Toast.LENGTH_SHORT).show();
         } else {
-            FriendHelper.addFriend(AccountHelper.getMyIdFromPreferences(activity),email,new FriendsActivity.AddProcessCallback());
+            FriendHelper.addFriend(AccountHelper.getMyIdFromPreferences(activity), email, new FriendsActivity.AddProcessCallback());
             //circle
-            ProgressBar loadingPanel= (ProgressBar)findViewById(R.id.loadingPanel);
+            ProgressBar loadingPanel = (ProgressBar) findViewById(R.id.loadingPanel);
             loadingPanel.setVisibility(View.VISIBLE);
         }
-
 
 
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
@@ -173,7 +176,7 @@ public class FriendsActivity extends Activity {
                 JSONObject json = new JSONObject(responseString);
                 Boolean success = json.getBoolean("success");
                 if (success) {
-                    JSONArray result = json.getJSONArray("friends");
+                    JSONArray result = new JSONArray(json.getString("friends"));
                     ProfilFriends pf;
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject jb = result.getJSONObject(i);
@@ -181,28 +184,42 @@ public class FriendsActivity extends Activity {
                         friend.add(pf);
 
                     }
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
+                            ListView listview = (ListView) findViewById(R.id.list_view);
+                            listview.setAdapter(adapter);
 
-                    FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
-                    ListView listview = (ListView) findViewById(R.id.list_view);
-                    listview.setAdapter(adapter);
+                            loadingPanel.setVisibility(View.GONE);
+                        }
+                    });
 
-                    loadingPanel.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(FriendsActivity.this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(FriendsActivity.this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
-            } catch (Exception e) {
-                Toast.makeText(FriendsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(FriendsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Log.e(TAG, "FailToAddFriend:" + e.getMessage());
             }
         }
     }
+
     public void cancelAddFriend(View view) {
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
         addFriendPanel.setVisibility(View.GONE);
     }
 
-    public void backFriendToIndex(View view){
-        Intent intent=new Intent(FriendsActivity.this, IndexActivity.class);
+    public void backFriendToIndex(View view) {
+        Intent intent = new Intent(FriendsActivity.this, IndexActivity.class);
         startActivity(intent);
     }
 }
