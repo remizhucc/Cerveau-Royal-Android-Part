@@ -38,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Steven"
-            android:textSize="40sp"
-            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textStyle="normal"
             android:layout_gravity="start"/>
 
         <LinearLayout

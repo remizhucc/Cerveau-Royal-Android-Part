@@ -152,7 +152,7 @@ public class FriendsActivity extends Activity {
         } else {
             FriendHelper.addFriend(AccountHelper.getMyIdFromPreferences(activity), email, new FriendsActivity.AddProcessCallback());
             //circle
-            ProgressBar loadingPanel = (ProgressBar) findViewById(R.id.loadingPanel);
+            loadingPanel = (ProgressBar) findViewById(R.id.loadingPanel);
             loadingPanel.setVisibility(View.VISIBLE);
         }
 
@@ -178,6 +178,7 @@ public class FriendsActivity extends Activity {
                 if (success) {
                     JSONArray result = new JSONArray(json.getString("friends"));
                     ProfilFriends pf;
+                    friend.clear();
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject jb = result.getJSONObject(i);
                         pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar());
@@ -189,7 +190,6 @@ public class FriendsActivity extends Activity {
                             FriendsAdapter adapter = new FriendsAdapter(FriendsActivity.this, R.layout.listfriends, friend);
                             ListView listview = (ListView) findViewById(R.id.list_view);
                             listview.setAdapter(adapter);
-
                             loadingPanel.setVisibility(View.GONE);
                         }
                     });
@@ -198,6 +198,7 @@ public class FriendsActivity extends Activity {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(FriendsActivity.this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
+                            loadingPanel.setVisibility(View.GONE);
 
                         }
                     });
