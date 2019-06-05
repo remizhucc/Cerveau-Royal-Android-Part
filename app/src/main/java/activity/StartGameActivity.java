@@ -293,12 +293,12 @@ public class StartGameActivity extends Activity {
 
     public void cancelMatchOpponent(View view) {
         hideWaitngPanel();
-//        sendCancelRequestToServer();
+        sendCancelRequestToServer();
         connecting = false;
     }
 
     public void sendCancelRequestToServer(){
-        RequestHelper.httpPostRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/cancel",
+        RequestHelper.httpPostRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/cancelMatch",
                 buildCancelRequestJsonString(),
                 new getCancelRequestCallback());
     }
