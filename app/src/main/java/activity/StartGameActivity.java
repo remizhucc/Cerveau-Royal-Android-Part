@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cerveauroyal.R;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -292,7 +293,39 @@ public class StartGameActivity extends Activity {
 
     public void cancelMatchOpponent(View view) {
         hideWaitngPanel();
+//        sendCancelRequestToServer();
         connecting = false;
+    }
+
+    public void sendCancelRequestToServer(){
+        RequestHelper.httpPostRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/cancel",
+                buildCancelRequestJsonString(),
+                new getCancelRequestCallback());
+    }
+
+    private String buildCancelRequestJsonString() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", AccountHelper.getMyIdFromPreferences(StartGameActivity.this));
+            json.put("subject", subject);
+            json.put("rank", AccountHelper.getMyRankFromPreferences(StartGameActivity.this));
+        } catch (JSONException e) {
+            System.out.println(e.getStackTrace());
+        }
+        return json.toString();
+    }
+
+    private class getCancelRequestCallback implements Callback {
+
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            Toast.makeText(StartGameActivity.this, "Get the CancelStartGame request response.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
