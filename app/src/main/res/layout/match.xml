@@ -223,8 +223,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:gravity="center"
-                android:text="Which state is the biggest state in America? "
-                android:textSize="30sp"
+                android:text="Which state is the biggest state in America?"
+                android:textSize="25sp"
                 android:textStyle="normal" />
         </LinearLayout>
 

@@ -43,7 +43,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//TODO countDown configuration
+//TODO stop countdown when i choose
 public class MatchActivity extends Activity {
     private Match match;
     private int timeleft;
@@ -110,6 +110,9 @@ public class MatchActivity extends Activity {
 
         scoreBar1.getLayoutParams().height= (int) Math.round(MatchHelper.getScoreBarLenght(match.score1));
         scoreBar2.getLayoutParams().height= (int) Math.round(MatchHelper.getScoreBarLenght(match.score2));
+        scoreBar1.requestLayout();
+        scoreBar2.requestLayout();
+
 
         score1.setText(String.valueOf(match.score1));
         score2.setText(String.valueOf(match.score2));
@@ -207,6 +210,9 @@ public class MatchActivity extends Activity {
             buttonChosen.setBackground(getDrawable(R.drawable.button_white_storke_green));
             if (match.questions.get(match.round - 1).getAnswer() == myChoice) {
                 match.score1 += timeleft * 10;
+            }
+            if (countdown != null) {
+                countdown.cancel();
             }
 
             sendMyChoiceToServer(myChoice);

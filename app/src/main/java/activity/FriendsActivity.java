@@ -87,7 +87,7 @@ public class FriendsActivity extends Activity {
                     ProfilFriends pf;
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject jb = result.getJSONObject(i);
-                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar());
+                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar(),User.read(jb.toString()).getId());
                         friend.add(pf);
 
                     }
@@ -119,23 +119,6 @@ public class FriendsActivity extends Activity {
     }
 
 
-    public void playWithFriend(int position, ListView listView) {
-
-        int userId = -1;
-        ImageView avatar2 = (ImageView) findViewById(R.id.avatar);
-        TextView text = (TextView) findViewById(R.id.nickname);
-        String nickname = text.getText().toString();
-        int avatarId = 0;
-
-        Intent intent = new Intent(this, StartGameActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("withUser", true);
-        intent.putExtra("userId", userId);
-        intent.putExtra("avatar_player2", avatarId);
-        intent.putExtra("nickname_player2", nickname);
-
-        startActivity(intent);
-    }
 
     public void addFriend(View view) {
         LinearLayout addFriendPanel = (LinearLayout) findViewById(R.id.addFriendPanel);
@@ -181,7 +164,7 @@ public class FriendsActivity extends Activity {
                     friend.clear();
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject jb = result.getJSONObject(i);
-                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar());
+                        pf = new ProfilFriends(User.read(jb.toString()).getnickname(), User.read(jb.toString()).getAvatar(),User.read(jb.toString()).getId());
                         friend.add(pf);
 
                     }

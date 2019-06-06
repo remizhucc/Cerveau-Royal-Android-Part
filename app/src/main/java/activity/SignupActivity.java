@@ -29,12 +29,12 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static helper.AccountHelper.getMyTokenFromPreferences;
 import static helper.AccountHelper.isPasswordAndComfirmPasswordMatch;
 
 public class SignupActivity extends Activity {
     private int avatar;
     private static Context context;
-    private String deviceToken;
     private Activity activity;
 
 
@@ -86,8 +86,7 @@ public class SignupActivity extends Activity {
             json.put("password", password);
             json.put("avatar", avatar);
             json.put("nickname", nickname);
-            String token = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            json.put("deviceToken", token);
+            json.put("deviceToken", getMyTokenFromPreferences());
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }
