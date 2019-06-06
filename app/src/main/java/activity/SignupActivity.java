@@ -86,7 +86,7 @@ public class SignupActivity extends Activity {
             json.put("password", password);
             json.put("avatar", avatar);
             json.put("nickname", nickname);
-            json.put("deviceToken", getMyTokenFromPreferences());
+            json.put("deviceToken", getMyTokenFromPreferences(this));
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());
         }

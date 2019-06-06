@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class InvitationFragment extends Fragment implements View.OnClickListener {
     User challenger;
-    String agentName;
+    String matchId;
 
     @Nullable
     @Override
@@ -43,7 +43,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
         View v = inflater.inflate(R.layout.invitation, container, false);
         //prepare date
         String userJson = getArguments().getString("user");
-        agentName = getArguments().getString("agentName");
+        matchId = getArguments().getString("matchId");
         challenger = User.read(userJson);
         //set onclick function
         Button accept = (Button) v.findViewById(R.id.button_accept);
@@ -67,7 +67,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
     }
 
     private void accept(View view) {
-        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation",
+        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/acceptInvitation",
                 buildRespondInvitationJsonString(true),
                 new Callback() {
                     @Override
@@ -86,7 +86,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
     }
 
     private void escape(View view) {
-        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/invitation",
+        RequestHelper.httpGetRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/acceptInvitation",
                 buildRespondInvitationJsonString(false),
                 new Callback() {
                     @Override
@@ -105,7 +105,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
     private String buildRespondInvitationJsonString(Boolean success) {
         JSONObject json = new JSONObject();
         try {
-            json.put("agentName", agentName);
+            json.put("matchId", matchId);
             json.put("success", success);
         } catch (JSONException e) {
             System.out.println(e.getStackTrace());

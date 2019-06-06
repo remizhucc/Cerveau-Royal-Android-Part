@@ -90,7 +90,6 @@ public class LoginActivity extends Activity {
         try {
             json.put("email", email);
             json.put("password", password);
-
             json.put("deviceToken", AccountHelper.getMyTokenFromPreferences(this));
         } catch (org.json.JSONException e) {
             System.out.println(e.getStackTrace());

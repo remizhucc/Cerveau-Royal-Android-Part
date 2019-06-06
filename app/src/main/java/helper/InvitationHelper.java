@@ -15,8 +15,9 @@ public class InvitationHelper {
         try{
         JSONObject json = new JSONObject(jsonString);
         Bundle bundle = new Bundle();
-        bundle.putString("user", json.getJSONObject("user").toString());
-        bundle.putString("agentName", json.getString("agentName"));
+        bundle.putString("user", json.getString("user"));
+        bundle.putString("matchId", json.getString("matchId"));
+        bundle.putString("subject", json.getString("subject"));
         invitation.setArguments(bundle);
         }catch (JSONException e){
             System.out.println(e.getStackTrace());
@@ -25,7 +26,7 @@ public class InvitationHelper {
 
     public static ReceiveInvitationBroadcastReceiver registerInvitationReceiver(Activity activity){
         ReceiveInvitationBroadcastReceiver receiver=new ReceiveInvitationBroadcastReceiver(activity);
-        IntentFilter filter = new IntentFilter("InvitationReceiver");
+        IntentFilter filter = new IntentFilter("android.intent.action.InvitationReceiver");
         activity.registerReceiver(receiver, filter);
         return receiver;
     }

@@ -17,6 +17,9 @@ import helper.InvitationHelper;
 public class ReceiveInvitationBroadcastReceiver extends BroadcastReceiver {
     Activity currentActivity;
 
+    public ReceiveInvitationBroadcastReceiver() {
+        super();
+    }
     public ReceiveInvitationBroadcastReceiver(Activity currentActivity) {
         super();
         this.currentActivity = currentActivity;

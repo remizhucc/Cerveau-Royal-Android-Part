@@ -23,7 +23,7 @@
 
         <receiver android:name="broadcastReceiver.ReceiveInvitationBroadcastReceiver"  android:exported="true">
             <intent-filter>
-                <action android:name="InvitationReceiver"/>
+                <action android:name="android.intent.action.InvitationReceiver"/>
             </intent-filter>
         </receiver>
         <activity android:name="activity.LoginActivity" android:noHistory="true">
