@@ -108,7 +108,7 @@ public class WinnerActivity extends Activity {
 
         if (getIntent().getExtras().getBoolean("withFriend")) {
             addFriendEnable = false;
-            setAddFriendButtonGrey();
+            hideAddFriendButton();
         } else {
             addFriendEnable = true;
         }
@@ -201,6 +201,11 @@ public class WinnerActivity extends Activity {
         intent.putExtra("id", getIntent().getIntExtra("rank2", 0));
         startActivity(intent);
 
+    }
+
+    private void hideAddFriendButton(){
+        Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
+        addFriendButton.setVisibility(View.GONE);
     }
 
     private void setAddFriendButtonGrey() {
