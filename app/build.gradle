@@ -17,6 +17,7 @@ android {
         }
     }
 }
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -28,6 +29,8 @@ dependencies {
     implementation files('libs/jackson-databind-2.9.4.jar')
     implementation files('libs/jackson-core-2.9.4.jar')
     implementation files('libs/jackson-annotations-2.9.4.jar')
+    //apply push notification
     implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha02'
 }

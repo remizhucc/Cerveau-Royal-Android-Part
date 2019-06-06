@@ -28,10 +28,6 @@ public class IndexActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
         initializeActivity();
-
-        //Add music
-        addIndexMusic();
-
     }
 
     private void addIndexMusic(){
@@ -79,6 +75,8 @@ public class IndexActivity extends Activity {
     @Override
     protected void onResume() {
         invitationReceiver=InvitationHelper.registerInvitationReceiver(this);
+        //Add music
+        addIndexMusic();
         super.onResume();
     }
 

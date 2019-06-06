@@ -64,4 +64,27 @@ public class RequestHelper {
         Call call = client.newCall(request);
         call.enqueue(callback);
     }
+
+
+    public static void httpPutRequest(String url, String data, Callback callback) {
+        OkHttpClient client = new OkHttpClient()
+                .newBuilder()
+                .retryOnConnectionFailure(false)
+                .connectTimeout(3600, TimeUnit.SECONDS)
+                .readTimeout(3600, TimeUnit.SECONDS)
+                .writeTimeout(3600, TimeUnit.SECONDS)
+                .build();
+
+        FormBody requestBody = new FormBody.Builder()
+                .add("JSON", data)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
 }

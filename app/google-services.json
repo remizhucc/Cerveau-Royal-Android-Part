@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "357106428100",
+    "firebase_url": "https://civic-circuit-195710.firebaseio.com",
+    "project_id": "civic-circuit-195710",
+    "storage_bucket": "civic-circuit-195710.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357106428100:android:5915e0ea28c8f7ac",
+        "android_client_info": {
+          "package_name": "com.cerveauroyal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357106428100-j20hin7m6hpq96kg23s00ci15ho1p1ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA05LCNgtGC1IdHMe_t8QVypZT-pxcP1Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357106428100-j20hin7m6hpq96kg23s00ci15ho1p1ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
