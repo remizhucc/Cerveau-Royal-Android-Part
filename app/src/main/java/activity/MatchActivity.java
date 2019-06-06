@@ -211,6 +211,9 @@ public class MatchActivity extends Activity {
             if (match.questions.get(match.round - 1).getAnswer() == myChoice) {
                 match.score1 += timeleft * 10;
             }
+            if (countdown != null) {
+                countdown.cancel();
+            }
 
             sendMyChoiceToServer(myChoice);
         }
