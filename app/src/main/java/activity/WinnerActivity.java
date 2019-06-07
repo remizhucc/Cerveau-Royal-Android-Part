@@ -27,6 +27,7 @@ import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.FriendHelper;
 import helper.InvitationHelper;
+import helper.NavigationBarHelper;
 import helper.RankHelper;
 import model.Constant;
 import okhttp3.Call;
@@ -45,7 +46,7 @@ public class WinnerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winner);
-
+        NavigationBarHelper.hideSystemUI(this);
         initializeActivity();
 
 

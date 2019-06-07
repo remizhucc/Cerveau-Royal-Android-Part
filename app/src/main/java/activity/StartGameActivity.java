@@ -26,6 +26,7 @@ import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
 import helper.InvitationHelper;
+import helper.NavigationBarHelper;
 import helper.RequestHelper;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,7 +48,7 @@ public class StartGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startgame);
         activity=this;
-
+        NavigationBarHelper.hideSystemUI(activity);
         ImageView avatar1 = (ImageView) findViewById(R.id.avatar_player1);
         TextView nickname1 = (TextView) findViewById(R.id.nom_player1);
         avatar1.setImageResource(AvatarHelper.getAvatarDrawableId(AccountHelper.getMyAvatarFromPreferences(this), this));

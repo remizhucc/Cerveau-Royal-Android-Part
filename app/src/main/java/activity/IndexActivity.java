@@ -15,6 +15,7 @@ import helper.AccountHelper;
 import helper.ActivityHelper;
 import helper.AvatarHelper;
 import helper.InvitationHelper;
+import helper.NavigationBarHelper;
 import helper.RankHelper;
 import model.Constant;
 import service.MusicService;
@@ -27,6 +28,7 @@ public class IndexActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index);
+        NavigationBarHelper.hideSystemUI(this);
         initializeActivity();
     }
 

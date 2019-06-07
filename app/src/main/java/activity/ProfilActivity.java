@@ -20,6 +20,7 @@ import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.InvitationHelper;
+import helper.NavigationBarHelper;
 import helper.RankHelper;
 import model.Constant;
 import model.User;
@@ -33,7 +34,7 @@ public class ProfilActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-
+        NavigationBarHelper.hideSystemUI(this);
         try {
             initializeActivity();
         } catch (UnsupportedEncodingException e) {

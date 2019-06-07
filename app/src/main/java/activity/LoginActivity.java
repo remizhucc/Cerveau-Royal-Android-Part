@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.NavigationBarHelper;
 import helper.RequestHelper;
 import model.User;
 import service.MusicService;
@@ -42,7 +43,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         activity=this;
-
+        NavigationBarHelper.hideSystemUI(activity);
         //Start service
         Intent serviceIntent = new Intent(this, ReceiveInvitationService.class);
         startService(serviceIntent);
@@ -163,6 +164,7 @@ public class LoginActivity extends Activity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            NavigationBarHelper.hideSystemUI(activity);
             View v = getCurrentFocus();
             if (ActivityHelper.isShouldHideInput(v, ev)) {
                 if (ActivityHelper.hideInputMethod(this, v)) {
