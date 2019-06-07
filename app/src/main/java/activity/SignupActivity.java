@@ -8,6 +8,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 import helper.AccountHelper;
 import helper.ActivityHelper;
+import helper.NavigationBarHelper;
 import helper.RequestHelper;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,6 +44,7 @@ public class SignupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        NavigationBarHelper.hideSystemUI(activity);
         activity=this;
         //default avatar
         context = getApplicationContext();
@@ -228,6 +231,19 @@ public class SignupActivity extends Activity {
         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-
+    //keyboard hide automatically
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            NavigationBarHelper.hideSystemUI(activity);
+            View v = getCurrentFocus();
+            if (ActivityHelper.isShouldHideInput(v, ev)) {
+                if (ActivityHelper.hideInputMethod(this, v)) {
+                    return true; //隐藏键盘时，其他控件不响应点击事件==》注释则不拦截点击事件
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
 }

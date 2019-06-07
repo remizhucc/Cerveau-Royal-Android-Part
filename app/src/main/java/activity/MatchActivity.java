@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 import helper.AccountHelper;
 import helper.AvatarHelper;
 import helper.MatchHelper;
+import helper.NavigationBarHelper;
 import helper.RankHelper;
 import helper.RequestHelper;
 import model.Constant;
@@ -55,6 +56,7 @@ public class MatchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match);
+        NavigationBarHelper.hideSystemUI(this);
         JSONObject json;
         try {
             json = new JSONObject(getIntent().getStringExtra("json"));

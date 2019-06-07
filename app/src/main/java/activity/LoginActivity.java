@@ -164,6 +164,7 @@ public class LoginActivity extends Activity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            NavigationBarHelper.hideSystemUI(activity);
             View v = getCurrentFocus();
             if (ActivityHelper.isShouldHideInput(v, ev)) {
                 if (ActivityHelper.hideInputMethod(this, v)) {

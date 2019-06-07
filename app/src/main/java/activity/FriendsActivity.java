@@ -28,6 +28,7 @@ import java.util.List;
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
 import helper.FriendHelper;
+import helper.NavigationBarHelper;
 import helper.RequestHelper;
 import model.ProfilFriends;
 import model.User;
@@ -50,6 +51,7 @@ public class FriendsActivity extends Activity {
 
         setContentView(R.layout.friends);
         activity = this;
+        NavigationBarHelper.hideSystemUI(activity);
         id = AccountHelper.getMyIdFromPreferences(this);
         try {
             getFriends(id);
