@@ -298,7 +298,7 @@ public class StartGameActivity extends Activity {
     }
 
     public void sendCancelRequestToServer(){
-        RequestHelper.httpPostRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/cancelMatch",
+        RequestHelper.httpPutRequest("http://cerveauroyal-env.tdsz9xheaw.eu-west-3.elasticbeanstalk.com/cancelMatch",
                 buildCancelRequestJsonString(),
                 new getCancelRequestCallback());
     }
@@ -324,7 +324,7 @@ public class StartGameActivity extends Activity {
 
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            Toast.makeText(StartGameActivity.this, "Get the CancelStartGame request response.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(StartGameActivity.this, "Get the CancelStartGame request response.", Toast.LENGTH_SHORT).show();
         }
     }
 
