@@ -36,6 +36,7 @@ import okhttp3.Response;
 public class InvitationFragment extends Fragment implements View.OnClickListener {
     User challenger;
     String matchId;
+    int subject;
 
     @Nullable
     @Override
@@ -44,6 +45,7 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
         //prepare date
         String userJson = getArguments().getString("user");
         matchId = getArguments().getString("matchId");
+        subject = getArguments().getInt("subject");
         challenger = User.read(userJson);
         //set onclick function
         Button accept = (Button) v.findViewById(R.id.button_accept);
@@ -63,6 +65,11 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
         nickname.setText(challenger.getnickname());
         rankImage.setImageResource(RankHelper.getRankDrawableId(challenger.getRank(), getActivity()));
         rankName.setText(RankHelper.getRankName(challenger.getRank()));
+
+        //set subject
+        TextView subjectText = (TextView) v.findViewById(R.id.subjectInvitation);
+        subjectText.setText(getSubjectName(subject));
+
         return v;
     }
 
@@ -111,6 +118,28 @@ public class InvitationFragment extends Fragment implements View.OnClickListener
             System.out.println(e.getStackTrace());
         }
         return json.toString();
+    }
+
+    private String getSubjectName(int subject){
+        switch (subject){
+            case 1:
+                return "Geography";
+            case 2:
+                return "Literature";
+            case 3:
+                return "Math";
+            case 4:
+                return "History";
+            case 5:
+                return "Art";
+            case 6:
+                return "Music";
+            case 7:
+                return "English";
+            case 8:
+                return "CommonSense";
+        }
+        return null;
     }
 
     @Override

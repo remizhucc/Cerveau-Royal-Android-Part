@@ -81,7 +81,7 @@ public class RequestHelper {
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(requestBody)
+                .put(requestBody)
                 .build();
 
         Call call = client.newCall(request);
