@@ -34,7 +34,7 @@ public class ProfilActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-        NavigationBarHelper.hideSystemUI(activity);
+        NavigationBarHelper.hideSystemUI(this);
         try {
             initializeActivity();
         } catch (UnsupportedEncodingException e) {

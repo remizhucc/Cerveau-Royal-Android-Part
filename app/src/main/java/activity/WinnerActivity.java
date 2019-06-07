@@ -46,7 +46,7 @@ public class WinnerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winner);
-        NavigationBarHelper.hideSystemUI(activity);
+        NavigationBarHelper.hideSystemUI(this);
         initializeActivity();
 
 
