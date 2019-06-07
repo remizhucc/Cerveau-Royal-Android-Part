@@ -43,7 +43,6 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//TODO stop countdown when i choose
 public class MatchActivity extends Activity {
     private Match match;
     private int timeleft;
