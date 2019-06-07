@@ -195,10 +195,8 @@ public class WinnerActivity extends Activity {
         Intent intent = new Intent(WinnerActivity.this, StartGameActivity.class);
         intent.putExtra("subject", getIntent().getIntExtra("subject", 0));
         intent.putExtra("withUser", true);
-        intent.putExtra("avatar", getIntent().getIntExtra("avatar2", 0));
-        intent.putExtra("rank", getIntent().getStringExtra("rank2"));
-        intent.putExtra("nickname", getIntent().getStringExtra("rank2"));
-        intent.putExtra("id", getIntent().getIntExtra("rank2", 0));
+        intent.putExtra("avatar", getIntent().getIntExtra("avatar_player2", 0));
+        intent.putExtra("nickname", getIntent().getStringExtra("nickname_player2"));
         startActivity(intent);
 
     }
