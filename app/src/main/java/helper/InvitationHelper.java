@@ -17,7 +17,7 @@ public class InvitationHelper {
         Bundle bundle = new Bundle();
         bundle.putString("user", json.getString("user"));
         bundle.putString("matchId", json.getString("matchId"));
-        bundle.putString("subject", json.getString("subject"));
+        bundle.putInt("subject", json.getInt("subject"));
         invitation.setArguments(bundle);
         }catch (JSONException e){
             System.out.println(e.getStackTrace());

@@ -172,7 +172,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_geography"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -186,7 +186,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_literature"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -199,7 +199,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_math"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -212,7 +212,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_history"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -321,7 +321,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_art"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -335,7 +335,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_music"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -348,7 +348,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/subject_english"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -449,8 +449,8 @@
 
                 <TextView
                     android:id="@+id/nom_player2"
-                    android:layout_width="130dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
                     android:layout_gravity="center"
                     android:layout_weight="1"
