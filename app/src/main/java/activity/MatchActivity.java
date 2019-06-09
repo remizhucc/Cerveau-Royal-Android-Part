@@ -339,7 +339,7 @@ public class MatchActivity extends Activity {
         option4.setBackground(getDrawable(R.drawable.button_grey));
         for (int i = 1; i <= 4; i++) {
             if (correction == i) {
-                if(choice1 == choice2){
+                if(choice1 == choice2 && choice1 == i){
                     buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white_storke_gradual));
                 } else if (choice1 == i) {
                     buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white_storke_green));
@@ -349,7 +349,7 @@ public class MatchActivity extends Activity {
                     buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_white));
                 }
             } else {
-                if(choice1 == choice2){
+                if(choice1 == choice2 && choice1 == i){
                     buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_grey_storke_gradual));
                 } else if (choice1 == i) {
                     buttons.get(i - 1).setBackground(getDrawable(R.drawable.button_grey_stroke_green));
