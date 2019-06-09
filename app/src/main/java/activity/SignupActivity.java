@@ -44,8 +44,8 @@ public class SignupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
-        NavigationBarHelper.hideSystemUI(activity);
         activity=this;
+        NavigationBarHelper.hideSystemUI(activity);
         //default avatar
         context = getApplicationContext();
         avatar = -1;
