@@ -96,10 +96,10 @@ public class WinnerActivity extends Activity {
             score2.setText(String.valueOf(dataScore2));
         }
         //set winner crown and music
-        if (offline){
+        if (offline) {
             crown1.setVisibility(View.INVISIBLE);
             addMusic(true);
-        }else if (dataScore1 > dataScore2) {
+        } else if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
             addMusic(true);
         } else {
@@ -116,20 +116,21 @@ public class WinnerActivity extends Activity {
 
     }
 
-    public void addMusic(boolean isWin){
+    public void addMusic(boolean isWin) {
         MusicIntent = new Intent(this, MusicService.class);
         stopService(MusicIntent);
-        Bundle bundle  = new Bundle();
-        if(isWin){
+        Bundle bundle = new Bundle();
+        if (isWin) {
             bundle.putInt("musicUrl", R.raw.victory);
-        } else{
+        } else {
             bundle.putInt("musicUrl", R.raw.failure);
         }
 
-        bundle.putBoolean("isLoop",false);
+        bundle.putBoolean("isLoop", false);
         MusicIntent.putExtras(bundle);
         startService(MusicIntent);
     }
+
     public void addFriend(View view) {
         if (addFriendEnable) {
             FriendHelper.addFriend(getIntent().getIntExtra("id1", 0),
@@ -199,12 +200,12 @@ public class WinnerActivity extends Activity {
         intent.putExtra("withUser", true);
         intent.putExtra("avatar_player2", getIntent().getIntExtra("avatar_player2", 0));
         intent.putExtra("nickname_player2", getIntent().getStringExtra("nickname_player2"));
-        intent.putExtra("userId", getIntent().getIntExtra("id2",0));
+        intent.putExtra("userId", getIntent().getIntExtra("id2", 0));
         startActivity(intent);
 
     }
 
-    private void hideAddFriendButton(){
+    private void hideAddFriendButton() {
         Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
         addFriendButton.setVisibility(View.GONE);
     }
@@ -212,6 +213,7 @@ public class WinnerActivity extends Activity {
     private void setAddFriendButtonGrey() {
         Button addFriendButton = (Button) findViewById(R.id.button_addFriend);
         addFriendButton.setBackground(getDrawable(R.drawable.button_grey));
+        Toast.makeText(WinnerActivity.this, "Add friend success", Toast.LENGTH_LONG).show();
     }
 
     @Override
