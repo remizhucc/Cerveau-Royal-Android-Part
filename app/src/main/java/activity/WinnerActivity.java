@@ -118,6 +118,7 @@ public class WinnerActivity extends Activity {
 
     public void addMusic(boolean isWin){
         MusicIntent = new Intent(this, MusicService.class);
+        stopService(MusicIntent);
         Bundle bundle  = new Bundle();
         if(isWin){
             bundle.putInt("musicUrl", R.raw.victory);
@@ -221,6 +222,7 @@ public class WinnerActivity extends Activity {
     @Override
     protected void onPause() {
         InvitationHelper.unRegisterInvitationReceiver(this, invitationReceiver);
+        stopService(MusicIntent);
         super.onPause();
     }
 
