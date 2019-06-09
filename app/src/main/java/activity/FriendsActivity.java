@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import broadcastReceiver.ReceiveInvitationBroadcastReceiver;
 import helper.AccountHelper;
+import helper.ActivityHelper;
 import helper.FriendHelper;
 import helper.NavigationBarHelper;
 import helper.RequestHelper;
@@ -207,5 +209,19 @@ public class FriendsActivity extends Activity {
     public void backFriendToIndex(View view) {
         Intent intent = new Intent(FriendsActivity.this, IndexActivity.class);
         startActivity(intent);
+    }
+    //keyboard hide automatically
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            NavigationBarHelper.hideSystemUI(activity);
+            View v = getCurrentFocus();
+            if (ActivityHelper.isShouldHideInput(v, ev)) {
+                if (ActivityHelper.hideInputMethod(this, v)) {
+                    return true; //隐藏键盘时，其他控件不响应点击事件==》注释则不拦截点击事件
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
