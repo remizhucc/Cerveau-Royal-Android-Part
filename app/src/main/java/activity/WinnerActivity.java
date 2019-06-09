@@ -126,7 +126,7 @@ public class WinnerActivity extends Activity {
             bundle.putInt("musicUrl", R.raw.failure);
         }
 
-        bundle.putBoolean("isLoop",true);
+        bundle.putBoolean("isLoop",false);
         MusicIntent.putExtras(bundle);
         startService(MusicIntent);
     }
