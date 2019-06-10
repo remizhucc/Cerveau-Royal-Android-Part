@@ -97,7 +97,7 @@ public class WinnerActivity extends Activity {
         }
         //set winner crown and music
         if (offline) {
-            crown1.setVisibility(View.INVISIBLE);
+            crown2.setVisibility(View.INVISIBLE);
             addMusic(true);
         } else if (dataScore1 > dataScore2) {
             crown2.setVisibility(View.INVISIBLE);
@@ -198,8 +198,8 @@ public class WinnerActivity extends Activity {
         Intent intent = new Intent(WinnerActivity.this, StartGameActivity.class);
         intent.putExtra("subject", getIntent().getIntExtra("subject", 0));
         intent.putExtra("withUser", true);
-        intent.putExtra("avatar_player2", getIntent().getIntExtra("avatar_player2", 0));
-        intent.putExtra("nickname_player2", getIntent().getStringExtra("nickname_player2"));
+        intent.putExtra("avatar_player2", getIntent().getIntExtra("avatar2", 0));
+        intent.putExtra("nickname_player2", getIntent().getStringExtra("nickName2"));
         intent.putExtra("userId", getIntent().getIntExtra("id2", 0));
         startActivity(intent);
 
